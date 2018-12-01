@@ -9,7 +9,9 @@ Some frontend libraries are used but all the backend is being made from scratch 
 config/              Website configurations
 controllers/         Part of MVC
 engine/              Core functions
-lib/                 CSS/JS
+lib/                 CSS/JS Libraries
+style/               Custom CSS
+script/              Custom JS
 models/              Part of MVC
 views/               Part of MVC
 ```
