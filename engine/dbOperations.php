@@ -21,7 +21,7 @@ class DBOperations
 
   public function create($dbname,$fields,$data)
   {
-    $sql = "INSERT INTO $dbname ($fields) VALUES ($data)";
+    $sql = $this->db->real_escape_string($this->db,"INSERT INTO $dbname ($fields) VALUES ($data)");
     $sql_query = $this->db->query($sql);
     $sql_query!= '' ? $message = 'Insert successful' : $message = 'Insert error!';
     return $message;
@@ -29,25 +29,25 @@ class DBOperations
 
   public function selectAll($dbname)
   {
-    $sql = "SELECT * FROM $dbname";
+    $sql = $this->db->real_escape_string($this->db,"SELECT * FROM $dbname");
     $sql_query = $this->db->query($sql);
-    $sql_fetch = $this->fetch_query($sql_query);
+    $sql_fetch = $this->fetchQuery($sql_query);
     return $sql_fetch;
   }
 
   public function select($dbname,$fields,$filter=''){
     if ($filter==''){
-      $sql = "SELECT $fields FROM $dbname";
+      $sql = $this->db->real_escape_string($this->db,"SELECT $fields FROM $dbname");
     } else {
-      $sql = "SELECT $fields FROM $dbname WHERE $filter";
+      $sql = $this->db->real_escape_string($this->db,"SELECT $fields FROM $dbname WHERE $filter");
     }
     $sql_query = $this->db->query($sql);
-    $sql_fetch = $this->fetch_query($sql_query);
+    $sql_fetch = $this->fetchQuery($sql_query);
     return $sql_fetch;
   }
 
   public function update($dbname,$data,$condition){
-    $sql="UPDATE $dbname SET $data WHERE $condition";
+    $sql = $this->db->real_escape_string($this->db,"UPDATE $dbname SET $data WHERE $condition");
     $sql_query = $this->db->query($sql);
     $sql_query!= '' ? $message = 'Update successful' : $message = 'Update error!';
     return $message;
@@ -55,9 +55,9 @@ class DBOperations
 
   public function delete($dbname,$condition=''){
     if ($condition==''){
-      $sql="DELETE * FROM $dbname";
+      $sql = $this->db->real_escape_string($this->db,"DELETE * FROM $dbname");
     } else {
-      $sql="DELETE FROM $dbname WHERE $condition";
+      $sql = $this->db->real_escape_string($this->db,"DELETE FROM $dbname WHERE $condition");
     }
     $sql_query = $this->db->query($sql);
     $sql_query!= '' ? $message = 'Delete successful' : $message = 'Delete error!';
