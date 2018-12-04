@@ -10,11 +10,10 @@ class DBOperations
 
   protected function fetchQuery($query_res)
   {
-    $i=0;
     $sql_fetch=array();
     while($sql_retrieve = $query_res->fetch_assoc()){
-      $sql_fetch[$i] = $sql_retrieve;
-      $i++;
+      $sql_fetch[] = $sql_retrieve;
+      
     }
     return $sql_fetch;
   }
