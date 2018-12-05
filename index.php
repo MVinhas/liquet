@@ -5,4 +5,3 @@ $config = isset($_GET['config']) ? (int)$_GET['config'] : 0;
 include('models/header.php');
 include('models/home.php');
 include('models/footer.php');
-?>
