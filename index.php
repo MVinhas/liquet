@@ -1,7 +1,10 @@
 <?php
-set_include_path($_SERVER['DOCUMENT_ROOT'].'/MVinhasCMS/');
-require_once('config/conf.php');
+require_once 'config/conf.php';
 $config = isset($_GET['config']) ? (int)$_GET['config'] : 0;
-include('models/header.php');
-include('models/home.php');
-include('models/footer.php');
+
+include('controllers/headController.php');
+include('controllers/headerController.php');
+
+\config\Dispatcher::dispatch();
+
+include('controllers/footerController.php');
