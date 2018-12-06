@@ -6,7 +6,7 @@ class HomeController
 {
     public function index()
     {
-        include 'Config/conf.php';
+        include 'Config/Conf.php';
 
         echo $twig->render('home.html');
     }
