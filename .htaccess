@@ -2,6 +2,9 @@
 
 RewriteEngine On
 
+# Prevent infinite looping
+RewriteCond %{ENV:REDIRECT_STATUS} ^$
+
 # Disable rewriting for existing files or directories
 
 RewriteCond %{REQUEST_FILENAME} !-f
