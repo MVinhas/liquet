@@ -4,8 +4,7 @@ namespace Config;
 
 class Dispatcher
 {
-    public static function dispatch()
-    {
+    public static function dispatch(){
         $url = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
         array_shift($url);
 
