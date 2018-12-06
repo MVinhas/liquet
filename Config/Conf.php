@@ -1,5 +1,5 @@
 <?php
-$debug_mode = 1; //0 - Production; 1- Development
+$debug_mode = 0; //0 - Production; 1- Development
 
 if($debug_mode==1){
     error_reporting(E_ALL);
