@@ -1,6 +1,7 @@
 <?php
+//0.1.0 - 06/12/2018
 require_once 'Config/conf.php';
-$config = isset($_GET['config']) ? (int)$_GET['config'] : 0;
+
 
 include('Controllers/headController.php');
 include('Controllers/headerController.php');
