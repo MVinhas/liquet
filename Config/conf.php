@@ -1,7 +1,10 @@
 <?php
+$debug_mode = 0; //0 - Production; 1- Development
 
-error_reporting(E_ALL);
-ini_set("display_errors","On");
+if($debug_mode==1){
+    error_reporting(E_ALL);
+    ini_set("display_errors","On");
+}
 
 require_once 'connector.php';
 require_once 'autoloader.php';
