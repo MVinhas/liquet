@@ -25,7 +25,7 @@ set('writable_dirs', []);
 
 // Hosts
 
-host('server')
+host('personal')
     ->set('deploy_path', '~/projetos/{{application}}');    
     
 
