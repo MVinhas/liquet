@@ -1,10 +1,10 @@
 <?php
-require_once 'config/conf.php';
+require_once 'Config/conf.php';
 $config = isset($_GET['config']) ? (int)$_GET['config'] : 0;
 
-include('controllers/headController.php');
-include('controllers/headerController.php');
+include('Controllers/headController.php');
+include('Controllers/headerController.php');
 
-\config\Dispatcher::dispatch();
+\Config\Dispatcher::dispatch();
 
-include('controllers/footerController.php');
+include('Controllers/footerController.php');

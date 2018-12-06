@@ -1,6 +1,6 @@
 <?php
 
-namespace config;
+namespace Config;
 
 class Dispatcher
 {
@@ -10,7 +10,7 @@ class Dispatcher
         array_shift($url);
 
         //check for controller
-        $controller = !empty($url[0]) ? "\controllers\\" . $url[0] . 'Controller' : '\controllers\HomeController';
+        $controller = !empty($url[0]) ? "\Controllers\\" . $url[0] . 'Controller' : '\Controllers\HomeController';
 
         //controller method
         $method = !empty($url[1]) ? $url[1] : 'index';

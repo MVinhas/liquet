@@ -1,11 +1,11 @@
 <?php
 
-namespace controllers;
+namespace Controllers;
 
 class HomeController
 {
     public function index(){
-        include 'config/conf.php';
+        include 'Config/conf.php';
 
         echo $twig->render('home.html');
     }
