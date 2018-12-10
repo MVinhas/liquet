@@ -1,11 +1,14 @@
 <?php
-//0.1.0 - 06/12/2018
-require_once 'Config/Conf.php';
+require_once 'config/conf.php';
 
 
-include('Controllers/HeadController.php');
-include('Controllers/HeaderController.php');
+$head = new \controllers\HeadController;
+$head->index();
 
-\Config\Dispatcher::dispatch();
+$header = new \controllers\HeaderController;
+$header->index();
 
-include('Controllers/FooterController.php');
+config\Dispatcher::dispatch();
+
+$footer = new \controllers\FooterController;
+$footer->index();

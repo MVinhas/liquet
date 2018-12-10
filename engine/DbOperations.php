@@ -1,6 +1,6 @@
 <?php
 
-class DBOperations
+class DbOperations
 {
     protected $db;
     

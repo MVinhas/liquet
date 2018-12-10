@@ -5,7 +5,7 @@ define('DB_PASSWORD', 'mvinhascms');
 define('DB_DATABASE', 'mvinhascms');
 
 #Connection creation
-class DBConnector
+class Connector
 {
     private static $instance;
     private $link;
@@ -17,7 +17,7 @@ class DBConnector
     public static function init()
     {
         if(is_null(self::$instance)){
-            self::$instance = new DBConnector();
+            self::$instance = new Connector();
         }
         return self::$instance;
     }
