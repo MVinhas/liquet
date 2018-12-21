@@ -2,7 +2,8 @@
 
 namespace controllers;
 
-class HeadController{
+class HeadController
+{
     public function index()
     {
         include 'config/conf.php';

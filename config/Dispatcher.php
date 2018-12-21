@@ -4,8 +4,9 @@ namespace config;
 
 class Dispatcher
 {
-    public static function dispatch(){
-        $url = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
+    public static function dispatch()
+    {
+        $url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         array_shift($url);
 
         //check for controller

@@ -16,7 +16,7 @@ class Connector
 
     public static function init()
     {
-        if(is_null(self::$instance)){
+        if (is_null(self::$instance)) {
             self::$instance = new Connector();
         }
         return self::$instance;
@@ -24,12 +24,11 @@ class Connector
 
     public function __call($name, $args)
     {
-        if(method_exists($this->connection, $name)){
+        if (method_exists($this->connection, $name)) {
             return call_user_func_array(array($this->connection,$name), $args);
         } else {
             trigger_error('Unknown Method ' . $name . '()', E_USER_WARNING);
             return false;
         }
     }
-
 }
