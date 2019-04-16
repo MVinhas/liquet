@@ -1,6 +1,10 @@
 <?php
-require_once 'config/conf.php';
+session_start([
+    'cookie_httponly' => true,
+    'cookie_secure' => true
+]);
 
+require_once 'config/conf.php';
 
 $head = new \controllers\HeadController;
 $head->index();
