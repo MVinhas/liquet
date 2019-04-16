@@ -1,4 +1,5 @@
 <?php
+namespace engine;
 
 class DbOperations
 {
@@ -6,7 +7,7 @@ class DbOperations
     
     public function __construct()
     {
-        $this->db = dbConnector::init();
+        $this->db = \config\Connector::init();
     }
 
     protected function fetchQuery($query_res)
@@ -18,51 +19,55 @@ class DbOperations
         return $sql_fetch;
     }
 
-    public function create($dbname, $fields, $data)
+    public function create($table, $fields, $data)
     {
-        $sql = $this->db->real_escape_string($this->db, "INSERT INTO $dbname ($fields) VALUES ($data)");
+        $sql = "INSERT INTO $table ($fields) VALUES ($data)";
+        $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        $sql_query!= '' ? $message = 'Insert successful' : $message = 'Insert error!';
-        return $message;
+        if ($this->db->error) {
+            return "Error: ".$this->db->error;
+        } else {
+            return true;
+        }
     }
 
-    public function selectAll($dbname)
-    {
-        $sql = $this->db->real_escape_string($this->db, "SELECT * FROM $dbname");
-        $sql_query = $this->db->query($sql);
-        $sql_fetch = $this->fetchQuery($sql_query);
-        return $sql_fetch;
-    }
-
-    public function select($dbname, $fields, $filter = '')
+    public function select($table, $fields = '*', $filter = '')
     {
         if ($filter=='') {
-            $sql = $this->db->real_escape_string($this->db, "SELECT $fields FROM $dbname");
+            $sql = "SELECT $fields FROM $table";
         } else {
-            $sql = $this->db->real_escape_string($this->db, "SELECT $fields FROM $dbname WHERE $filter");
+            $sql = "SELECT $fields FROM $table WHERE $filter";
         }
+        $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
+        if (!$sql_query) {
+            return false;
+        }
         $sql_fetch = $this->fetchQuery($sql_query);
         return $sql_fetch;
     }
 
-    public function update($dbname, $data, $condition)
+    public function update($table, $data, $condition)
     {
-        $sql = $this->db->real_escape_string($this->db, "UPDATE $dbname SET $data WHERE $condition");
+        $sql = "UPDATE $table SET $data WHERE $condition";
+        $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        $sql_query!= '' ? $message = 'Update successful' : $message = 'Update error!';
-        return $message;
+        if ($this->db->error) {
+            return "Error: ".$this->db->error;
+        } else {
+            return true;
+        }
     }
 
-    public function delete($dbname, $condition = '')
+    public function delete($table, $condition = '1=1')
     {
-        if ($condition=='') {
-            $sql = $this->db->real_escape_string($this->db, "DELETE * FROM $dbname");
-        } else {
-            $sql = $this->db->real_escape_string($this->db, "DELETE FROM $dbname WHERE $condition");
-        }
+        $sql = "DELETE * FROM $table WHERE $condition";
+        $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        $sql_query!= '' ? $message = 'Delete successful' : $message = 'Delete error!';
-        return $message;
+        if ($this->db->error) {
+            return "Error: ".$this->db->error;
+        } else {
+            return true;
+        }
     }
 }
