@@ -1,12 +1,16 @@
 <?php
-
 namespace controllers;
 
-class HeaderController
+use \engine\Site as Site;
+
+class HeaderController extends Controller
 {
     public function index()
     {
-        include 'config/conf.php';
-        echo $twig->render('header.html');
+        $params = array();
+        $site = new Site();
+        $params['sitename'] = $site->getName();
+
+        echo $this->twig->render('main/header.html', $params);
     }
 }

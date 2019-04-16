@@ -2,11 +2,11 @@
 
 namespace controllers;
 
-class HeadController
+class HeadController extends Controller
 {
     public function index()
     {
-        include 'config/conf.php';
-        echo $twig->render('head.html');
+        $params['dev_mode'] = $this->debug_mode;
+        echo $this->twig->render('main/head.html', $params);
     }
 }

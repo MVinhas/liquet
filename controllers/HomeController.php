@@ -2,12 +2,23 @@
 
 namespace controllers;
 
-class HomeController
+use models\Home as Home;
+
+class HomeController extends Controller
 {
+
     public function index()
     {
-        include 'config/conf.php';
+        $model = new Home();
+        if ($model->checkUsers() === false) {
+            $this->setup();
+        } else {
+            echo $this->twig->render('main/home.html');
+        }
+    }
 
-        echo $twig->render('home.html');
+    public function setup()
+    {
+        echo $this->twig->render('main/setup.html');
     }
 }
