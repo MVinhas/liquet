@@ -1,7 +1,5 @@
 <?php
-/*
-* PSR-4
-*/
+
 function autoload($className)
 {
     $className = ltrim($className, '\\');
@@ -13,5 +11,7 @@ function autoload($className)
         $fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
     }
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-    include $fileName;
+    if (file_exists($fileName)) {
+        require_once $fileName;
+    }
 }

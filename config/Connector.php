@@ -1,8 +1,10 @@
 <?php
+namespace config;
+
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'mvinhascms');
-define('DB_PASSWORD', 'mvinhascms');
-define('DB_DATABASE', 'mvinhascms');
+define('DB_USERNAME', 'seamus');
+define('DB_PASSWORD', 'seamus');
+define('DB_DATABASE', 'seamus');
 
 #Connection creation
 class Connector
@@ -11,7 +13,11 @@ class Connector
     private $link;
     private function __construct()
     {
-        $this->connection = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+        $this->connection = new \mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+        if ($this->connection->connect_error) {
+            die('Connect Error (' . $this->connection->connect_errno . ') '
+            . $this->connection->connect_error);
+        }
     }
 
     public static function init()
