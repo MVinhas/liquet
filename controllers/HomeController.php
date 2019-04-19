@@ -19,6 +19,7 @@ class HomeController extends Controller
 
     public function setup()
     {
+        $model = new Home();
         echo $this->twig->render('main/setup.html');
     }
 }
