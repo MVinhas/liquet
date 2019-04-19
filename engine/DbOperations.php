@@ -24,7 +24,7 @@ class DbOperations
         $sql = "INSERT INTO $table ($fields) VALUES ($data)";
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        if ($this->db->error) {
+        if ($this->db->errono != '') {
             return "Error: ".$this->db->error;
         } else {
             return true;
@@ -41,7 +41,8 @@ class DbOperations
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
         if (!$sql_query) {
-            return false;
+            $errorCode = $this->db->connection->errno;
+            return $errorCode != '' ? $errorCode : false;
         }
         $sql_fetch = $this->fetchQuery($sql_query);
         return $sql_fetch;
@@ -64,8 +65,20 @@ class DbOperations
         $sql = "DELETE * FROM $table WHERE $condition";
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        if ($this->db->error) {
+        if ($this->db->connection->error) {
             return "Error: ".$this->db->error;
+        } else {
+            return true;
+        }
+    }
+
+    public function createTable($table)
+    {
+        $sql = $this->db->real_escape_string($table);
+        $sql_query = $this->db->query($sql);
+        echo "<pre>" , print_r(get_object_vars($this->db)) , "</pre>";exit;
+        if ($this->db->connection->errno) {
+            return false;
         } else {
             return true;
         }

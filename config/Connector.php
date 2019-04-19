@@ -5,6 +5,7 @@ define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'seamus');
 define('DB_PASSWORD', 'seamus');
 define('DB_DATABASE', 'seamus');
+mysqli_report(MYSQLI_REPORT_STRICT);
 
 #Connection creation
 class Connector
