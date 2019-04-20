@@ -1,11 +1,53 @@
 {% spaceless %}
-<div class="jumbotron container">
+<div class="jumbotron">
     <h1 class="display-4">It works!</h1>
     <p class="lead">However, it seems like there is no one registered, so it's time to setup your account!</p>
-    <hr class="my-4">
-    <p>Please link on the below button to add an administrator to this website.</p>
-    <p class="lead">
-      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
 </div>
+<form class="needs-validation" action="Home/register/" method="POST" enctype="multipart/form-data" novalidate>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="firstname">First name</label>
+      <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First name" required>
+      <div class="valid-tooltip">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="lastname">Last name</label>
+      <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last name" required>
+      <div class="valid-tooltip">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="username">Username</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="username">@</span>
+        </div>
+        <input type="text" class="form-control" id="validationTooltipUsername" placeholder="Username" name="username" aria-describedby="validationTooltipUsernamePrepend" required>
+        <div class="invalid-tooltip">
+          Please choose a unique and valid username.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationTooltip03">Email</label>
+      <input type="email" class="form-control" id="validationTooltip03" name="email" placeholder="Insert your e-mail here" required>
+      <div class="invalid-tooltip">
+        Please provide a valid e-mail.
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="role">Role</label>
+      <input type="text" class="form-control" id="role" name="role" readonly="readonly" placeholder="State" value="admin" required>
+      <div class="invalid-tooltip">
+        Please provide a valid state.
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
 {% endspaceless %}
