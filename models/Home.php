@@ -29,7 +29,6 @@
             if ($getUsers === false) {
                 return false;   
             } else if ((int)$getUsers > 0) {
-
                 $this->checkUserTable($getUsers);
                 return false;
             } else {

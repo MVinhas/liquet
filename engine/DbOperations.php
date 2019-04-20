@@ -76,7 +76,6 @@ class DbOperations
     {
         $sql = $this->db->real_escape_string($table);
         $sql_query = $this->db->query($sql);
-        echo "<pre>" , print_r(get_object_vars($this->db)) , "</pre>";exit;
         if ($this->db->connection->errno) {
             return false;
         } else {

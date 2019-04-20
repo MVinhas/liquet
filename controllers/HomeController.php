@@ -10,7 +10,7 @@ class HomeController extends Controller
     public function index()
     {
         $model = new Home();
-        if ($model->checkUsers() === false) {
+        if ($model->checkUsers() == false) {
             $this->setup();
         } else {
             echo $this->twig->render('main/home.html');
@@ -21,5 +21,10 @@ class HomeController extends Controller
     {
         $model = new Home();
         echo $this->twig->render('main/setup.html');
+    }
+
+    public function register()
+    {
+        echo "Dados recebidos:<br>" . "<pre>" , print_r($_POST) , "</pre>";
     }
 }
