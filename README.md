@@ -1,5 +1,5 @@
 # Seamus
-Seamus is a ablog wrote on PHP from scratch, based on my (relatively modest) knowledge.
+Seamus is a blog wrote on PHP from scratch, based on my (relatively modest) knowledge.
 
 Some frontend libraries are used but all the backend is being made from scratch backed up by Twig to ensure proper organization of both PHP and HTML pages.
 
