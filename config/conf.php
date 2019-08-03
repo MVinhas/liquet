@@ -1,10 +1,10 @@
 <?php
-#CONFIG FLAGS
-$debug_mode                 = 1; #0 - Production; 1 - Development
-$sitename                   = 'Seamus';
-$siteversion                = '0.2.0-dev';
-$siteauthor                 = 'Micael Vinhas';
-$launchyear                 = '2019';
+$config_flags = array();
+$config_flags['debug_mode']                 = 1; #0 - Production; 1 - Development
+$config_flags['sitename']                   = 'Seamus';
+$config_flags['siteversion']                = '0.2.0.'.date('ymd').'-dev';
+$config_flags['siteauthor']                 = 'Micael Vinhas';
+$config_flags['launchyear']                 = '2019';
 
 if ($debug_mode === 1) {
     error_reporting(E_ALL);
@@ -23,4 +23,4 @@ require_once 'engine/DbOperations.php';
 
 $loader = new Twig_Loader_Filesystem('views');
 
-$twig = new Twig_Environment($loader);
+$template = new Twig_Environment($loader);
