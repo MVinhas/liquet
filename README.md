@@ -1,7 +1,8 @@
-# MVinhasCMS
-MVinhasCMS is a CMS (you don't say!) blog wrote on PHP from scratch, based on my (relatively modest) knowledge.
+# Seamus
+Seamus (that's the dog) is a simple PHP project aimed to be a blog made from scratch, using only Twig as a template engine and Bootstrap/jQuery for CSS/JS business respectively.
 
-Some frontend libraries are used but all the backend is being made from scratch backed up by Twig to ensure proper organization of both PHP and HTML pages.
+## Project name origin
+The name was inspired after a Pink Floyd song, 'Seamus', from the album Meddle. The song itself is not that nice, but it's a nice intro for the truly masterpiece of Meddle, 'Echoes'. Haven't you heard yet? *Haha, charade you are*
 
 
 ### Directory Structure
