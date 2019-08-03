@@ -13,14 +13,14 @@ class HomeController extends Controller
         if ($model->checkUsers() == false) {
             $this->setup();
         } else {
-            echo $this->twig->render('main/home.html');
+            echo $this->template->render('main/home.html');
         }
     }
 
     public function setup()
     {
         $model = new Home();
-        echo $this->twig->render('main/setup.html');
+        echo $this->template->render('main/setup.html');
     }
 
     public function register()

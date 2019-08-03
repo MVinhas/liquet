@@ -11,6 +11,6 @@ class HeaderController extends Controller
         $site = new Site();
         $params['sitename'] = $site->getName();
 
-        echo $this->twig->render('main/header.html', $params);
+        echo $this->template->render('main/header.html', $params);
     }
 }
