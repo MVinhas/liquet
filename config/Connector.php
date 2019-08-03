@@ -5,7 +5,6 @@ define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'seamus');
 define('DB_PASSWORD', 'seamus');
 define('DB_DATABASE', 'seamus');
-mysqli_report(MYSQLI_REPORT_STRICT);
 
 #Connection creation
 class Connector
@@ -14,10 +13,12 @@ class Connector
     private $link;
     private function __construct()
     {
-        $this->connection = new \mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-        if ($this->connection->connect_error) {
-            die('Connect Error (' . $this->connection->connect_errno . ') '
-            . $this->connection->connect_error);
+        try {
+            mysqli_report(MYSQLI_REPORT_STRICT);
+            $this->connection = new \mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+        } catch (\mysqli_sql_exception $e) {
+            $dbConf = new \controllers\DbConfController;
+            $dbConf->index();
         }
     }
 
