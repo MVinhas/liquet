@@ -30,4 +30,14 @@ class Site
     {
         return $this->flags['launchyear'];
     }
+
+    public function getCopyright()
+    {
+        if ($this->getLaunchYear() >= date('Y')) {
+            $copyright = $this->getLaunchYear().' '.$this->getAuthor();
+        } else {
+            $copyright = $this->getLaunchYear().' - '.date('Y').' '.$this->getAuthor();
+        }
+        return $copyright;
+    }
 }
