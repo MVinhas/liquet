@@ -13,7 +13,8 @@ class HomeController extends Controller
         if ($model->checkUsers() == false) {
             $this->setup();
         } else {
-            echo $this->template->render('main/home.html');
+            $this->path = 'home/'.__FUNCTION__;
+            $this->callTemplate($this->path);
         }
     }
 

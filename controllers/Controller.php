@@ -6,19 +6,24 @@ class Controller
     public function __construct()
     {
         include 'config/conf.php';
-        $this->debug_mode = $debug_mode;
+        $this->config_flags = $config_flags;
         $this->template = $template;
     }
 
-    protected function callTemplate($template)
+    protected function getTemplatePath($filename)
     {
-        echo $this->template->render($template.'.html');
+        return explode('Controller', $filename);
+    }
+
+    protected function callTemplate($template, $out = array())
+    {
+        echo $this->template->render($template.'.html', $out);
     }
 
     protected function callFooter()
     {
-        $footer = new FooterController();
-        $footer->index();
+        $footer = new SiteController();
+        $footer->footer();
         exit;
     }
 }
