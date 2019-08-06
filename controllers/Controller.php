@@ -10,9 +10,16 @@ class Controller
         $this->template = $template;
     }
 
-    protected function getTemplatePath($filename)
+    protected function getDirectory($filename)
     {
-        return explode('Controller', $filename);
+        $pathExplode = explode('Controller', $filename);
+        $directory = strtolower($pathExplode[0]);
+        return $directory;
+    }
+
+    protected function getFile($path, $file)
+    {
+        return $path.'/'.$file;
     }
 
     protected function callTemplate($template, $out = array())
@@ -26,4 +33,5 @@ class Controller
         $footer->footer();
         exit;
     }
+
 }
