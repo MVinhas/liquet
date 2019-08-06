@@ -1,7 +1,7 @@
 <?php
 namespace engine;
 
-class Site
+class SiteInfo
 {
     protected $flags;
 

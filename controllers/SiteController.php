@@ -2,7 +2,7 @@
 
 namespace controllers;
 
-use \engine\Site;
+use \engine\SiteInfo;
 use \config\Dispatcher;
 
 class SiteController extends Controller
@@ -13,10 +13,9 @@ class SiteController extends Controller
     {
         parent::__construct();
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
-        $this->path = $this->getTemplatePath($file)[0];
-        $this->path = strtolower($this->path).'/';
-
+        $this->path = $this->getDirectory($file);
     }
+
     public function index()
     {
         $this->head();
@@ -25,30 +24,30 @@ class SiteController extends Controller
         $this->footer();
     }
 
-    public function head()
+    private function head()
     {
         $out = array();
         $out['debug_mode'] = $this->config_flags['debug_mode'];
-        $head = $this->path.__FUNCTION__;
+        $head = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($head, $out);
     }
 
-    public function header()
+    private function header()
     {
         $out = array();
-        $site = new Site();
+        $site = new SiteInfo();
         $out['sitename'] = $site->getName();
-        $header = $this->path.__FUNCTION__;
+        $header = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($header, $out);
     }
 
-    public function footer()
+    protected function footer()
     {
         $out = array();
-        $site = new Site();
+        $site = new SiteInfo();
         $out['copyleft'] = $site->getCopyright();
         $out['siteversion'] = $site->getVersion();
-        $footer = $this->path.__FUNCTION__;
+        $footer = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($footer, $out);
     }
 }

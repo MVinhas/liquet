@@ -7,21 +7,31 @@ use models\Home as Home;
 class HomeController extends Controller
 {
 
+    protected $path;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $file = pathinfo(__FILE__, PATHINFO_FILENAME);
+        $this->path = $this->getDirectory($file);
+    }
+
     public function index()
     {
         $model = new Home();
         if ($model->checkUsers() == false) {
             $this->setup();
         } else {
-            $this->path = 'home/'.__FUNCTION__;
-            $this->callTemplate($this->path);
+            $home = $this->getFile($this->path, __FUNCTION__);
+            echo $this->callTemplate($home);
         }
     }
 
-    public function setup()
+    private function setup()
     {
         $model = new Home();
-        echo $this->template->render('main/setup.html');
+        $setup = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($setup);
     }
 
     public function register()
