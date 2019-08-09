@@ -16,6 +16,7 @@ class Connector
         try {
             mysqli_report(MYSQLI_REPORT_STRICT);
             $this->connection = new \mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+            
         } catch (\mysqli_sql_exception $e) {
             $dbConf = new \controllers\DbConfController;
             $dbConf->index();

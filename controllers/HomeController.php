@@ -19,9 +19,12 @@ class HomeController extends Controller
     public function index()
     {
         $model = new Home();
-        if ($model->checkUsers() == false) {
+        if ($model->checkUsers() === false) {
             $this->setup();
-        } else {
+        } else if ($model->checkUsers() === '-1'){
+            $migrations = new \migrations\Setup();
+            $migrations->index();
+        } else {            
             $home = $this->getFile($this->path, __FUNCTION__);
             echo $this->callTemplate($home);
         }
@@ -29,13 +32,15 @@ class HomeController extends Controller
 
     private function setup()
     {
+        
         $model = new Home();
         $setup = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($setup);
+        
     }
 
     public function register()
     {
-        echo "Dados recebidos:<br>" . "<pre>" , print_r($_POST) , "</pre>";
+        //Tratar o $_POST
     }
 }
