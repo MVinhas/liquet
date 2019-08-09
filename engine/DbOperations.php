@@ -41,8 +41,7 @@ class DbOperations
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
         if (!$sql_query) {
-            $errorCode = $this->db->connection->errno;
-            return $errorCode != '' ? $errorCode : false;
+            return false;
         }
         $sql_fetch = $this->fetchQuery($sql_query);
         return $sql_fetch;
@@ -53,7 +52,7 @@ class DbOperations
         $sql = "UPDATE $table SET $data WHERE $condition";
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        if ($this->db->error) {
+        if ($this->db->connection->error) {
             return "Error: ".$this->db->error;
         } else {
             return true;
@@ -72,8 +71,20 @@ class DbOperations
         }
     }
 
-    public function createTable($table)
+    public function checkTable($table)
     {
+        $sql = "SELECT 1 FROM $table LIMIT 1";
+        $sql = $this->db->real_escape_string($sql);
+        $sql_query = $this->db->query($sql);
+        if ($this->db->connection->error) {
+            return false;
+        }
+        return true;
+    }
+    
+    public function createTable($table, $fields)
+    {
+        
         $sql = $this->db->real_escape_string($table);
         $sql_query = $this->db->query($sql);
         if ($this->db->connection->errno) {
@@ -82,4 +93,5 @@ class DbOperations
             return true;
         }
     }
+
 }
