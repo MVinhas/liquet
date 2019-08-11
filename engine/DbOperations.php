@@ -84,8 +84,19 @@ class DbOperations
     
     public function createTable($table, $fields)
     {
+        $numItems = count($fields);
+        $i = 0;
+        $values = '';
+        foreach ($fields as $k => $v) {
+            if (++$i !== $numItems) {
+                $values .= $k.' '.$v.',';
+            } else {
+                $values .= $k.' '.$v;
+            }   
+        }
         
-        $sql = $this->db->real_escape_string($table);
+        $sql = "CREATE TABLE $table ($values)";
+        $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
         if ($this->db->connection->errno) {
             return false;
