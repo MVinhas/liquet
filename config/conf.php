@@ -21,6 +21,6 @@ require_once 'vendor/autoload.php';
 
 require_once 'engine/DbOperations.php';
 
-$loader = new Twig_Loader_Filesystem('views');
+$loader = new \Twig\Loader\FilesystemLoader('views');
 
-$template = new Twig_Environment($loader);
+$template = new \Twig\Environment($loader);
