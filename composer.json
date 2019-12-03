@@ -1,5 +1,15 @@
 {
+    "name": "mvinhas/seamus",
+    "description": "CMS Blog",
+    "type": "project",
     "require": {
-        "twig/twig": "^2.0"    
-    }
+        "twig/twig": "^3.0"
+    },
+    "license": "AGPL-3.0",
+    "authors": [
+        {
+            "name": "Micael Vinhas",
+            "email": "mvinhas.tirso@gmail.com"
+        }
+    ]
 }
