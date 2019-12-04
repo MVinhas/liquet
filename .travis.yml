@@ -1,10 +1,7 @@
-{
-  "os": [
-    "linux"
-  ],
-  "php": [
-    "7.2",
-    "7.3"
-  ],
-  "language": "php"
-}
+language: php
+
+php:
+  - 7.2
+  - 7.3
+
+script: ./tests.sh
