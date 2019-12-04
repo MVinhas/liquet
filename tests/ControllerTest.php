@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 
-final class EmailTest extends TestCase
+final class ControllerTest extends TestCase
 {
     public function filePathHasCorrectFormat(): void
     {
