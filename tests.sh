@@ -1,1 +1,1 @@
-./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/ControllerTest
+./vendor/bin/phpunit --bootstrap config/conf.php tests/ControllerTest

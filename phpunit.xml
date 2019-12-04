@@ -1,4 +1,4 @@
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit bootstrap="config/conf.php">
   <testsuites>
     <testsuite name="basecontroller">
       <file>tests/ControllerTest.php</file>
