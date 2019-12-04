@@ -7,7 +7,7 @@ final class ControllerTest extends TestCase
     {
         $this->assertEquals(
             'teste/teste.php',
-            Controller::getFile('teste','teste.php')
+            \controllers\Controller::getFile('teste','teste.php')
         );
     }
 }

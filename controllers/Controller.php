@@ -17,7 +17,7 @@ class Controller
         return $directory;
     }
 
-    protected function getFile($path, $file)
+    public function getFile($path, $file)
     {
         return $path.'/'.$file;
     }
