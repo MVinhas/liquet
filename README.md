@@ -1,3 +1,4 @@
+![Travis](https://travis-ci.com/MVinhas/Seamus.svg?branch=master)
 # Seamus
 Seamus (that's the dog) is a simple PHP project aimed to be a blog made from scratch, using only Twig as a template engine and Bootstrap/jQuery for CSS/JS business respectively.
 
