@@ -7,10 +7,10 @@ require 'recipe/common.php';
 set('allow_anonymous_stats', true);
 
 // Project name
-set('application', 'MVinhasCMS');
+set('application', 'Seamus');
 
 // Project repository
-set('repository', 'git@github.com:MVinhas/MVinhasCMS.git');
+set('repository', 'git@github.com:MVinhas/Seamus.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true); 
