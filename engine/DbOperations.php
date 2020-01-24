@@ -33,7 +33,7 @@ class DbOperations
 
     public function select($table, $fields = '*', $filter = '')
     {
-        if ($filter=='') {
+        if ($filter == '') {
             $sql = "SELECT $fields FROM $table";
         } else {
             $sql = "SELECT $fields FROM $table WHERE $filter";

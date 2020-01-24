@@ -14,10 +14,12 @@
         
         public function checkUsers()
         {
-            $getUsers = $this->db->select('users');
+            $getUsers = $this->db->select('users') ?? false;
+            
+            $tableExists = false;
             
             if ($getUsers === false) {
-                $tableExists = $this->db->checkTable('users');  
+                $tableExists = $this->db->checkTable('users') ?? false;  
             }
 
             if ($tableExists === true) {

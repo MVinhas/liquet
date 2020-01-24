@@ -27,7 +27,7 @@ class SiteController extends Controller
     private function head()
     {
         $out = array();
-        $out['debug_mode'] = $this->config_flags['debug_mode'];
+        $out['debug_mode'] = $this->config_flags->debug_mode;
         $head = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($head, $out);
     }

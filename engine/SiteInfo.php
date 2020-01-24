@@ -13,22 +13,22 @@ class SiteInfo
 
     public function getName()
     {
-        return $this->flags['sitename'];
+        return $this->flags->sitename;
     }
 
     public function getVersion()
     {
-        return $this->flags['siteversion'];
+        return $this->flags->siteversion;
     }
 
     public function getAuthor()
     {
-        return $this->flags['siteauthor'];
+        return $this->flags->siteauthor;
     }
 
     public function getLaunchYear()
     {
-        return $this->flags['launchyear'];
+        return $this->flags->launchyear;
     }
 
     public function getCopyright()
