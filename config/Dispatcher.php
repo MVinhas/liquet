@@ -10,7 +10,7 @@ class Dispatcher
         array_shift($url);
         $siteInfo = new \engine\SiteInfo();
         
-        //if using HomeDir, the second position is the site name, not the controller name
+        //if using Apache/NGINX HomeDir, the second position is the site name, not the controller name
         if ($url[0] == $siteInfo->getName()) {
             array_shift($url);
         }
