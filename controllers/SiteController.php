@@ -4,6 +4,8 @@ namespace controllers;
 
 use \engine\SiteInfo;
 use \config\Dispatcher;
+use \models\Header as Header;
+use \models\Footer as Footer;
 
 class SiteController extends Controller
 {
@@ -28,17 +30,20 @@ class SiteController extends Controller
     {
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        $head = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($head, $out);
+        
+        $headTemplate = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($headTemplate, $out);
     }
 
     private function header()
     {
         $out = array();
-        $site = new SiteInfo();
-        $out['sitename'] = $site->getName();
-        $header = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($header, $out);
+        $siteInfo = new SiteInfo();
+        $header = new Header();
+        $out['sitename'] = $siteInfo->getName();
+        $out['menu'] = $header->getMenu();
+        $headerTemplate = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($headerTemplate, $out);
     }
 
     protected function footer()
@@ -47,7 +52,8 @@ class SiteController extends Controller
         $site = new SiteInfo();
         $out['copyleft'] = $site->getCopyright();
         $out['siteversion'] = $site->getVersion();
-        $footer = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($footer, $out);
+        
+        $footerTemplate = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($footerTemplate, $out);
     }
 }
