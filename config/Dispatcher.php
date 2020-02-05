@@ -9,15 +9,15 @@ class Dispatcher
         
         array_shift($url);
         $siteInfo = new \engine\SiteInfo();
-        
+       
         //if using Apache/NGINX HomeDir, the second position is the site name, not the controller name
         if ($url[0] == $siteInfo->getName()) {
             array_shift($url);
         }
-         
+        
+        isset($url[0]) ? $url[0] = preg_replace('/\?/','',$url[0]) : null;
         //check for controller
         $controller = !empty($url[0]) ? "\controllers\\" . $url[0] . 'Controller' : '\controllers\HomeController';
-
         //controller method
         $method = !empty($url[1]) ? $url[1] : 'index';
 
@@ -26,7 +26,7 @@ class Dispatcher
 
         //controller instance
         $cont = new $controller;
-
+ 
         $cont->$method($arg);
     }
 }
