@@ -3,12 +3,12 @@
 <header class="header">
   <nav class="navbar navbar-dark bg-dark">
     <span class="navbar-brand mb-0 h1">
-      <a class="navbar-brand" href="#">{{sitename|raw}}</a>
+      <a class="navbar-brand" href="?">{{sitename|raw}}</a>
     </span>
     <ul class="navbar-nav ml-auto">
         {% for item in menu %}
         <li class="nav-item">
-            <a class="nav-link" href="?id={{item.id}}">{{item.name}}</a>
+            <a class="nav-link" href="?{{item.class}}">{{item.name}}</a>
         </li>
         {% endfor %}
     </ul>
