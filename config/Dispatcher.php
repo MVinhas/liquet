@@ -4,6 +4,25 @@ namespace config;
 class Dispatcher
 {
     public static function dispatch()
+    { 
+        $uri = self::getURI();
+        $cont = new $uri->controller;
+        $method = $uri->method;
+        $arg = $uri->arg;
+        $cont->$method($arg);  
+    }
+    public static function metadata()
+    {
+        $uri = self::getURI();
+        $split = explode("\\", $uri->controller);
+        $controller = explode("Controller",$split[2]);
+
+        $site = new \engine\SiteInfo();
+
+        $_SESSION['page_title'] = $site->getName().' :: '.$controller[0];
+
+    }
+    private static function getURI()
     {
         $url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         
@@ -23,10 +42,11 @@ class Dispatcher
 
         //get argument
         $arg = !empty($url[2]) ? $url[2] : null;
-
-        //controller instance
-        $cont = new $controller;
- 
-        $cont->$method($arg);
+        
+        $uri = new \stdClass();
+        $uri->controller = $controller;
+        $uri->method = $method;
+        $uri->arg = $arg;
+        return $uri;
     }
 }
