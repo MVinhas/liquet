@@ -20,17 +20,22 @@ class SiteController extends Controller
 
     public function index()
     {
+        $this->getMetadata();
         $this->head();
         $this->header();
         Dispatcher::dispatch();
         $this->footer();
     }
 
+    private function getMetadata()
+    {
+        $metadata = Dispatcher::metadata();
+    }
     private function head()
     {
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        
+        $out['page_title'] = $_SESSION['page_title'];
         $headTemplate = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($headTemplate, $out);
     }
@@ -51,9 +56,13 @@ class SiteController extends Controller
         $out = array();
         $site = new SiteInfo();
         $out['copyleft'] = $site->getCopyright();
-        $out['siteversion'] = $site->getVersion();
-        
+        $out['siteversion'] = $site->getVersion(); 
         $footerTemplate = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($footerTemplate, $out);
+    }
+    public function terms()
+    {
+        $termsTemplate = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($termsTemplate);
     }
 }
