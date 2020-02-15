@@ -38,9 +38,11 @@ class DbOperations
         } else {
             $sql = "SELECT $fields FROM $table WHERE $filter";
         }
+        
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        if (!$sql_query) {
+        
+        if ($sql_query->num_rows < 1) {
             return false;
         }
         $sql_fetch = $this->fetchQuery($sql_query);
