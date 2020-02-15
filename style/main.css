@@ -10,6 +10,8 @@ body{
    text-align: left;
    padding-top: 70px;
    padding-bottom: 70px;
+   position: relative;
+   min-height: 100vh;
  }
 
 .copyleft {
@@ -21,6 +23,10 @@ body{
   position: absolute;
   top: 0;
   width: 100%;
+}
+
+.container{
+  position:relative;
 }
 
 .footer{
