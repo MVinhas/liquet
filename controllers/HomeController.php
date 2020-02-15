@@ -33,9 +33,11 @@ class HomeController extends Controller
     private function setup()
     {
         
+        $out = array();
+        $out['debug_mode'] = $this->config_flags->debug_mode;
         $model = new Home();
         $setup = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($setup);
+        echo $this->callTemplate($setup, $out);
         
     }
 
