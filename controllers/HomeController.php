@@ -21,10 +21,10 @@ class HomeController extends Controller
         $model = new Home();
         if ($model->checkUsers() === false) {
             $this->setup();
-        } else if ($model->checkUsers() === '-1'){
+        } elseif ($model->checkUsers() === '-1') {
             $migrations = new \migrations\Setup();
             $migrations->index();
-        } else {            
+        } else {
             $home = $this->getFile($this->path, __FUNCTION__);
             echo $this->callTemplate($home);
         }
@@ -38,7 +38,6 @@ class HomeController extends Controller
         $model = new Home();
         $setup = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($setup, $out);
-        
     }
 
     public function register()
