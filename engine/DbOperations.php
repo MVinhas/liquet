@@ -94,7 +94,7 @@ class DbOperations
                 $values .= $k.' '.$v.',';
             } else {
                 $values .= $k.' '.$v;
-            }   
+            }
         }
         
         $sql = "CREATE TABLE $table ($values)";
@@ -106,5 +106,4 @@ class DbOperations
             return true;
         }
     }
-
 }
