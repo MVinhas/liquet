@@ -56,7 +56,7 @@ class SiteController extends Controller
         $out = array();
         $site = new SiteInfo();
         $out['copyleft'] = $site->getCopyright();
-        $out['siteversion'] = $site->getVersion(); 
+        $out['siteversion'] = $site->getVersion();
         $footerTemplate = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($footerTemplate, $out);
     }
