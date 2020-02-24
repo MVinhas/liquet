@@ -4,23 +4,22 @@ namespace config;
 class Dispatcher
 {
     public static function dispatch()
-    { 
+    {
         $uri = self::getURI();
         $cont = new $uri->controller;
         $method = $uri->method;
         $arg = $uri->arg;
-        $cont->$method($arg);  
+        $cont->$method($arg);
     }
     public static function metadata()
     {
         $uri = self::getURI();
         $split = explode("\\", $uri->controller);
-        $controller = explode("Controller",$split[2]);
+        $controller = explode("Controller", $split[2]);
 
         $site = new \engine\SiteInfo();
 
         $_SESSION['page_title'] = $site->getName().' :: '.$controller[0];
-
     }
     private static function getURI()
     {
@@ -34,7 +33,7 @@ class Dispatcher
             array_shift($url);
         }
         
-        isset($url[0]) ? $url[0] = preg_replace('/\?/','',$url[0]) : null;
+        isset($url[0]) ? $url[0] = preg_replace('/\?/', '', $url[0]) : null;
         //check for controller
         $controller = !empty($url[0]) ? "\controllers\\" . $url[0] . 'Controller' : '\controllers\HomeController';
         //controller method
