@@ -33,5 +33,4 @@ class Controller
         $footer->footer();
         exit;
     }
-
 }
