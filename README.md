@@ -1,19 +1,16 @@
 [![Build Status](https://travis-ci.com/MVinhas/Seamus.svg?branch=master)](https://travis-ci.com/MVinhas/Seamus)
 # Seamus
-Seamus (that's the dog) is a simple PHP project aimed to be a blog made from scratch, using only Twig as a template engine and Bootstrap/jQuery for CSS/JS business respectively.
+Seamus is a MVC CMS blog build from scratch, with only Bootstrap as CSS/JS provider and Twig as a template engine.
 
-## Project name origin
-The name was inspired after a Pink Floyd song, 'Seamus', from the album Meddle. The song itself is not that nice, but it's a nice intro for the truly masterpiece of Meddle, 'Echoes'. Haven't you heard yet? *Haha, charade you are*
-
-
-### Directory Structure
+## Directory Structure
 ```
-config/              Website configurations
+config/              Website and Database configurations
 controllers/         Part of MVC
-engine/              Core functions
-lib/                 CSS/JS Libraries
-style/               Custom CSS
-script/              Custom JS
+engine/              Core website functions
+migrations/          Database tables creator
 models/              Part of MVC
+scripts/             Website JS/jQuery
+style/               Website CSS
+tests/               Unit Tests
 views/               Part of MVC
 ```
