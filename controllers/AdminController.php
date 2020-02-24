@@ -17,8 +17,9 @@ class AdminController extends Controller
 
     public function index()
     {
-        if (!isset($_SESSION['user']))
+        if (!isset($_SESSION['user'])) {
             $this->login();
+        }
     }
     
     public function login()
@@ -33,8 +34,11 @@ class AdminController extends Controller
     {
         $admin = new Admin();
         $user = $admin->getUser($_POST['email']);
-        if ($user === true)
+        if ($user === true) {
             $_SESSION['user'] = $_POST;
-        echo "<pre>";print_r($_SESSION);"</pre>";
+        }
+        echo "<pre>";
+        print_r($_SESSION);
+        "</pre>";
     }
 }
