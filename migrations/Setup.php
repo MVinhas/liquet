@@ -3,7 +3,7 @@ namespace migrations;
 
 class Setup
 {
-    protected $db; 
+    protected $db;
     public function __construct()
     {
         $this->db = new \engine\DbOperations;
@@ -26,7 +26,7 @@ class Setup
             'username' => 'VARCHAR(30) NOT NULL',
             'password' => 'VARCHAR(50) NOT NULL',
             'role' => 'VARCHAR(15) NOT NULL',
-            'reg_date' => 'TIMESTAMP'   
+            'reg_date' => 'TIMESTAMP'
         );
         $this->db->createTable(__FUNCTION__, $fields);
     }
@@ -44,7 +44,7 @@ class Setup
             'tags' => 'VARCHAR(255)',
             'comments' => 'INT(11) NOT NULL',
             'likes' => 'INT(11) NOT NULL',
-            'status' => 'INT(1) NOT NULL'   
+            'status' => 'INT(1) NOT NULL'
         );
         $this->db->createTable(__FUNCTION__, $fields);
     }
@@ -57,7 +57,7 @@ class Setup
             'date' => 'DATE',
             'content' => 'TEXT',
             'likes' => 'INT(11) NOT NULL',
-            'status' => 'INT(1) NOT NULL'   
+            'status' => 'INT(1) NOT NULL'
         );
         $this->db->createTable(__FUNCTION__, $fields);
     }
@@ -83,5 +83,4 @@ class Setup
             'footer' => 'INT(1) DEFAULT 0'
         );
     }
-
 }
