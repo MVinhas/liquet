@@ -42,6 +42,16 @@ class HomeController extends Controller
 
     public function register()
     {
-        //Tratar o $_POST
+        $db = new \engine\DbOperations();
+        $fields = 'email, username, password, role, active';
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $values = "%s, %s, %s, %s, %d";
+        $values = sprintf($values, $_POST['email'], $_POST['username'], $password, 'admin', 1);
+        $createUser = $db->create('users', $fields, $values);
+        if ($createUser === true) {
+            echo "Success!";
+        } else {
+            echo $createUser;
+        }
     }
 }
