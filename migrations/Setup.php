@@ -16,6 +16,7 @@ class Setup
         $this->comments();
         $this->categories();
         $this->pages();
+        $this->controllers();
     }
 
     private function users()
@@ -81,6 +82,14 @@ class Setup
             'active' => 'INT(1) DEFAULT 1',
             'header' => 'INT(1) DEFAULT 0',
             'footer' => 'INT(1) DEFAULT 0'
+        );
+    }
+
+    private function controllers()
+    {
+        $fields = array(
+            'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
+            'name' => 'VARCHAR(64) NOT NULL'
         );
     }
 }
