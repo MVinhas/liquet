@@ -21,13 +21,28 @@ class DbOperations
 
     public function create($table, $fields, $data)
     {
-        $sql = "INSERT INTO $table ($fields) VALUES ($data)";
-        $sql = $this->db->real_escape_string($sql);
-        $sql_query = $this->db->query($sql);
-        if ($this->db->errono != '') {
-            return "Error: ".$this->db->error;
-        } else {
+        $data_array = explode(',',$data);
+        $prepare_array = array();
+        foreach ($data_array as $k => $v) {
+            $prepare_array[$k] = str_replace($v,'?',$data_array[$k]);
+        }
+        $prepare = implode(',',$prepare_array);
+        $sql = "INSERT INTO $table ($fields) VALUES ($prepare)";
+        $count_fields = substr_count($prepare,'?');
+        $values = array();
+        $values_type = array();
+        for ($i=0; $i < $count_fields; $i++)  {
+            $field{$i} = ltrim($data_array[$i],' ');
+            $values_type{$i} = substr(gettype($data_array[$i]),0,1);
+            array_push($values, $field{$i});
+        }
+        $values_type = implode('',$values_type);
+        $sql = $this->db->prepare($sql);
+        $sql->bind_param("$values_type",...$values);
+        if ($sql->execute()) {
             return true;
+        } else {
+            return "Error: ".$this->db->connection->error;
         }
     }
 
@@ -37,8 +52,7 @@ class DbOperations
             $sql = "SELECT $fields FROM $table";
         } else {
             $sql = "SELECT $fields FROM $table WHERE $filter";
-        }
-        
+        } 
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
         
@@ -55,7 +69,7 @@ class DbOperations
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
         if ($this->db->connection->error) {
-            return "Error: ".$this->db->error;
+            return "Error: ".$this->db->connection->error;
         } else {
             return true;
         }
@@ -67,7 +81,7 @@ class DbOperations
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
         if ($this->db->connection->error) {
-            return "Error: ".$this->db->error;
+            return "Error: ".$this->db->connection->error;
         } else {
             return true;
         }
