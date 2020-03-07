@@ -57,6 +57,7 @@ class SiteController extends Controller
         $site = new SiteInfo();
         $out['copyleft'] = $site->getCopyright();
         $out['siteversion'] = $site->getVersion();
+        $out['debug_mode'] = $this->config_flags->debug_mode;
         $footerTemplate = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($footerTemplate, $out);
     }
