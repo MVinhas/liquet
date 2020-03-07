@@ -25,7 +25,7 @@ class Setup
             'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
             'email' => 'VARCHAR(50) NOT NULL',
             'username' => 'VARCHAR(30) NOT NULL',
-            'password' => 'VARCHAR(50) NOT NULL',
+            'password' => 'VARCHAR(128) NOT NULL',
             'role' => 'VARCHAR(15) NOT NULL',
             'reg_date' => 'TIMESTAMP'
         );
