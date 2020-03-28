@@ -34,8 +34,12 @@ class Header
     public function getMenu()
     {
         $menu = $this->db->select('pages', '*', 'header = 1');
-        $controller = $this->db->select('controllers', 'name', 'id = '.$menu[0]['controller']);
-        $menu[0]['class'] = $controller[0]['name'];
-        return $menu;
+        if (!empty($menu)) {
+            $controller = $this->db->select('controllers', 'name', 'id = '.$menu[0]['controller']);
+            $menu[0]['class'] = $controller[0]['name'];
+            return $menu;
+        } else {
+            return 'Error';
+        }
     }
 }
