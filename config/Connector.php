@@ -2,9 +2,9 @@
 namespace config;
 
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'seamus');
-define('DB_PASSWORD', 'seamus');
-define('DB_DATABASE', 'seamus');
+define('DB_USERNAME', 'mvinhas');
+define('DB_PASSWORD', 'mvinhas');
+define('DB_DATABASE', 'mvinhasblog');
 
 #Connection creation
 class Connector
