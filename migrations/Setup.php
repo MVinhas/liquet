@@ -83,6 +83,7 @@ class Setup
             'header' => 'INT(1) DEFAULT 0',
             'footer' => 'INT(1) DEFAULT 0'
         );
+        $this->db->createTable(__FUNCTION__, $fields);
     }
 
     private function controllers()
@@ -91,5 +92,6 @@ class Setup
             'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
             'name' => 'VARCHAR(64) NOT NULL'
         );
+        $this->db->createTable(__FUNCTION__, $fields);
     }
 }
