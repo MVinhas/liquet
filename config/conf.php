@@ -1,7 +1,7 @@
 <?php
 $config_flags = new stdClass();
 $config_flags->debug_mode = 1; #0 - Production; 1 - Development
-$config_flags->sitename = 'Seamus';
+$config_flags->sitename = 'mvinhas-blog';
 $config_flags->siteversion = '0.1.0-alpha1';
 $config_flags->siteauthor = 'Micael Vinhas';
 $config_flags->launchyear = '2019';
