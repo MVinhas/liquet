@@ -23,7 +23,7 @@ class Setup
     {
         $fields = array(
             'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
-            'email' => 'VARCHAR(50) NOT NULL',
+            'email' => 'VARCHAR(50) NOT NULL UNIQUE KEY',
             'username' => 'VARCHAR(30) NOT NULL',
             'password' => 'VARCHAR(128) NOT NULL',
             'role' => 'VARCHAR(15) NOT NULL',
@@ -67,7 +67,7 @@ class Setup
     {
         $fields = array(
             'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
-            'name' => 'VARCHAR(64) NOT NULL'
+            'name' => 'VARCHAR(64) NOT NULL UNIQUE KEY'
         );
         $this->db->createTable(__FUNCTION__, $fields);
     }
@@ -90,7 +90,7 @@ class Setup
     {
         $fields = array(
             'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
-            'name' => 'VARCHAR(64) NOT NULL'
+            'name' => 'VARCHAR(64) NOT NULL UNIQUE KEY'
         );
         $this->db->createTable(__FUNCTION__, $fields);
     }
