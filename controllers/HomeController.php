@@ -32,7 +32,7 @@ class HomeController extends Controller
         }
     }
 
-    private function setup()
+    public function setup()
     {
         
         $out = array();
