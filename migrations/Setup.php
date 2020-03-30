@@ -27,7 +27,8 @@ class Setup
             'username' => 'VARCHAR(30) NOT NULL',
             'password' => 'VARCHAR(128) NOT NULL',
             'role' => 'VARCHAR(15) NOT NULL',
-            'reg_date' => 'TIMESTAMP'
+            'reg_date' => 'TIMESTAMP',
+            'active' => 'INT(11) NOT NULL DEFAULT 0'
         );
         $this->db->createTable(__FUNCTION__, $fields);
     }
