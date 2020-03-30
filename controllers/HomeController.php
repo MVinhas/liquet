@@ -24,6 +24,8 @@ class HomeController extends Controller
         } elseif ($model->checkUsers() === '-1') {
             $migrations = new \migrations\Setup();
             $migrations->index();
+            $home = $this->getFile($this->path, 'first_setup');
+            echo $this->callTemplate($home);
         } else {
             $home = $this->getFile($this->path, __FUNCTION__);
             echo $this->callTemplate($home);
@@ -50,6 +52,7 @@ class HomeController extends Controller
         $createUser = $db->create('users', $fields, $values);
         if ($createUser === true) {
             echo "Success!";
+            
         } else {
             echo $createUser;
         }
