@@ -56,11 +56,14 @@ class DbOperations
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
         
-        if ($sql_query->num_rows < 1) {
-            return false;
+        if ($sql_query) {
+            if (!$sql_query->num_rows) {
+                return false;
+            }
+            $sql_fetch = $this->fetchQuery($sql_query);
+            return $sql_fetch;
         }
-        $sql_fetch = $this->fetchQuery($sql_query);
-        return $sql_fetch;
+        return false;
     }
 
     public function update($table, $data, $condition)
