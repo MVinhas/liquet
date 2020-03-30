@@ -1,38 +1,20 @@
-/* (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('keypress', function(event) {
-          if (form.checkValidity() === true) {
-            $('#submit').prop("disabled", false); 
-          } else {
-            $('#submit').prop("disabled", true); 
-          }
-        });
-        form.addEventListener('submit', function(event) {
-          
-          if (form.checkValidity() === false) {
-            
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })(); */
 $('#first-account').validate({
   rules : {
     email: {
       required: true,
-      email: true
+      email: true,
+      remote: {
+        url: 'scripts/requests/CheckFormData.php',
+        type: 'post'  
+      }
     },
     username: {
       required: true,
-      minlength: 3
+      minlength: 3,
+      remote: {
+        url: 'scripts/requests/CheckFormData.php',
+        type: 'post'  
+      }
     },
     password: {
       required: true,
@@ -49,10 +31,14 @@ $('#first-account').validate({
     }
   },
   messages : {
-    email: 'You must insert a valid email',
+    email: {
+      required: 'You must insert a valid email',
+      remote: 'Email already in use!'
+    },
     username: {
       required: 'Please provide a username',
-      minlength: 'Your username must have at least 3 characters'
+      minlength: 'Your username must have at least 3 characters',
+      remote: 'Username already in use!'
     },
     password: {
       required: 'Please provide a password',
