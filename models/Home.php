@@ -15,7 +15,6 @@
         public function checkUsers()
         {
             $getUsers = $this->db->select('users');
- 
             $tableExists = false;
             
             if ($getUsers === false) {
@@ -26,10 +25,11 @@
             if ($tableExists === true) {
                 return false;
             } else {
+                if (!empty($getUsers)) {
+                    return true;
+                }
                 return '-1';
             }
-
-            return true;
 
         }
            
