@@ -52,8 +52,7 @@ class DbOperations
             $sql = "SELECT $fields FROM $table";
         } else {
             $sql = "SELECT $fields FROM $table WHERE $filter";
-        } 
-        $sql = $this->db->real_escape_string($sql);
+        }
         $sql_query = $this->db->query($sql);
         
         if ($sql_query) {
