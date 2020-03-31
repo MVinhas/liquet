@@ -51,8 +51,7 @@ class HomeController extends Controller
         $values = sprintf($values, $_POST['email'], $_POST['username'], $password, 'admin', 1);
         $createUser = $db->create('users', $fields, $values);
         if ($createUser === true) {
-            echo "Success!";
-            
+            echo "Success!";    
         } else {
             echo $createUser;
         }

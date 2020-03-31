@@ -15,7 +15,7 @@ class Header
     public function checkUsers()
     {
         $getUsers = $this->db->select('users') ?? false;
-            
+        
         $tableExists = false;
             
         if ($getUsers === false) {
@@ -33,9 +33,10 @@ class Header
 
     public function getMenu()
     {
-        $menu = $this->db->select('pages', '*', 'header = 1');
-        if (!empty($menu)) {
-            $controller = $this->db->select('controllers', 'name', 'id = '.$menu[0]['controller']);
+        $menu = $this->db->select('pages', '*', 'header = ?', '1');
+        
+        if (!empty($menu['id'])) {
+            $controller = $this->db->select('controllers', 'name', 'id = ?', $menu[0]['controller']);
             $menu[0]['class'] = $controller[0]['name'];
             return $menu;
         } else {
