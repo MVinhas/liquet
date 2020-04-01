@@ -19,7 +19,6 @@
             
             if ($getUsers === false) {
                 $tableExists = $this->db->checkTable('users') ?? false;
-     
             }
 
             if ($tableExists === true) {
