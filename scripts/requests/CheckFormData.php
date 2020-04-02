@@ -37,11 +37,11 @@
             $email_exists = $check->email($email);
         }
         if (!empty($email_exists)) {
-            if (in_array($email, $email_exists[0])) {
-                $exists = 1;
-                echo 'false';
-            } else {
-                echo 'true';
+            foreach ($email_exists as $k => $v) {
+                if (in_array($email, $v)) {
+                    $exists = 1;
+                    echo 'false';
+                }
             }
         }
         if (!isset($exists)) echo 'true';
@@ -49,14 +49,14 @@
 
     if (isset($_POST['username'])) {
         $username = $_POST['username'];
-        $username = preg_replace('/[^\w]/','',$username);
+        //$username = preg_replace('/[^\w]/','',$username);
         $username_exists = $check->username($username);
         if (!empty($username_exists)) {
-            if (in_array($username, $username_exists[0])) {
-                $exists = 1;
-                echo 'false';
-            } else {
-                echo 'true';
+            foreach ($username_exists as $k => $v) {
+                if (in_array($username, $v)) {
+                    $exists = 1;
+                    echo 'false';
+                }
             }
         }
         if (!isset($exists)) echo 'true';
