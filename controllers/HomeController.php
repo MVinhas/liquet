@@ -55,17 +55,21 @@ class HomeController extends Controller
         $createUser = $db->create('users', $fields, $values);
         if ($createUser === true) {
             echo "Success!";
-            if ($this->config_flags->debug_mode == 1) {
-                //Something to write to txt log
-                $log  = "User registered: ".$_POST['username'].' - '.date("F j, Y, g:i a").PHP_EOL;
-                "-------------------------".PHP_EOL;
-                //Save string to log, use FILE_APPEND to append.
-                file_put_contents('../log_'.date("j.n.Y").'.log', $log, FILE_APPEND);
-            } else {
+            if ($this->config_flags->debug_mode == 0) {
                 mail($_POST['email'],"Registered successfully","Hello, you've been registered successfuly on mvinhas-blog");
-            }   
+            }
+            $this->login();   
         } else {
             echo $createUser;
         }
+    }
+
+    private function login()
+    {
+        return $_SESSION['users'] = array(
+            'email' => $_POST['email'],
+            'username' => $_POST['username'],
+            'role' => 'admin'
+        );   
     }
 }
