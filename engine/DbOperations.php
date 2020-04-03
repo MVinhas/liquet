@@ -21,24 +21,24 @@ class DbOperations
 
     public function create($table, $fields, $data)
     {
-        $data_array = explode(',',$data);
+        $data_array = explode(',', $data);
         $prepare_array = array();
         foreach ($data_array as $k => $v) {
-            $prepare_array[$k] = str_replace($v,'?',$data_array[$k]);
+            $prepare_array[$k] = str_replace($v, '?', $data_array[$k]);
         }
-        $prepare = implode(',',$prepare_array);
+        $prepare = implode(',', $prepare_array);
         $sql = "INSERT INTO $table ($fields) VALUES ($prepare)";
-        $count_fields = substr_count($prepare,'?');
+        $count_fields = substr_count($prepare, '?');
         $values = array();
         $values_type = array();
-        for ($i=0; $i < $count_fields; $i++)  {
-            $field{$i} = ltrim($data_array[$i],' ');
-            $values_type{$i} = substr(gettype($data_array[$i]),0,1);
+        for ($i=0; $i < $count_fields; $i++) {
+            $field{$i} = ltrim($data_array[$i], ' ');
+            $values_type{$i} = substr(gettype($data_array[$i]), 0, 1);
             array_push($values, $field{$i});
         }
-        $values_type = implode('',$values_type);
+        $values_type = implode('', $values_type);
         $sql = $this->db->prepare($sql);
-        $sql->bind_param("$values_type",...$values);
+        $sql->bind_param("$values_type", ...$values);
         if ($sql->execute()) {
             return true;
         } else {
@@ -48,7 +48,7 @@ class DbOperations
 
     public function select($table, $fields = '*', $filter = '', $field_values = '')
     {
-        $data_array = explode(',',$field_values);
+        $data_array = explode(',', $field_values);
         if ($filter == '') {
             $sql = "SELECT $fields FROM $table";
             $sql_query = $this->db->query($sql);
@@ -62,21 +62,21 @@ class DbOperations
         }
        
         if ($field_values != '') {
-            $count_fields = substr_count($filter,'?');
+            $count_fields = substr_count($filter, '?');
             $values = array();
             $values_type = array();
-            for ($i=0; $i < $count_fields; $i++)  {
-                $field{$i} = ltrim($data_array[$i],' ');
+            for ($i=0; $i < $count_fields; $i++) {
+                $field{$i} = ltrim($data_array[$i], ' ');
                 
-                $values_type{$i} = strtolower(substr(gettype($data_array[$i]),0,1));
+                $values_type{$i} = strtolower(substr(gettype($data_array[$i]), 0, 1));
                 array_push($values, $field{$i});
             }
-            $values_type = implode('',$values_type);
+            $values_type = implode('', $values_type);
         }
         
         $sql = $this->db->prepare($sql);
         
-        $sql->bind_param("$values_type",...$values);
+        $sql->bind_param("$values_type", ...$values);
         
         if ($sql->execute()) {
             $result = $sql->get_result();
@@ -90,26 +90,26 @@ class DbOperations
     public function update($table, $fields, $fields_value, $where, $where_value)
     {
         $sql = "UPDATE $table SET $fields WHERE $condition";
-        $data_array = explode(',',$fields_value);
+        $data_array = explode(',', $fields_value);
         
-        $count_fields = substr_count($fields,'?');
+        $count_fields = substr_count($fields, '?');
         $values = array();
         $values_type = array();
-        for ($i=0; $i < $count_fields; $i++)  {
-            $field{$i} = ltrim($data_array[$i],' ');
+        for ($i=0; $i < $count_fields; $i++) {
+            $field{$i} = ltrim($data_array[$i], ' ');
             
-            $values_type{$i} = strtolower(substr(gettype($data_array[$i]),0,1));
+            $values_type{$i} = strtolower(substr(gettype($data_array[$i]), 0, 1));
             array_push($values, $field{$i});
         }
         $values_type = implode('', $values_type);
         
-        $count_fields_where = substr_count($where,'?');
+        $count_fields_where = substr_count($where, '?');
         $values_where = array();
         $values_type_where = array();
-        for ($i=0; $i < $count_fields; $i++)  {
-            $field{$i} = ltrim($data_array[$i],' ');
+        for ($i=0; $i < $count_fields; $i++) {
+            $field{$i} = ltrim($data_array[$i], ' ');
             
-            $values_type_where{$i} = strtolower(substr(gettype($data_array[$i]),0,1));
+            $values_type_where{$i} = strtolower(substr(gettype($data_array[$i]), 0, 1));
             array_push($values_where, $field{$i});
         }
         $values_type_where = implode('', $values_type_where);
@@ -117,7 +117,7 @@ class DbOperations
         $values_type = $values_type.$values_type_where;
 
         $sql = $this->db->prepare($sql);
-        $sql->bind_param("$values_type",...$values, ...$values_where);
+        $sql->bind_param("$values_type", ...$values, ...$values_where);
 
         if ($sql->execute()) {
             return true;
@@ -126,21 +126,21 @@ class DbOperations
         }
     }
 
-    public function delete($table, $condition = '1=1', $condition_values='')
+    public function delete($table, $condition = '1=1', $condition_values = '')
     {
         $sql = "DELETE * FROM $table WHERE $condition";
-        $data_array = explode(',',$condition_values);
+        $data_array = explode(',', $condition_values);
          
-        $count_fields = substr_count($condition,'?');
+        $count_fields = substr_count($condition, '?');
         $values = array();
         $values_type = array();
-        for ($i=0; $i < $count_fields; $i++)  {
-            $field{$i} = ltrim($data_array[$i],' ');
+        for ($i=0; $i < $count_fields; $i++) {
+            $field{$i} = ltrim($data_array[$i], ' ');
             
-            $values_type{$i} = strtolower(substr(gettype($data_array[$i]),0,1));
+            $values_type{$i} = strtolower(substr(gettype($data_array[$i]), 0, 1));
             array_push($values, $field{$i});
         }
-        $values_type = implode('',$values_type);
+        $values_type = implode('', $values_type);
        
         $sql = $this->db->prepare($sql);
         

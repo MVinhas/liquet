@@ -1,4 +1,4 @@
-$("#login").submit(function(e) {
+$("#login").submit(function (e) {
 
     e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -6,13 +6,12 @@ $("#login").submit(function(e) {
     var url = form.attr('action');
     var type = form.attr('method');
     $.ajax({
-           type: type,
-           url: url,
-           data: form.serialize(), // serializes the form's elements.
-           success: function(data)
-           {
-               alert(data); // show response from the php script.
-           }
+        type: type,
+        url: url,
+        data: form.serialize(), // serializes the form's elements.
+        success: function (data) {
+            alert(data); // show response from the php script.
+        }
          });
 
 

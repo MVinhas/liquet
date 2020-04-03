@@ -56,9 +56,9 @@ class HomeController extends Controller
         if ($createUser === true) {
             echo "Success!";
             if ($this->config_flags->debug_mode == 0) {
-                mail($_POST['email'],"Registered successfully","Hello, you've been registered successfuly on mvinhas-blog");
+                mail($_POST['email'], "Registered successfully", "Hello, you've been registered successfuly on mvinhas-blog");
             }
-            $this->login();   
+            $this->login();
         } else {
             echo $createUser;
         }
@@ -70,6 +70,6 @@ class HomeController extends Controller
             'email' => $_POST['email'],
             'username' => $_POST['username'],
             'role' => 'admin'
-        );   
+        );
     }
 }
