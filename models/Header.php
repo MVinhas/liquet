@@ -34,9 +34,10 @@ class Header
     public function getMenu()
     {
         $menu = $this->db->select('pages', '*', 'header = ?', '1');
+
         foreach ($menu as $k => $v) {
-            $controller = $this->db->select('controllers', 'name', 'id = ?', $v['controller']);
-            $method = $this->db->select('methods', 'name', 'id = ?', $v['method']);
+            $method = $this->db->select('methods', 'name, controller', 'id = ?', $v['method']);
+            $controller = $this->db->select('controllers', 'name', 'id = ?', $method[0]['controller']);
             $menu[$k]['class'] = $controller[0]['name'].'/'.$method[0]['name'];
         }
         if (!empty($menu)) {
