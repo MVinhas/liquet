@@ -21,6 +21,7 @@ scripts/             Website JS/jQuery
 style/               Website CSS
 tests/               Unit Tests
 views/               Part of MVC
+cpanel/              Admin and User Settings area
 ```
 
 ## Contributing

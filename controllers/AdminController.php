@@ -35,10 +35,9 @@ class AdminController extends Controller
         $admin = new Admin();
         $user = $admin->getUser($_POST['email']);
         if ($user === true) {
-            $_SESSION['user'] = $_POST;
+            $home = new HomeController;
+            $home->login();
         }
-        echo "<pre>";
-        print_r($_SESSION);
-        "</pre>";
+        
     }
 }
