@@ -1,18 +1,32 @@
-$("#login").submit(function (e) {
-
-    e.preventDefault(); // avoid to execute the actual submit of the form.
-
-    var form = $(this);
-    var url = form.attr('action');
-    var type = form.attr('method');
-    $.ajax({
-        type: type,
-        url: url,
-        data: form.serialize(), // serializes the form's elements.
-        success: function (data) {
-            window.location.url = 'admin';
+$('#login').validate({
+    rules : {
+        username: {
+            required: true,
+            minlength: 3,
+            remote: {
+                url: 'scripts/requests/CheckLogin.php',
+                type: 'post'
+            }
+        },
+        password: {
+            required: true,
+            minlength: 5,
+            remote: {
+                url: 'scripts/requests/CheckLogin.php',
+                type: 'post'
+            }
         }
-         });
-
-
-});
+    },
+    messages : {
+        username: {
+            required: 'Please provide a username',
+            minlength: 'Your username must have at least 3 characters',
+            remote: 'Username not found!'
+        },
+        password: {
+            required: 'Please provide a password',
+            minlength: 'Your password must be at least 6 characters long',
+            remote: 'Wrong Password'
+        }
+    }
+}); 
