@@ -66,10 +66,14 @@ class HomeController extends Controller
 
     private function login()
     {
-        return $_SESSION['users'] = array(
-            'email' => $_POST['email'],
-            'username' => $_POST['username'],
-            'role' => 'admin'
-        );
+        if (!$_SESSION['users']['email'] && $_POST['email']) {
+            $_SESSION['users'] = array(
+                'email' => $_POST['email'],
+                'username' => $_POST['username'],
+                'role' => 'admin'
+            );
+        }
+        header('Location: cpanel/index.php');
+
     }
 }

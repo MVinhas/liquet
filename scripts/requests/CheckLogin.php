@@ -10,7 +10,6 @@ class CheckLogin
     protected $db;
     public function __construct()
     {
-        session_start();
         $this->db = new DbOperations;
     }
 
@@ -32,8 +31,8 @@ class CheckLogin
 
 $check = new CheckLogin;
 if (isset($_POST['username'])) {
+    
     $username = $_POST['username'];
-    $_SESSION['temp_username'] = $username;
     $username_exists = $check->username($username);
     if (!empty($username_exists)) {
         foreach ($username_exists as $k => $v) {
@@ -49,23 +48,17 @@ if (isset($_POST['username'])) {
 }
 
 if (isset($_POST['password'])) {
-
-    $password = $_POST['password'];
-    $check->password($_SESSION['temp_username']);
+    $password = explode('||',$_POST['password']);
+    $username_exists = $check->password($password[0]);
     if (!empty($username_exists)) {
-        foreach ($username_exists as $k => $v) {
-            if (in_array($username, $v)) {
-                echo $v;
-                $password = password_verify($password, $v['password']);
-                if ($password) {
-                    $exists = 1;
-                    echo 'true';
-                }
-            }
+        $password = password_verify($password[1], $username_exists[0]['password']);
+        if ($password) {
+            $exists = 1;
+            echo 'true';
         }
     }
     if (!isset($exists)) {
         echo 'false';
     }
-    unset($_SESSION['temp_username']);
+    
 }

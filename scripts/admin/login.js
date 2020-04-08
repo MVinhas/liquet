@@ -13,7 +13,12 @@ $('#login').validate({
             minlength: 5,
             remote: {
                 url: 'scripts/requests/CheckLogin.php',
-                type: 'post'
+                type: 'post',
+                data: {
+                    password: function() {
+                        return $( "#username" ).val()+'||'+$( "#password" ).val();
+                    }
+                }
             }
         }
     },
