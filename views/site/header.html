@@ -7,12 +7,14 @@
     </span>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Menu
         </a>
-        <div class="dropdown-menu" aria-labelledby="menu">
-          {% for item in menu %}
-          <a class="dropdown-item" href="?{{item.class}}">{{item.name}}</a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="menu">
+          {% for item in header %}
+            {% if item.menu == 1%}
+              <a class="dropdown-item waves-effect waves-light" href="?{{item.class}}">{{item.name}}</a>
+            {% endif %}
           {% endfor %}
         </div>
       </li>
