@@ -80,9 +80,11 @@ class Setup
             'name' => 'VARCHAR(64) NOT NULL',
             'short_content' => 'VARCHAR(512) NULL',
             'content' => 'TEXT NULL',
-            'active' => 'INT(1) DEFAULT 1',
-            'header' => 'INT(1) DEFAULT 0',
-            'footer' => 'INT(1) DEFAULT 0'
+            'method' => 'INT(11) NOT NULL',
+            'active' => 'INT(1) NOT NULL DEFAULT 1',
+            'header' => 'INT(1) NOT NULL DEFAULT 0',
+            'menu' => 'INT(1) NOT NULL DEFAULT 0',
+            'footer' => 'INT(1) NOT NULL DEFAULT 0'
         );
         $this->db->createTable(__FUNCTION__, $fields);
     }
