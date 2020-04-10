@@ -46,7 +46,7 @@ class SiteController extends Controller
         $siteInfo = new SiteInfo();
         $header = new Header();
         $out['sitename'] = $siteInfo->getName();
-        $out['menu'] = $header->getMenu();
+        $out['header'] = $header->getMenu();
         $headerTemplate = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($headerTemplate, $out);
     }
