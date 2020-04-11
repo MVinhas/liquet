@@ -1,13 +1,13 @@
 {% apply spaceless %}
 <link rel="stylesheet" href="style/home/setup.{% if debug_mode == 0 %}min.{% endif %}css" type="text/css">
 {% if first_account == 1 %}
-<div class="jumbotron">
-    <h1 class="display-4">It works!</h1>
+<div class="jumbotron jumbotron-fluid">
+    <h1>It works!</h1>
     <p class="lead">However, it seems like there is no one registered, so it's time to setup your account!</p>
 </div>
 {% else %}
 <div class="jumbotron">
-  <h1 class="display-4">Registration</h1>
+  <h1>Registration</h1>
   <p class="lead">Please fill in your data in order to register you account.</p>
 </div>
 {% endif %}
