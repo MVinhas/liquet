@@ -2,23 +2,28 @@
 <body>
 <header class="header">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark order-1">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
     <span class="navbar-brand mb-0 h1">
       <a class="navbar-brand" href="?">{{sitename|raw}}</a>
     </span>
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Menu
-        </a>
-        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="menu">
-          {% for item in header %}
-            {% if item.menu == 1%}
-              <a class="dropdown-item waves-effect waves-light" href="?{{item.class}}">{{item.name}}</a>
-            {% endif %}
-          {% endfor %}
-        </div>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Menu
+          </a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="menu">
+            {% for item in header %}
+              {% if item.menu == 1%}
+                <a class="dropdown-item waves-effect waves-light" href="?{{item.class}}">{{item.name}}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </li>
+      </ul>
+    </div>
   </nav>
 </header>
 <div class="container">
