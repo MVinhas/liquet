@@ -1,14 +1,15 @@
 {% apply spaceless %}
 </div>
-<footer class="footer">
-  <nav class="navbar navbar-light bg-light">
-    <div class="container">
-      <span class="text-muted"><span class="copyleft">&copy</span>{{copyleft}}</span>
-      <div class="float-right">
-        <span class="text-muted">{{siteversion}}</span>
-      </div>
-    </div>
-  </nav>
+<footer class="bd-footer text-muted footer">
+  <div class="container-fluid p-3 p-md-5">
+    <ul class="bd-footer-links">
+      {% for item in footer %}
+      <li><a href="{{item.url}}}}">{{item.name|raw}}</a></li>
+      {% endfor %}
+    </ul>
+    <p class="text-muted"><span class="copyleft">&copy</span>{{copyleft}}</p>
+    <p class="text-muted">{{siteversion}}</p>
+  </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js" integrity="sha384-6UVI3atWyL/qZbDIJb7HW8PyHhFNMiX5rYNY2gAYcaYJjYk5cNIQShSQPBleGMYu" crossorigin="anonymous"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
