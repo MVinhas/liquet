@@ -30,4 +30,23 @@ class Home
             return '-1';
         }
     }
+
+    public function checkAdmin()
+    {
+        $admin_exists = $this->db->select('users','*','role = ?','admin');
+        if (!empty($admin_exists))
+            return '1';
+        return '0';
+    }
+
+    public function createUser($table = 'users', $fields, $values)
+    {
+        $createUser = $this->db->create('users', $fields, $values);
+
+        if ($createUser === true) {
+            return "1";
+        } else {
+            return $createUser;
+        }
+    }
 }

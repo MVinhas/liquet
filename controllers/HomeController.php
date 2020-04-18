@@ -8,20 +8,21 @@ class HomeController extends Controller
 {
 
     protected $path;
+    protected $model;
 
     public function __construct()
     {
         parent::__construct();
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
+        $this->model = new Home();
     }
 
     public function index()
     {
-        $model = new Home();
-        if ($model->checkUsers() === false) {
+        if ($this->model->checkUsers() === false) {
             $this->setup();
-        } elseif ($model->checkUsers() === '-1') {
+        } elseif ($this->model->checkUsers() === '-1') {
             $migrations = new \migrations\Setup();
             $migrations->index();
             $home = $this->getFile($this->path, 'first_setup');
@@ -37,8 +38,7 @@ class HomeController extends Controller
         
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        $model = new Home();
-        if ($model->checkUsers() != 1) {
+        if ($this->model->checkUsers() != 1) {
             $out['first_account'] = 1;
         }
         $setup = $this->getFile($this->path, __FUNCTION__);
@@ -47,20 +47,23 @@ class HomeController extends Controller
 
     public function register()
     {
-        $db = new \engine\DbOperations();
         $fields = 'email, username, password, role, active';
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $admin_exists = $this->model->checkAdmin();
+        if ($admin_exists == 1) {
+            $role = 'user';
+        } else {
+            $role = 'admin';
+        }
         $values = "%s, %s, %s, %s, %d";
-        $values = sprintf($values, $_POST['email'], $_POST['username'], $password, 'admin', 1);
-        $createUser = $db->create('users', $fields, $values);
-        if ($createUser === true) {
+        $values = sprintf($values, $_POST['email'], $_POST['username'], $password, $role, 1);
+        $createUser = $this->model->createUser('users', $fields, $values);
+        if ($createUser == '1') {
             echo "Success!";
             if ($this->config_flags->debug_mode == 0) {
                 mail($_POST['email'], "Registered successfully", "Hello, you've been registered successfuly on mvinhas-blog");
             }
             $this->login();
-        } else {
-            echo $createUser;
         }
     }
 

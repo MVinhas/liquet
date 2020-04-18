@@ -18,7 +18,7 @@ $('#first-account').validate({
         },
         password: {
             required: true,
-            minlength: 5
+            minlength: 6
         },
         'confirm-password': {
             required: true,

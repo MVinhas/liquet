@@ -60,7 +60,6 @@ class DbOperations
         } else {
             $sql = "SELECT $fields FROM $table WHERE $filter";
         }
-       
         if ($field_values != '') {
             $count_fields = substr_count($filter, '?');
             $values = array();
@@ -75,7 +74,6 @@ class DbOperations
         }
         
         $sql = $this->db->prepare($sql);
-        
         $sql->bind_param("$values_type", ...$values);
         
         if ($sql->execute()) {
