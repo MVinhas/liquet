@@ -13,9 +13,9 @@ class Admin
     }
         
 
-    public function getUser($email, $password)
+    public function getUser($username, $password)
     {
-        $user = $this->db->select('users', '*', 'email = ?', $email);
+        $user = $this->db->select('users', '*', 'username = ?', $username);
         
         $password_verify = password_verify($password, $user[0]['password']);
         
