@@ -67,7 +67,7 @@ class HomeController extends Controller
         }
     }
 
-    private function login()
+    public function login()
     {
         if (!$_SESSION['users']['email'] && $_POST['email']) {
             $_SESSION['users'] = array(
