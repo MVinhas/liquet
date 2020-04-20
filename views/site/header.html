@@ -17,18 +17,30 @@
           </li>
           {% endif %}
         {% endfor %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Menu
-          </a>
-          <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="menu">
-            {% for item in header %}
-              {% if item.menu == 1%}
-                <a class="dropdown-item waves-effect waves-light" href="?{{item.class}}">{{item.name|raw}}</a>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </li>
+        {% if session != '' %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{session.username|raw}}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="user">
+              <a class="dropdown-item waves-effect waves-light" href="?Home/login">Control Panel</a>
+              <a class="dropdown-item waves-effect waves-light" href="?Home/logout">Quit</a>
+            </div>
+          </li>
+        {% else %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Menu
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="menu">
+              {% for item in header %}
+                {% if item.menu == 1%}
+                  <a class="dropdown-item waves-effect waves-light" href="?{{item.class}}">{{item.name|raw}}</a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
