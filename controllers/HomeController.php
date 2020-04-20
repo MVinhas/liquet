@@ -69,14 +69,20 @@ class HomeController extends Controller
 
     public function login()
     {
-        if (!$_SESSION['users']['email'] && $_POST['email']) {
+        if (!$_SESSION['users']['email'] && $_POST['username']) {
             $_SESSION['users'] = array(
                 'email' => $_POST['email'],
                 'username' => $_POST['username'],
                 'role' => 'admin'
             );
         }
-        header('Location: cpanel/index.php');
+        header('Location: ?Home');
 
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['users']);
+        header('Location: ?Home');
     }
 }
