@@ -28,8 +28,9 @@ class HomeController extends Controller
             $home = $this->getFile($this->path, 'first_setup');
             echo $this->callTemplate($home);
         } else {
+            $out['categories'] = $this->model->getCategories();
             $home = $this->getFile($this->path, __FUNCTION__);
-            echo $this->callTemplate($home);
+            echo $this->callTemplate($home, $out);
         }
     }
 
