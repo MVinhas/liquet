@@ -49,4 +49,10 @@ class Home
             return $createUser;
         }
     }
+
+    public function getCategories()
+    {
+        $categories = $this->db->select('categories','*');
+        return $categories;
+    }
 }
