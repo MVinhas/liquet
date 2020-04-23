@@ -46,7 +46,9 @@ class Setup
             'tags' => 'VARCHAR(255)',
             'comments' => 'INT(11) NOT NULL',
             'likes' => 'INT(11) NOT NULL',
-            'status' => 'INT(1) NOT NULL'
+            'status' => 'INT(1) NOT NULL',
+            'featured' => 'INT(1) NOT NULL DEFAULT 0',
+            'other_featured' => 'INT(1) NOT NULL DEFAULT 0'
         );
         $this->db->createTable(__FUNCTION__, $fields);
     }
