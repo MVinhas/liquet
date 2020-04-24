@@ -55,4 +55,10 @@ class Home
         $categories = $this->db->select('categories','*');
         return $categories;
     }
+
+    public function getPosts()
+    {
+        $posts = $this->db->select('posts','*', 'status = ?','1');
+        return $posts;
+    }
 }
