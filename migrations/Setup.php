@@ -17,6 +17,7 @@ class Setup
         $this->categories();
         $this->pages();
         $this->controllers();
+        $this->tags();
         $this->insertControllers();
         $this->insertMethods();
         $this->insertPages();
@@ -104,6 +105,15 @@ class Setup
             'name' => 'VARCHAR(64) NOT NULL UNIQUE KEY'
         );
         $this->db->createTable(__FUNCTION__, $fields);
+    }
+
+    private function tags()
+    {
+        $fields = array(
+            'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
+            'name' => 'VARCHAR(64) NOT NULL UNIQUE KEY'
+        );
+        $this->db->createTable(__FUNCTION__, $fields);   
     }
 
     private function insertControllers()
