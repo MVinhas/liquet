@@ -10,7 +10,7 @@
     <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
       <div class="col-md-6 px-0">
         <h1 class="display-4 font-italic">{{item.title|raw}}</h1>
-        <p class="lead my-3">{{item.content|raw}}</p>
+        <p class="lead my-3">{{item.short_content|raw}}</p>
         <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
       </div>
     </div>
@@ -27,7 +27,7 @@
             <strong class="d-inline-block mb-2 text-primary">{{item.category|raw}}</strong>
             <h3 class="mb-0">{{item.title|raw}}</h3>
             <div class="mb-1 text-muted">{{item.date|raw}}</div>
-            <p class="mb-auto">{{item.content|raw}}</p>
+            <p class="mb-auto">{{item.short_content|raw}}</p>
             <a href="#" class="stretched-link">Continue reading</a>
           </div>
           <div class="col-auto d-none d-lg-block">
