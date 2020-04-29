@@ -30,6 +30,7 @@ class HomeController extends Controller
         } else {
             $out['categories'] = $this->model->getCategories();
             $out['posts'] = $this->model->getPosts();
+            $out['about'] = $this->model->getAbout();
             $home = $this->getFile($this->path, __FUNCTION__);
             echo $this->callTemplate($home, $out);
         }

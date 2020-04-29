@@ -65,4 +65,10 @@ class Home
         }
         return $posts;
     }
+
+    public function getAbout()
+    {   
+        $about = $this->db->select('about','*','id = ?','1');
+        return $about;
+    }
 }
