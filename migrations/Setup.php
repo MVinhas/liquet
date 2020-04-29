@@ -18,11 +18,13 @@ class Setup
         $this->pages();
         $this->controllers();
         $this->tags();
+        $this->about();
         $this->insertControllers();
         $this->insertMethods();
         $this->insertPages();
         $this->insertCategories();
         $this->insertPosts();
+        $this->insertAbout();
     }
 
     private function users()
@@ -116,6 +118,14 @@ class Setup
         $this->db->createTable(__FUNCTION__, $fields);   
     }
 
+    private function about()
+    {
+        $fields = array(
+            'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
+            'name' => 'TEXT NULL' 
+        );
+    }
+
     private function insertControllers()
     {
         $table = 'controllers';
@@ -195,5 +205,14 @@ class Setup
         $this->db->create($table, $fields, $values_4);
         $this->db->create($table, $fields, $values_5);
         $this->db->create($table, $fields, $values_6);
+    }
+
+    private function insertAbout()
+    {
+        $table = 'about';
+        $fields = '`description`';
+        $values = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at enim ut.';
+
+        $this->db->create($table, $fields, $values);
     }
 }
