@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/MVinhas/mvinhas-blog.svg?branch=master)](https://travis-ci.org/github/MVinhas/mvinhas-blog)
-# Seamus
+# MVinhas Blog
 
 MVinhas Blog is a MVC CMS blog build from scratch, only with Bootstrap as CSS/JS provider and Twig as a template engine. The primarly goal has educational intentions, but it is expected to serve the final user as a simple but functional CMS blog to use for whatever purpose
 
