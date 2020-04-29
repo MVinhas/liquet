@@ -59,6 +59,10 @@ class Home
     public function getPosts()
     {
         $posts = $this->db->select('posts','*', 'status = ?','1');
+        foreach ($posts as $k => $v) {
+            $category = $this->db->select('categories','*','id = ?',$v['category']);
+            $posts[$k]['category'] = $category[0]['name'];
+        }
         return $posts;
     }
 }
