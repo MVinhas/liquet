@@ -71,4 +71,10 @@ class Home
         $about = $this->db->select('about','*','id = ?','1');
         return $about;
     }
+
+    public function getArchives()
+    {
+        $archives = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y")','1');
+        return $archives;
+    }
 }

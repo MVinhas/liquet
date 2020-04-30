@@ -31,6 +31,7 @@ class HomeController extends Controller
             $out['categories'] = $this->model->getCategories();
             $out['posts'] = $this->model->getPosts();
             $out['about'] = $this->model->getAbout();
+            $out['archives'] = $this->model->getArchives();
             $home = $this->getFile($this->path, __FUNCTION__);
             echo $this->callTemplate($home, $out);
         }
