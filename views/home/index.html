@@ -75,7 +75,7 @@
           <h4 class="font-italic">Archives</h4>
           <ol class="list-unstyled mb-0">
             {% for item in archives %}
-            <li><a href="#">{{item.date|raw}}</a></li>
+            <li><a href="?Post/index/&month={{item.month}}&year={{item.year}}">{{item.date|raw}}</a></li>
             {% endfor %}
           </ol>
         </div>
