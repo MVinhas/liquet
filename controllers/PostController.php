@@ -22,8 +22,10 @@ class PostController extends Controller
         $monthNum = $_GET['month'];
         $dateObj   = \DateTime::createFromFormat('!m', $monthNum);
         $monthName = $dateObj->format('F');
-
-        echo "Posts from $monthName ".$_GET['year'];
+        $out = array();
+        $out['posts'] = $this->model->getCurrentPosts($_GET['month'], $_GET['year']);
+        $posts = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($posts, $out);
     }
 
 }
