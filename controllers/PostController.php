@@ -24,6 +24,13 @@ class PostController extends Controller
         $monthName = $dateObj->format('F');
         $out = array();
         $out['posts'] = $this->model->getCurrentPosts($_GET['month'], $_GET['year']);
+
+        $home = new \models\Home();
+        $out['categories'] = $home->getCategories();
+        $out['about'] = $home->getAbout();
+        $out['archives'] = $home->getArchives();
+        $out['social'] = $home->getSocial();
+
         $posts = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($posts, $out);
     }
