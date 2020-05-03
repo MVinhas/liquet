@@ -19,6 +19,7 @@ class Setup
         $this->controllers();
         $this->tags();
         $this->about();
+        $this->social();
         $this->insertControllers();
         $this->insertMethods();
         $this->insertPages();
@@ -123,6 +124,16 @@ class Setup
         $fields = array(
             'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
             'name' => 'TEXT NULL' 
+        );
+    }
+
+    private function social()
+    {
+        $fields = array(
+            'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
+            'name' => 'VARCHAR(64) NOT NULL UNIQUE KEY',
+            'link' => 'VARCHAR(256) NOT NULL',
+            'visible' => 'INT(1) NOT NULL DEFAULT 1'
         );
     }
 
