@@ -77,4 +77,10 @@ class Home
         $archives = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y")','1');
         return $archives;
     }
+
+    public function getSocial()
+    {
+        $social = $this->db->select('social', '*', 'visible = ?','1');
+        return $social;
+    }
 }
