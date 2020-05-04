@@ -19,4 +19,11 @@ class Post
 
         return $posts;   
     }
+
+    public function getPost($id)
+    {
+        $post = $this->db->select('posts', '*', 'id = ?', $id);
+
+        return $post;
+    }
 }

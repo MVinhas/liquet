@@ -17,8 +17,9 @@ class PostController extends Controller
         $this->model = new Post();
     }
 
-    public function index()
+    public function archive()
     {
+
         $monthNum = $_GET['month'];
         $dateObj   = \DateTime::createFromFormat('!m', $monthNum);
         $monthName = $dateObj->format('F');
@@ -33,6 +34,20 @@ class PostController extends Controller
 
         $posts = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($posts, $out);
+    }
+
+    public function detail()
+    {
+        $id = $_GET['id'];
+        $out['post'] = $this->model->getPost($_GET['id']);
+        $home = new \models\Home();
+        $out['categories'] = $home->getCategories();
+        $out['about'] = $home->getAbout();
+        $out['archives'] = $home->getArchives();
+        $out['social'] = $home->getSocial();
+
+        $post = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($post, $out);
     }
 
 }

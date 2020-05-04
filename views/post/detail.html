@@ -4,7 +4,7 @@
         <h3 class="pb-4 mb-4 font-italic border-bottom">
           From the Firehose
         </h3>
-        {% for item in posts %}
+        {% for item in post %}
         <div class="blog-post">
           <h2 class="blog-post-title">{{item.title|raw}}</h2>
           <p class="blog-post-meta">{{item.date}} by <a href="#">{{item.author|raw}}</a></p>

@@ -28,7 +28,7 @@
             <h3 class="mb-0">{{item.title|raw}}</h3>
             <div class="mb-1 text-muted">{{item.date|raw}}</div>
             <p class="mb-auto">{{item.short_content|raw}}</p>
-            <a href="#" class="stretched-link">Continue reading</a>
+            <a href="?Post/detail/&id={{item.id}}" class="stretched-link">Continue reading</a>
           </div>
           <div class="col-auto d-none d-lg-block">
             <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
@@ -49,7 +49,7 @@
         {% for item in posts %}
         {% if item.featured == 0 and item.other_featured == 0%}
         <div class="blog-post">
-          <h2 class="blog-post-title">{{item.title|raw}}</h2>
+          <h2 class="blog-post-title"><a class="text-dark" href="?Post/detail/&id={{item.id}}">{{item.title|raw}}</a></h2>
           <p class="blog-post-meta">{{item.date}} by <a href="#">{{item.author|raw}}</a></p>
           <p>{{item.content|raw}}</p>
         </div><!-- /.blog-post -->
@@ -75,7 +75,7 @@
           <h4 class="font-italic">Archives</h4>
           <ol class="list-unstyled mb-0">
             {% for item in archives %}
-            <li><a href="?Post/index/&month={{item.month}}&year={{item.year}}">{{item.date|raw}}</a></li>
+            <li><a href="?Post/archive/&month={{item.month}}&year={{item.year}}">{{item.date|raw}}</a></li>
             {% endfor %}
           </ol>
         </div>
