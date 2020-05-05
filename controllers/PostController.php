@@ -21,10 +21,11 @@ class PostController extends Controller
     {
 
         $monthNum = $_GET['month'];
+        $year = $_GET['year'];
         $dateObj   = \DateTime::createFromFormat('!m', $monthNum);
         $monthName = $dateObj->format('F');
         $out = array();
-        $out['posts'] = $this->model->getCurrentPosts($_GET['month'], $_GET['year']);
+        $out['posts'] = $this->model->getCurrentPosts($monthNum, $year);
 
         $home = new \models\Home();
         $out['categories'] = $home->getCategories();
@@ -39,15 +40,29 @@ class PostController extends Controller
     public function detail()
     {
         $id = $_GET['id'];
-        $out['post'] = $this->model->getPost($_GET['id']);
+        $out['posts'] = $this->model->getPost($id);
         $home = new \models\Home();
         $out['categories'] = $home->getCategories();
         $out['about'] = $home->getAbout();
         $out['archives'] = $home->getArchives();
         $out['social'] = $home->getSocial();
 
-        $post = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($post, $out);
+        $posts = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($posts, $out);
+    }
+
+    public function category()
+    {
+        $category = $_GET['category'];
+        $out['posts'] = $this->model->getPostsByCategory($category);
+        $home = new \models\Home();
+        $out['categories'] = $home->getCategories();
+        $out['about'] = $home->getAbout();
+        $out['archives'] = $home->getArchives();
+        $out['social'] = $home->getSocial();
+        
+        $posts = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($posts, $out);
     }
 
 }
