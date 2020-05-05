@@ -26,4 +26,11 @@ class Post
 
         return $post;
     }
+
+    public function getPostsByCategory($category)
+    {
+        $posts = $this->db->select('posts', '*', 'category = ?', $category);
+
+        return $posts;
+    }
 }
