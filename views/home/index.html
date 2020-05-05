@@ -1,7 +1,7 @@
 <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
       {% for item in categories %}
-      <a class="p-2 text-muted" href="#">{{item.name|raw}}</a>
+      <a class="p-2 text-muted" href="?Post/category/&category={{item.id}}">{{item.name|raw}}</a>
       {% endfor %}
     </nav>
   </div>
@@ -11,7 +11,7 @@
       <div class="col-md-6 px-0">
         <h1 class="display-4 font-italic">{{item.title|raw}}</h1>
         <p class="lead my-3">{{item.short_content|raw}}</p>
-        <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+        <p class="lead mb-0"><a href="?Post/detail/&id={{item.id}}" class="text-white font-weight-bold">Continue reading...</a></p>
       </div>
     </div>
     {% endif%}
@@ -24,7 +24,7 @@
       <div class="col-md-6">
         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
           <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary">{{item.category|raw}}</strong>
+            <strong class="d-inline-block mb-2 text-primary"><a href="?Post/category/&category={{item.category}}">{{item.category_name|raw}}</a></strong>
             <h3 class="mb-0">{{item.title|raw}}</h3>
             <div class="mb-1 text-muted">{{item.date|raw}}</div>
             <p class="mb-auto">{{item.short_content|raw}}</p>
