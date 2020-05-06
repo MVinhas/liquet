@@ -29,7 +29,12 @@ class HomeController extends Controller
             echo $this->callTemplate($home);
         } else {
             $out['categories'] = $this->model->getCategories();
-            $out['posts'] = $this->model->getPosts();
+            $offset = 0;
+            if (isset($_GET['page'])) {
+                $offset = $_GET['page'] * 5;
+                $out['page'] = $_GET['page'];
+            }
+            $out['posts'] = $this->model->getPosts($offset);
             $out['about'] = $this->model->getAbout();
             $out['archives'] = $this->model->getArchives();
             $out['social'] = $this->model->getSocial();

@@ -46,7 +46,9 @@
         <h3 class="pb-4 mb-4 font-italic border-bottom">
           From the Firehose
         </h3>
+        {% set num_posts = 0 %}
         {% for item in posts %}
+        {% set num_posts = num_posts + 1%}
         {% if item.featured == 0 and item.other_featured == 0%}
         <div class="blog-post">
           <h2 class="blog-post-title"><a class="text-dark" href="?Post/detail/&id={{item.id}}">{{item.title|raw}}</a></h2>
@@ -55,10 +57,9 @@
         </div><!-- /.blog-post -->
         {% endif %}
         {% endfor %}
-  
         <nav class="blog-pagination">
-          <a class="btn btn-outline-primary" href="#">Older</a>
-          <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+          <a class="btn btn-outline-primary {% if num_posts < 3 %}disabled{% endif %}" href="?Home/index/&page={{page+1}} {% if num_posts < 3 %}aria-disabled="true"{% endif %}">Older</a>
+          <a class="btn btn-outline-secondary {% if page == 0 %}disabled{% endif %}" href="?Home/index/&page={{page-1}}" tabindex="-1" {% if page == 0%}aria-disabled="true" {% endif %}>Newer</a>
         </nav>
   
       </div><!-- /.blog-main -->

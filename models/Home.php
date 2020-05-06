@@ -56,9 +56,9 @@ class Home
         return $categories;
     }
 
-    public function getPosts()
+    public function getPosts($offset = '0')
     {
-        $posts = $this->db->select('posts','*', 'status = ?','1');
+        $posts = $this->db->select('posts','*', 'status = ? ORDER BY id DESC LIMIT 5 OFFSET '.$offset,'1');
         foreach ($posts as $k => $v) {
             $category = $this->db->select('categories','*','id = ?',$v['category']);
             $posts[$k]['category_name'] = $category[0]['name'];
@@ -74,7 +74,7 @@ class Home
 
     public function getArchives()
     {
-        $archives = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y")','1');
+        $archives = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year ', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y")','1');
         return $archives;
     }
 
