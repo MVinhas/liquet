@@ -95,4 +95,17 @@ class HomeController extends Controller
         unset($_SESSION['users']);
         header('Location: ?Home');
     }
+
+    public function search()
+    {
+        $search_terms = explode(" ", $_POST['search']);
+        $out = array();
+        $out['posts'] = $this->model->getPostsBySearch($search_terms);
+        $out['categories'] = $this->model->getCategories();
+        $out['about'] = $this->model->getAbout();
+        $out['archives'] = $this->model->getArchives();
+        $out['social'] = $this->model->getSocial();
+        $search = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($search, $out);    
+    }
 }
