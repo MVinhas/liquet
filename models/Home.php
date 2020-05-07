@@ -83,4 +83,19 @@ class Home
         $social = $this->db->select('social', '*', 'visible = ?','1');
         return $social;
     }
+
+    public function getPostsBySearch($search)
+    {
+        $sql = '';
+        $field = '';
+        foreach ($search as $k => $v) {
+            if ($v !== "") {
+                $sql .= " AND title LIKE CONCAT('%',?,'%') ";
+                $field .= $v.", ";
+            }
+        }
+        $field = rtrim($field, ',');
+        $posts = $this->db->select('posts', '*', '1= ?'.$sql, "1,".$field);
+        return $posts;
+    }
 }
