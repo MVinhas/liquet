@@ -22,7 +22,12 @@ class SiteController extends Controller
     {
         $this->getMetadata();
         $this->head();
-        $this->header();
+        if (isset($_GET['Admin/cpanel'])) {
+            $admin = new \controllers\AdminController;
+            $admin->headerAdmin();
+        } else {
+            $this->header();
+        }
         Dispatcher::dispatch();
         $this->footer();
     }
@@ -67,5 +72,11 @@ class SiteController extends Controller
     {
         $termsTemplate = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($termsTemplate);
+    }
+
+    public function subscribe()
+    {
+        $subscribe = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($subscribe);
     }
 }
