@@ -40,16 +40,4 @@ class AdminController extends Controller
         }
         
     }
-
-    public function cpanel()
-    {
-        $cpanel = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($cpanel);
-    }
-
-    public function headerAdmin()
-    {
-        $header = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($header);
-    }
 }
