@@ -84,10 +84,6 @@ class DbOperations
         }
     }
 
-    public function add($arg1, $arg2)
-    {
-        return $arg1+$arg2;
-    }
     public function update($table, $fields, $fields_value, $where, $where_value)
     {
         $sql = "UPDATE $table SET $fields WHERE $condition";
