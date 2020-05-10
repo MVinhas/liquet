@@ -17,19 +17,29 @@ class SiteController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
     }
-
     public function index()
     {
+        $getKeys = array_keys($_GET);
         $this->getMetadata();
         $this->head();
-        if (isset($_GET['Admin/cpanel'])) {
-            $admin = new \controllers\AdminController;
-            $admin->headerAdmin();
+        $cpanel = false;
+        foreach ($getKeys as $key) {
+            $key = substr($key, 0, strpos($key, "/"));
+            if ($key === 'CPanel') {
+                $cpanel = true;
+            }
+        }
+        if ($cpanel === true) {
+            $cpanelController = new \controllers\CPanelController;
+            $cpanelController->header();
         } else {
             $this->header();
         }
         Dispatcher::dispatch();
-        $this->footer();
+
+        if ($cpanel === false) {
+            $this->footer();
+        }
     }
 
     private function getMetadata()
