@@ -14,6 +14,7 @@ class CPanelController extends Controller
         parent::__construct();
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
+        $this->model = new CPanel();
     }
 
     public function index()
@@ -29,5 +30,13 @@ class CPanelController extends Controller
         $out = array();
         $out['sitename'] = $siteInfo->getName();
         echo $this->callTemplate($header, $out);
+    }
+
+    public function postsIndex()
+    {
+        $cpanel = $this->getFile($this->path, __FUNCTION__);
+        $out = array();
+        $out['post_list'] = $this->model->getPosts();
+        echo $this->callTemplate($cpanel, $out);
     }
 }
