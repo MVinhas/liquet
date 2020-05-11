@@ -51,12 +51,14 @@ class DbOperations
         $data_array = explode(',', $field_values);
         if ($filter == '') {
             $sql = "SELECT $fields FROM $table";
-            $sql_query = $this->db->query($sql);
-            if (!$sql_query->num_rows) {
-                return false;
+            $sql = $this->db->prepare($sql);
+            if ($sql->execute()) {
+                $result = $sql->get_result();
+                $sql_fetch = $this->fetchQuery($result);
+                return $sql_fetch;
+            } else {
+                return "Error: ".$this->db->connection->error;
             }
-            $sql_fetch = $this->fetchQuery($sql_query);
-            return $sql_fetch;
         } else {
             $sql = "SELECT $fields FROM $table WHERE $filter";
         }
