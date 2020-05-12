@@ -39,4 +39,10 @@ class CPanelController extends Controller
         $out['post_list'] = $this->model->getPosts();
         echo $this->callTemplate($cpanel, $out);
     }
+
+    public function postCreate()
+    {
+       $postCreate = $this->getFile($this->path, __FUNCTION__);
+       echo $this->callTemplate($postCreate); 
+    }
 }
