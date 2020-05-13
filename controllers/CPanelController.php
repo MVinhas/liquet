@@ -42,7 +42,11 @@ class CPanelController extends Controller
 
     public function postCreate()
     {
-       $postCreate = $this->getFile($this->path, __FUNCTION__);
-       echo $this->callTemplate($postCreate); 
+        $postCreate = $this->getFile($this->path, __FUNCTION__);
+        $out = array();
+        $home = new \models\Home();
+        $out['categories'] = $home->getCategories();
+        $out['author'] = $_SESSION['users']['username'];
+        echo $this->callTemplate($postCreate, $out); 
     }
 }
