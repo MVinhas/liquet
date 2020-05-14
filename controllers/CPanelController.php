@@ -47,6 +47,12 @@ class CPanelController extends Controller
         $home = new \models\Home();
         $out['categories'] = $home->getCategories();
         $out['author'] = $_SESSION['users']['username'];
+        $out['debug_mode'] = $this->config_flags->debug_mode;
         echo $this->callTemplate($postCreate, $out); 
+    }
+
+    public function postCreateSubmit()
+    {
+        echo "<pre>";print_r($_POST);"</pre>";
     }
 }
