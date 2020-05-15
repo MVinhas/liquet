@@ -37,7 +37,9 @@ class SiteController extends Controller
         }
         Dispatcher::dispatch();
 
-        if ($cpanel === false) {
+        if ($cpanel === true) {
+            $cpanelController->footer();
+        } else {
             $this->footer();
         }
     }
