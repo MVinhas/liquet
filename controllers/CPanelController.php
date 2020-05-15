@@ -32,6 +32,12 @@ class CPanelController extends Controller
         echo $this->callTemplate($header, $out);
     }
 
+    public function footer()
+    {
+        $footer = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callTemplate($footer);
+    }
+
     public function postsIndex()
     {
         $cpanel = $this->getFile($this->path, __FUNCTION__);
