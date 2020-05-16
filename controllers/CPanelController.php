@@ -46,19 +46,37 @@ class CPanelController extends Controller
         echo $this->callTemplate($cpanel, $out);
     }
 
-    public function postCreate()
+    public function postEditor()
     {
         $postCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $home = new \models\Home();
+        if (!empty($_GET['id'])) {
+            $out['post_id'] = $_GET['id'];
+            $out['post'] = $home->getPost($_GET['id']);
+        }
         $out['categories'] = $home->getCategories();
         $out['author'] = $_SESSION['users']['username'];
         $out['debug_mode'] = $this->config_flags->debug_mode;
         echo $this->callTemplate($postCreate, $out); 
     }
 
-    public function postCreateSubmit()
+    public function postEditorSubmit()
     {
-        echo "<pre>";print_r($_POST);"</pre>";
+        if (!empty($_GET['id'])) {
+            $post = array();
+            $post['title'] = $_POST['title'];
+            $post['category'] = $_POST['category'];
+            $post['short_content'] = $_POST['short_content'];
+            $post['content'] = $_POST['content'];
+            $this->model->editPost($_GET['id'], $post);
+        } else {
+            $this->model->createPost($_POST);
+        }
+        
+        $cpanel = $this->getFile($this->path, 'postsIndex');
+        $out = array();
+        $out['post_list'] = $this->model->getPosts();
+        echo $this->callTemplate($cpanel, $out);
     }
 }
