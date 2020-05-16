@@ -66,6 +66,13 @@ class Home
         return $posts;
     }
 
+    public function getPost($id)
+    {
+        $post = $this->db->select('posts', '*', 'id = ?', "$id");
+
+        return $post;
+    }
+
     public function getAbout()
     {   
         $about = $this->db->select('about','*','id = ?','1');
