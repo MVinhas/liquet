@@ -139,9 +139,9 @@ class DbOperations
         }
     }
 
-    public function delete($table, $condition = '1=1', $condition_values = '')
+    public function delete($table, $condition = '1 = ?', $condition_values = '1')
     {
-        $sql = "DELETE * FROM $table WHERE $condition";
+        $sql = "DELETE FROM $table WHERE $condition";
         $data_array = explode(',', $condition_values);
          
         $count_fields = substr_count($condition, '?');
@@ -154,7 +154,7 @@ class DbOperations
             array_push($values, $field{$i});
         }
         $values_type = implode('', $values_type);
-       
+        echo $sql;
         $sql = $this->db->prepare($sql);
         
         $sql->bind_param("$values_type", ...$values);
