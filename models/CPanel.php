@@ -27,7 +27,11 @@ class CPanel
     
     public function editPost($id, $post)
     {
-        $this->db->update('posts', 'title = ?, category = ?, short_content = ?, content = ?', $post, 'id = ?', $id);
-        return;   
+        $this->db->update('posts', 'title = ?, category = ?, short_content = ?, content = ?', $post, 'id = ?', $id); 
+    }
+
+    public function deletePost($id)
+    {
+        $this->db->delete('posts', 'id = ?', $id);
     }
 }

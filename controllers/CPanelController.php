@@ -79,4 +79,14 @@ class CPanelController extends Controller
         $out['post_list'] = $this->model->getPosts();
         echo $this->callTemplate($cpanel, $out);
     }
+
+    public function postDelete()
+    {
+        $post_id = $_GET['id'];
+        $this->model->deletePost($post_id);
+        $cpanel = $this->getFile($this->path, 'postsIndex');
+        $out = array();
+        $out['post_list'] = $this->model->getPosts();
+        echo $this->callTemplate($cpanel, $out);
+    }
 }
