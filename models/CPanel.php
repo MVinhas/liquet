@@ -19,6 +19,13 @@ class CPanel
         return $posts;    
     }
 
+    public function getCategories()
+    {
+        $categories = $this->db->select('categories', '*');
+
+        return $categories;    
+    }
+
     public function createPost($post)
     {
         $post['date'] = date('Y-m-d');

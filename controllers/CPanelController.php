@@ -46,6 +46,14 @@ class CPanelController extends Controller
         echo $this->callTemplate($cpanel, $out);
     }
 
+    public function categoriesIndex()
+    {
+        $cpanel = $this->getFile($this->path, __FUNCTION__);
+        $out = array();
+        $out['categories_list'] = $this->model->getCategories();
+        echo $this->callTemplate($cpanel, $out);
+    }
+
     public function postEditor()
     {
         $postCreate = $this->getFile($this->path, __FUNCTION__);
