@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="row">
+        {% set active = 'Categories' %}
+        {% include 'cpanel/sidebar.html' %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{% if category.0.name != ''%}Edit {% else %}Create {% endif %}Post</h1>
+    </div>
+    <form id="category_create" class="needs-validation" action="?CPanel/categoryEditorSubmit/&id={{category.0.id}}" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control required" id="name" name="name" aria-describedby="nameHelp" placeholder="Name" value="{{category.0.name}}" required>
+          <small id="nameHelp" class="form-text text-muted">Maximum 64 characters</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</main>
+</div>
+</div>
+<script defer src="scripts/cpanel/categoryEditor.{% if debug_mode == 0 %}min.{% endif %}js"></script>
