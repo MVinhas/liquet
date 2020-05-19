@@ -8,7 +8,7 @@
         <div class="btn-toolbar mb-2 mb-md-0">
           <button type="button" class="btn btn-sm btn-outline-secondary">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-            <a href="?CPanel/postEditor">New Category</a>
+            <a href="?CPanel/categoryEditor">New Category</a>
           </button>
         </div>
     </div>
@@ -28,12 +28,33 @@
         <td>{{item.id}}</td>
         <td>{{item.name|raw}}</td>
         <td><a href="?CPanel/categoryEditor/&id={{item.id}}">Edit</a></td>
-        <td><a href="?CPanel/categoryDelete/&id={{item.id}}">Delete</a></td>
+        <td><a data-href="?CPanel/categoryDelete/&id={{item.id}}" data-toggle="modal" data-target="#confirm-delete">Delete</a></td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
 </div>
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              Confirm deletion
+          </div>
+          <div class="modal-body">
+              Do you really want to delete this category?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <a href="#" class="btn btn-danger btn-ok">Delete</a>
+          </div>
+      </div>
+  </div>
+</div>
+
 </main>
 </div>
 </div>
+<script>
+
+</script>
