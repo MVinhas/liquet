@@ -35,7 +35,9 @@ class CPanelController extends Controller
     public function footer()
     {
         $footer = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($footer);
+        $out = array();
+        $out['debug_mode'] = $this->config_flags->debug_mode;
+        echo $this->callTemplate($footer, $out);
     }
 
     public function postsIndex()
@@ -69,6 +71,19 @@ class CPanelController extends Controller
         echo $this->callTemplate($postCreate, $out); 
     }
 
+    public function categoryEditor()
+    {
+        $categoryCreate = $this->getFile($this->path, __FUNCTION__);
+        $out = array();
+        $home = new \models\Home();
+        if (!empty($_GET['id'])) {
+            $out['category_id'] = $_GET['id'];
+            $out['category'] = $home->getCategory($_GET['id']);
+        }
+        $out['debug_mode'] = $this->config_flags->debug_mode;
+        echo $this->callTemplate($categoryCreate, $out); 
+    }
+
     public function postEditorSubmit()
     {
         if (!empty($_GET['id'])) {
@@ -88,6 +103,22 @@ class CPanelController extends Controller
         echo $this->callTemplate($cpanel, $out);
     }
 
+    public function categoryEditorSubmit()
+    {
+        if (!empty($_GET['id'])) {
+            $category = array();
+            $category['name'] = $_POST['name'];
+            $this->model->editCategory($_GET['id'], $category);
+        } else {
+            $this->model->createCategory($_POST);
+        }
+        
+        $cpanel = $this->getFile($this->path, 'categoriesIndex');
+        $out = array();
+        $out['categories_list'] = $this->model->getCategories();
+        echo $this->callTemplate($cpanel, $out);
+    }
+
     public function postDelete()
     {
         $post_id = $_GET['id'];
@@ -95,6 +126,16 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
         $out['post_list'] = $this->model->getPosts();
+        echo $this->callTemplate($cpanel, $out);
+    }
+
+    public function categoryDelete()
+    {
+        $category_id = $_GET['id'];
+        $this->model->deleteCategory($category_id);
+        $cpanel = $this->getFile($this->path, 'categoriesIndex');
+        $out = array();
+        $out['categories_list'] = $this->model->getCategories();
         echo $this->callTemplate($cpanel, $out);
     }
 }

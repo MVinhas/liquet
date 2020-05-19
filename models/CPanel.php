@@ -37,8 +37,23 @@ class CPanel
         $this->db->update('posts', 'title = ?, category = ?, short_content = ?, content = ?', $post, 'id = ?', $id); 
     }
 
+    public function createCategory($post)
+    {
+        $this->db->create('categories', 'name', $post);
+    }
+    
+    public function editCategory($id, $post)
+    {
+        $this->db->update('categories', 'name = ?', $post, 'id = ?', $id); 
+    }
+
     public function deletePost($id)
     {
         $this->db->delete('posts', 'id = ?', $id);
+    }
+
+    public function deleteCategory($id)
+    {
+        $this->db->delete('categories', 'id = ?', $id);
     }
 }
