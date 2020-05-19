@@ -73,6 +73,13 @@ class Home
         return $post;
     }
 
+    public function getCategory($id)
+    {
+        $category = $this->db->select('categories', '*', 'id = ?', "$id");
+
+        return $category;
+    }
+
     public function getAbout()
     {   
         $about = $this->db->select('about','*','id = ?','1');
