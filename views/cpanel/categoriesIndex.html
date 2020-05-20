@@ -28,29 +28,14 @@
         <td>{{item.id}}</td>
         <td>{{item.name|raw}}</td>
         <td><a href="?CPanel/categoryEditor/&id={{item.id}}">Edit</a></td>
-        <td><a data-href="?CPanel/categoryDelete/&id={{item.id}}" data-toggle="modal" data-target="#confirm-delete">Delete</a></td>
+        <td><a href="#" data-href="?CPanel/categoryDelete/&id={{item.id}}" data-toggle="modal" data-target="#confirm-delete">Delete</a></td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
 </div>
-
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              Confirm deletion
-          </div>
-          <div class="modal-body">
-              Do you really want to delete this category?
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <a href="#" class="btn btn-danger btn-ok">Delete</a>
-          </div>
-      </div>
-  </div>
-</div>
+{% set data = 'category' %}
+{% include 'cpanel/popups.html' %}
 
 </main>
 </div>
