@@ -12,3 +12,8 @@ function CheckPassword(inputtxt)
         return false;
     }
 }
+
+/* Modal Delete */
+$('#confirm-delete').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+});
