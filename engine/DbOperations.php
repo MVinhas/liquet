@@ -145,19 +145,9 @@ class DbOperations
         $data_array = explode(',', $condition_values);
          
         $count_fields = substr_count($condition, '?');
-        $values = array();
-        $values_type = array();
-        for ($i=0; $i < $count_fields; $i++) {
-            $field{$i} = ltrim($data_array[$i], ' ');
-            
-            $values_type{$i} = strtolower(substr(gettype($data_array[$i]), 0, 1));
-            array_push($values, $field{$i});
-        }
-        $values_type = implode('', $values_type);
-        $sql = $this->db->prepare($sql);
-        
-        $sql->bind_param("$values_type", ...$values);
-        
+
+        $sql = $this->preparedStatement($sql, $count_fields, $data_array);
+
         if ($sql->execute()) {
             return true;
         } else {
@@ -197,5 +187,25 @@ class DbOperations
         } else {
             return true;
         }
+    }
+
+    private function preparedStatement($sql, $count_fields, $data_array)
+    {
+        $values = array();
+        $values_types = array();
+
+        for ($i=0; $i < $count_fields; $i++) {
+            $field{$i} = ltrim($data_array[$i], ' ');
+            
+            $values_type{$i} = strtolower(substr(gettype($data_array[$i]), 0, 1));
+            array_push($values, $field{$i});
+        }
+        $values_type = implode('', $values_type);
+
+        $sql = $this->db->prepare($sql);
+        
+        $sql->bind_param("$values_type", ...$values);
+
+        return $sql;
     }
 }
