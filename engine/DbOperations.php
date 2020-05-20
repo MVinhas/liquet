@@ -154,7 +154,6 @@ class DbOperations
             array_push($values, $field{$i});
         }
         $values_type = implode('', $values_type);
-        echo $sql;
         $sql = $this->db->prepare($sql);
         
         $sql->bind_param("$values_type", ...$values);
