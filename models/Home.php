@@ -33,7 +33,8 @@ class Home
 
     public function checkAdmin()
     {
-        $admin_exists = $this->db->select('users','*','role = ?','admin');
+        $data = array('admin');
+        $admin_exists = $this->db->select('users','*','role = ?', $data);
         if (!empty($admin_exists))
             return '1';
         return '0';
@@ -58,9 +59,11 @@ class Home
 
     public function getPosts($offset = '0')
     {
-        $posts = $this->db->select('posts','*', 'status = ? ORDER BY id DESC LIMIT 5 OFFSET '.$offset,'1');
+        $data = array('1');
+        $posts = $this->db->select('posts','*', 'status = ? ORDER BY id DESC LIMIT 5 OFFSET '.$offset, $data);
         foreach ($posts as $k => $v) {
-            $category = $this->db->select('categories','*','id = ?',$v['category']);
+            $data = array($v['category']);
+            $category = $this->db->select('categories','*','id = ?', $data);
             $posts[$k]['category_name'] = $category[0]['name'];
         }
         return $posts;
@@ -68,48 +71,53 @@ class Home
 
     public function getPost($id)
     {
-        $post = $this->db->select('posts', '*', 'id = ?', "$id");
+        $data = array($id);
+        $post = $this->db->select('posts', '*', 'id = ?', $data);
 
         return $post;
     }
 
     public function getCategory($id)
     {
-        $category = $this->db->select('categories', '*', 'id = ?', "$id");
+        $data = array($id);
+        $category = $this->db->select('categories', '*', 'id = ?', $data);
 
         return $category;
     }
 
     public function getAbout()
     {   
-        $about = $this->db->select('about','*','id = ?','1');
+        $data = array('1');
+        $about = $this->db->select('about','*','id = ?', $data);
         return $about;
     }
 
     public function getArchives()
     {
-        $archives = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year ', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y")','1');
+        $data = array('1');
+        $archives = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year ', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y")', $data);
         return $archives;
     }
 
     public function getSocial()
     {
-        $social = $this->db->select('social', '*', 'visible = ?','1');
+        $data = array('1');
+        $social = $this->db->select('social', '*', 'visible = ?', $data);
         return $social;
     }
 
     public function getPostsBySearch($search)
     {
         $sql = '';
-        $field = '';
+        $data = array('1');
         foreach ($search as $k => $v) {
             if ($v !== "") {
                 $sql .= " AND title LIKE CONCAT('%',?,'%') ";
-                $field .= $v.", ";
+                array_push($data, $v);
             }
         }
         $field = rtrim($field, ',');
-        $posts = $this->db->select('posts', '*', '1= ?'.$sql, "1,".$field);
+        $posts = $this->db->select('posts', '*', '1= ?'.$sql, $data);
         return $posts;
     }
 }

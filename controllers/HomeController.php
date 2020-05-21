@@ -65,8 +65,8 @@ class HomeController extends Controller
         } else {
             $role = 'admin';
         }
-        $values = "%s, %s, %s, %s, %d";
-        $values = sprintf($values, $_POST['email'], $_POST['username'], $password, $role, 1);
+
+        $values = array($_POST['email'], $_POST['username'], $password, $role, 1);
         $createUser = $this->model->createUser('users', $fields, $values);
         if ($createUser == '1') {
             echo "Success!";

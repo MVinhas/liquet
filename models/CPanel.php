@@ -29,12 +29,14 @@ class CPanel
     public function createPost($post)
     {
         $post['date'] = date('Y-m-d');
+    
         $this->db->create('posts', 'title, category, author, short_content, content, date', $post);
     }
     
     public function editPost($id, $post)
     {
-        $this->db->update('posts', 'title = ?, category = ?, short_content = ?, content = ?', $post, 'id = ?', $id); 
+        $data = array($id);
+        $this->db->update('posts', 'title = ?, category = ?, short_content = ?, content = ?', $post, 'id = ?', $data); 
     }
 
     public function createCategory($post)
@@ -44,16 +46,19 @@ class CPanel
     
     public function editCategory($id, $post)
     {
-        $this->db->update('categories', 'name = ?', $post, 'id = ?', $id); 
+        $data = array($id);
+        $this->db->update('categories', 'name = ?', $post, 'id = ?', $data); 
     }
 
     public function deletePost($id)
     {
-        $this->db->delete('posts', 'id = ?', $id);
+        $data = array($id);
+        $this->db->delete('posts', 'id = ?', $data);
     }
 
     public function deleteCategory($id)
     {
-        $this->db->delete('categories', 'id = ?', $id);
+        $data = array($id);
+        $this->db->delete('categories', 'id = ?', $data);
     }
 }

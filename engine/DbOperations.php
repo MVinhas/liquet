@@ -21,12 +21,10 @@ class DbOperations
 
     public function create($table, $fields, $data)
     {
-        if (is_array($data)) {
-            $data_array = array_values($data);
-        } else {
-            $data_array = explode(',', $data);
-        }
+        $data_array = array_values($data);
+
         $prepare_array = array();
+
         foreach ($data_array as $k => $v) {
             $prepare_array[$k] = str_replace($v, '?', $data_array[$k]);
         }
@@ -43,9 +41,11 @@ class DbOperations
         }
     }
 
-    public function select($table, $fields = '*', $filter = '', $field_values = '')
+    public function select($table, $fields = '*', $filter = '', $field_values = array())
     {
-        $data_array = explode(',', $field_values);
+        if (!empty($field_values)) {
+            $data_array = array_values($field_values); 
+        }
         if ($filter == '') {
             $sql = "SELECT $fields FROM $table";
             $sql = $this->db->prepare($sql);
@@ -78,11 +78,7 @@ class DbOperations
 
     public function update($table, $fields, $fields_value, $where, $where_value)
     {   
-        if (is_array($fields_value)) {
-            $data_array = array_values($fields_value);
-        } else {
-            $data_array = explode(',', $fields_value);
-        }
+        $data_array = array_values($fields_value);
 
         if (is_array($where_value)) {
             $data_array_where = array_values($where_value);
@@ -158,7 +154,6 @@ class DbOperations
     {
         $values = array();
         $values_types = array();
-
         for ($i=0; $i < $count_fields; $i++) {
             $field{$i} = ltrim($data_array[$i], ' ');
             

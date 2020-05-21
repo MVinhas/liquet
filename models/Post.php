@@ -14,22 +14,28 @@ class Post
 
     public function getCurrentPosts($month = '1', $year = '1970')
     {
-        $date = $month.','.$year;
-        $posts = $this->db->select('posts', '*', 'DATE_FORMAT(date, "%m") LIKE ? AND DATE_FORMAT(date, "%Y") LIKE ?', $date);
+        $data = array($month, $year);
+        $posts = $this->db->select('posts', '*', 'DATE_FORMAT(date, "%m") LIKE ? AND DATE_FORMAT(date, "%Y") LIKE ?', $data);
 
         return $posts;   
     }
 
     public function getPost($id)
     {
-        $post = $this->db->select('posts', '*', 'id = ?', $id);
+        $data = array($id);
+        $post = $this->db->select('posts', '*', 'id = ?', $data);
 
         return $post;
     }
 
     public function getPostsByCategory($category)
     {
-        $posts = $this->db->select('posts', '*', 'category = ?', $category);
+        $data = array(
+            'category' => $category,
+            'status'   => 1
+        );
+
+        $posts = $this->db->select('posts', '*', 'category = ? AND status = ?', $data);
 
         return $posts;
     }
