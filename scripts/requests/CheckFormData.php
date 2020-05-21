@@ -16,13 +16,15 @@ class CheckFormData
         
     public function email($email)
     {
-        $getUsers = $this->db->select('users', 'email', "email = ?", $email);
+        $data = array($email);
+        $getUsers = $this->db->select('users', 'email', "email = ?", $data);
         return $getUsers;
     }
 
     public function username($username)
     {
-        $getUsers = $this->db->select('users', 'username', "username = ?", $username);
+        $data = array($username); 
+        $getUsers = $this->db->select('users', 'username', "username = ?", $data);
  
         return $getUsers;
     }

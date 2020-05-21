@@ -43,6 +43,7 @@ class DbOperations
 
     public function select($table, $fields = '*', $filter = '', $field_values = array())
     {
+
         if (!empty($field_values)) {
             $data_array = array_values($field_values); 
         }

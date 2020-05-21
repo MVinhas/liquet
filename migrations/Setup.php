@@ -152,8 +152,8 @@ class Setup
     {
         $table = 'methods';
         $fields = 'name, controller';
-        $values_1 = "'setup', 1";
-        $values_2 = "'login', 2";
+        $values_1 = array('setup', 1);
+        $values_2 = array('login', 2);
 
         $this->db->create($table, $fields, $values_1);
         $this->db->create($table, $fields, $values_2);
@@ -163,8 +163,8 @@ class Setup
     {
         $table = 'pages';
         $fields = '`name`, `short_content`, `content`, `method`, `active`, `header`, `menu`, `footer`';
-        $values_1 = "'Register', NULL, NULL, 1, 1, 1, 1, 0";
-        $values_2 = "'Login', NULL, NULL, 2, 1, 1, 1, 0";
+        $values_1 = array('Register', NULL, NULL, 1, 1, 1, 1, 0);
+        $values_2 = array('Login', NULL, NULL, 2, 1, 1, 1, 0);
 
         $this->db->create($table, $fields, $values_1);
         $this->db->create($table, $fields, $values_2);
@@ -203,12 +203,12 @@ class Setup
     {
         $table = 'posts';
         $fields = '`category`, `title`, `author`, `date`, `banner`, `short_content`, `content`, `tags`, `comments`, `likes`, `status`, `featured`, `other_featured`';
-        $values_1 = "1, 'Fusce sit amet consectetur risus.', 'Micael Vinhas', '2020-04-07', NULL, '', 'Integer consequat interdum egestas. Sed mollis ornare erat non varius. Mauris congue, nunc quis porta condimentum, ligula tellus commodo velit, at cursus diam arcu in odio. Cras nisl quam, aliquam sit amet aliquam a, fermentum sit amet arcu. Integer molestie at tortor vel malesuada.', NULL, 0, 0, 1, 1, 0";
-        $values_2 = "2, 'Vestibulum molestie efficitur facilisis.', 'Micael Vinhas', '2020-04-22', NULL, '', 'Nulla hendrerit lacus at elit viverra malesuada. Aliquam ut mattis velit. Etiam consequat mattis dapibus. Etiam cursus arcu in sodales gravida. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', NULL, 0, 0, 1, 0, 1";
-        $values_3 = "3, 'Praesent in pretium arcu.', 'Micael Vinhas', '2020-04-30', NULL, '', 'Morbi maximus mauris sed dolor fringilla, in accumsan augue tempus. Ut pharetra tincidunt magna at imperdiet. Ut faucibus felis nulla, sit amet bibendum ex fermentum non. ', NULL, 0, 0, 1, 0, 1";
-        $values_4 = "4, 'Curabitur sit amet lobortis purus.', 'Micael Vinhas', '2020-04-19', NULL, '', 'Vestibulum molestie efficitur facilisis. Sed finibus feugiat odio et blandit. Aenean at enim eget augue egestas pretium. Nunc eget tellus eget risus aliquam malesuada sed at turpis. Donec hendrerit ullamcorper mi, in rutrum tortor bibendum quis. Donec luctus consectetur turpis at sodales. Curabitur sit amet lobortis purus.', NULL, 0, 0, 1, 0, 0)";
-        $values_5 = "5, 'Ut auctor consequat arcu, at accumsan sem semper quis.', 'Micael Vinhas', '2020-04-11', NULL, '', 'Curabitur sit amet lobortis purus. Donec luctus, libero vitae faucibus dapibus, ante ligula iaculis libero, a ornare sapien urna at nunc.', NULL, 0, 0, 1, 0, 0)";
-        $values_6 = "5, 'Aliquam pretium odio ac lorem mattis pellentesque.', 'Micael Vinhas', '2020-04-04', NULL, '', 'Ut sollicitudin, dolor in interdum cursus, felis ante suscipit ante, non laoreet ex velit ac ligula. Maecenas turpis enim, luctus nec eleifend a, consequat in orci. Maecenas egestas accumsan lacinia. Duis a elit eget justo finibus dapibus sed at augue. Fusce porttitor ut nisl eu posuere.', NULL, 0, 0, 1, 0, 0";
+        $values_1 = array(1, 'Fusce sit amet consectetur risus.', 'Micael Vinhas', '2020-04-07', NULL, '', 'Integer consequat interdum egestas. Sed mollis ornare erat non varius. Mauris congue, nunc quis porta condimentum, ligula tellus commodo velit, at cursus diam arcu in odio. Cras nisl quam, aliquam sit amet aliquam a, fermentum sit amet arcu. Integer molestie at tortor vel malesuada.', NULL, 0, 0, 1, 1, 0);
+        $values_2 = array(2, 'Vestibulum molestie efficitur facilisis.', 'Micael Vinhas', '2020-04-22', NULL, '', 'Nulla hendrerit lacus at elit viverra malesuada. Aliquam ut mattis velit. Etiam consequat mattis dapibus. Etiam cursus arcu in sodales gravida. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', NULL, 0, 0, 1, 0, 1);
+        $values_3 = array(3, 'Praesent in pretium arcu.', 'Micael Vinhas', '2020-04-30', NULL, '', 'Morbi maximus mauris sed dolor fringilla, in accumsan augue tempus. Ut pharetra tincidunt magna at imperdiet. Ut faucibus felis nulla, sit amet bibendum ex fermentum non. ', NULL, 0, 0, 1, 0, 1);
+        $values_4 = array(4, 'Curabitur sit amet lobortis purus.', 'Micael Vinhas', '2020-04-19', NULL, '', 'Vestibulum molestie efficitur facilisis. Sed finibus feugiat odio et blandit. Aenean at enim eget augue egestas pretium. Nunc eget tellus eget risus aliquam malesuada sed at turpis. Donec hendrerit ullamcorper mi, in rutrum tortor bibendum quis. Donec luctus consectetur turpis at sodales. Curabitur sit amet lobortis purus.', NULL, 0, 0, 1, 0, 0);
+        $values_5 = array(5, 'Ut auctor consequat arcu, at accumsan sem semper quis.', 'Micael Vinhas', '2020-04-11', NULL, '', 'Curabitur sit amet lobortis purus. Donec luctus, libero vitae faucibus dapibus, ante ligula iaculis libero, a ornare sapien urna at nunc.', NULL, 0, 0, 1, 0, 0);
+        $values_6 = array(5, 'Aliquam pretium odio ac lorem mattis pellentesque.', 'Micael Vinhas', '2020-04-04', NULL, '', 'Ut sollicitudin, dolor in interdum cursus, felis ante suscipit ante, non laoreet ex velit ac ligula. Maecenas turpis enim, luctus nec eleifend a, consequat in orci. Maecenas egestas accumsan lacinia. Duis a elit eget justo finibus dapibus sed at augue. Fusce porttitor ut nisl eu posuere.', NULL, 0, 0, 1, 0, 0);
         
         $this->db->create($table, $fields, $values_1);
         $this->db->create($table, $fields, $values_2);

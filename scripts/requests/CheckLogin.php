@@ -16,14 +16,16 @@ class CheckLogin
 
     public function username($username)
     {
-        $getUsers = $this->db->select('users', 'username', "username = ?", $username);
+        $data = array($username); 
+        $getUsers = $this->db->select('users', 'username', "username = ?", $data);
  
         return $getUsers;
     }
 
     public function password($username)
     {
-        $getUsers = $this->db->select('users', 'password', "username = ?", $username);
+        $data = array($username); 
+        $getUsers = $this->db->select('users', 'password', "username = ?", $data);
  
         return $getUsers;
     }
