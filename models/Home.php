@@ -116,7 +116,6 @@ class Home
                 array_push($data, $v);
             }
         }
-        $field = rtrim($field, ',');
         $posts = $this->db->select('posts', '*', '1= ?'.$sql, $data);
         return $posts;
     }
