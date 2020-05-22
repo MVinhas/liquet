@@ -19,6 +19,11 @@ class CPanelController extends Controller
 
     public function index()
     {
+        $out = array();
+        if (isset($_GET['timelapse'])) {
+            $timelapse = $_GET['timelapse'];
+            $out['visits'] = $this->model->getVisits($timelapse);
+        }
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($cpanel);
     }

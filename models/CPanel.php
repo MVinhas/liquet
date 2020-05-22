@@ -61,4 +61,24 @@ class CPanel
         $data = array($id);
         $this->db->delete('categories', 'id = ?', $data);
     }
+
+    public function getVisits($timelapse)
+    {
+        switch($timelapse) {
+            case 'week':        
+            break;
+            case 'previous_week':
+            break;
+            case 'month':
+            break;
+            case 'previous_month':
+            break;
+            case 'year':
+            break;
+            case 'last_year':
+            break;
+            default:
+        break;
+        }
+    }
 }
