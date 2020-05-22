@@ -20,6 +20,7 @@ class Setup
         $this->tags();
         $this->about();
         $this->social();
+        $this->sessions();
         $this->insertControllers();
         $this->insertMethods();
         $this->insertPages();
@@ -125,6 +126,7 @@ class Setup
             'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
             'name' => 'TEXT NULL' 
         );
+        $this->db->createTable(__FUNCTION__, $fields); 
     }
 
     private function social()
@@ -135,6 +137,16 @@ class Setup
             'link' => 'VARCHAR(256) NOT NULL',
             'visible' => 'INT(1) NOT NULL DEFAULT 1'
         );
+        $this->db->createTable(__FUNCTION__, $fields); 
+    }
+
+    private function sessions()
+    {
+        $fields = array(
+            'id' => 'BIGINT(20) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
+            'session' => 'VARCHAR(32) NOT NULL UNIQUE KEY'
+        );
+        $this->db->createTable(__FUNCTION__, $fields); 
     }
 
     private function insertControllers()
