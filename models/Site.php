@@ -18,7 +18,8 @@ class Site
         $visit = $this->db->select('sessions', 'id', 'session = ?', $data);
 
         if (empty($visit)) {
-            $this->db->create('sessions', 'session', $data);
+            $data = array(session_id(), date('Y-m-d'));
+            $this->db->create('sessions', 'session, firstvisit', $data);
         }
     }
 }
