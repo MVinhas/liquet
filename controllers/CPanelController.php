@@ -22,10 +22,15 @@ class CPanelController extends Controller
         $out = array();
         if (isset($_GET['timelapse'])) {
             $timelapse = $_GET['timelapse'];
-            $out['visits'] = $this->model->getVisits($timelapse);
+            $visits = $this->model->getVisits($timelapse);
+        }
+        
+        foreach ($visits as $k => $v) {
+
+            $out['visits'][$v['date']] = $v['value'];
         }
         $cpanel = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($cpanel);
+        echo $this->callTemplate($cpanel, $out);
     }
 
     public function header()
