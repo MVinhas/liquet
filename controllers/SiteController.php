@@ -6,6 +6,7 @@ use \engine\SiteInfo;
 use \config\Dispatcher;
 use \models\Header as Header;
 use \models\Footer as Footer;
+use \models\Site as Site;
 
 class SiteController extends Controller
 {
@@ -16,10 +17,12 @@ class SiteController extends Controller
         parent::__construct();
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
+        $this->model = new Site();
     }
     public function index()
     {
         $getKeys = array_keys($_GET);
+        $this->registerVisit();
         $this->getMetadata();
         $this->head();
         $cpanel = false;
@@ -90,5 +93,10 @@ class SiteController extends Controller
     {
         $subscribe = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($subscribe);
+    }
+
+    private function registerVisit()
+    {
+        $this->model->visitCounter();
     }
 }
