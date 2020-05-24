@@ -20,10 +20,6 @@
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="?CPanel/index/&timelapse=week">This Week</a>
                 <a class="dropdown-item" href="?CPanel/index/&timelapse=last_week">Last Week</a>
-                <a class="dropdown-item" href="?CPanel/index/&timelapse=month">This Month</a>
-                <a class="dropdown-item" href="?CPanel/index/&timelapse=last_month">Last Month</a>
-                <a class="dropdown-item" href="?CPanel/index/&timelapse=year">This Year</a>
-                <a class="dropdown-item" href="?CPanel/index/&timelapse=last_year">Last Year</a>
               </div>
             </div>
           </div>
@@ -41,7 +37,6 @@
     <script>
       feather.replace()
     </script>
-
     <!-- Graphs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
@@ -49,9 +44,9 @@
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          labels: [{% for k, item in visits%}'{{k|raw}}'{% if not loop.last %},{% endif %}{% endfor%}],
           datasets: [{
-            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            data: [{% for k, item in visits%}{{item}}{% if not loop.last %},{% endif %}{% endfor%}],
             lineTension: 0,
             backgroundColor: 'transparent',
             borderColor: '#007bff',
