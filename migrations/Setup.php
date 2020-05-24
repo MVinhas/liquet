@@ -144,7 +144,8 @@ class Setup
     {
         $fields = array(
             'id' => 'BIGINT(20) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
-            'session' => 'VARCHAR(32) NOT NULL UNIQUE KEY'
+            'session' => 'VARCHAR(32) NOT NULL',
+            'firstvisit' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP'
         );
         $this->db->createTable(__FUNCTION__, $fields); 
     }
