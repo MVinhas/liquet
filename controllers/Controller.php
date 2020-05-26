@@ -10,7 +10,7 @@ class Controller
         $this->template = $template;
     }
 
-    protected function getDirectory($filename)
+    public function getDirectory($filename)
     {
         $pathExplode = explode('Controller', $filename);
         $directory = strtolower($pathExplode[0]);
