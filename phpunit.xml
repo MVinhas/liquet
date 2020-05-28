@@ -1,7 +1,10 @@
 <phpunit bootstrap="config/conf.php">
   <testsuites>
-    <testsuite name="basecontroller">
+    <testsuite name="controllers">
       <file>tests/ControllerTest.php</file>
+    </testsuite>
+    <testsuite name="engine">
+      <file>tests/SiteInfoTest.php</file>
     </testsuite>
   </testsuites>
 </phpunit>
