@@ -13,30 +13,30 @@ class SiteInfo
 
     public function getName()
     {
-        return $this->flags->sitename;
+        return trim($this->flags->sitename);
     }
 
     public function getVersion()
     {
-        return $this->flags->siteversion;
+        return trim($this->flags->siteversion);
     }
 
     public function getAuthor()
     {
-        return $this->flags->siteauthor;
+        return trim($this->flags->siteauthor);
     }
 
     public function getLaunchYear()
     {
-        return $this->flags->launchyear;
+        return trim($this->flags->launchyear);
     }
 
     public function getCopyright()
     {
         if ($this->getLaunchYear() >= date('Y')) {
-            $copyright = $this->getLaunchYear().' '.$this->getAuthor();
+            $copyright = trim($this->getLaunchYear().' '.$this->getAuthor());
         } else {
-            $copyright = $this->getLaunchYear().' - '.date('Y').' '.$this->getAuthor();
+            $copyright = trim($this->getLaunchYear().' - '.date('Y').' '.$this->getAuthor());
         }
         return $copyright;
     }
