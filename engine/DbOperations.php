@@ -156,10 +156,10 @@ class DbOperations
         $values = array();
         $values_types = array();
         for ($i=0; $i < $count_fields; $i++) {
-            $field{$i} = ltrim($data_array[$i], ' ');
+            $field[$i] = ltrim($data_array[$i], ' ');
             
-            $values_type{$i} = strtolower(substr(gettype($data_array[$i]), 0, 1));
-            array_push($values, $field{$i});
+            $values_type[$i] = strtolower(substr(gettype($data_array[$i]), 0, 1));
+            array_push($values, $field[$i]);
         }
         $values_type = implode('', $values_type);
 
@@ -167,10 +167,10 @@ class DbOperations
             $values_where = array();
             $values_type_where = array();
             for ($i=0; $i < $count_fields_where; $i++) {
-                $field{$i} = ltrim($data_array_where[$i], ' ');
+                $field[$i] = ltrim($data_array_where[$i], ' ');
                 
-                $values_type_where{$i} = strtolower(substr(gettype($data_array_where[$i]), 0, 1));
-                array_push($values_where, $field{$i});
+                $values_type_where[$i] = strtolower(substr(gettype($data_array_where[$i]), 0, 1));
+                array_push($values_where, $field[$i]);
             }
             $values_type_where = implode('', $values_type_where);
      
