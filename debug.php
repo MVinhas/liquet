@@ -1,5 +1,10 @@
 <?php   
-    echo "<pre>";
+    echo "<pre style='z-index: 100;
+    position: absolute;
+    border: 1px solid #ccc;
+    top: 100%;
+    background: #eee;
+    width: 100%;'>";
     echo "<b>SESSION:</b>";
     print_r($_SESSION);
     echo "<br><b>POST:</b>";
