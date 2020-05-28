@@ -1,2 +1,2 @@
-./vendor/bin/phpunit --bootstrap config/conf.php tests/ControllerTest
-./vendor/bin/phpunit --bootstrap config/conf.php tests/SiteInfoTest
+./vendor/bin/phpunit --bootstrap config/conf.php tests/ControllerTest.php
+./vendor/bin/phpunit --bootstrap config/conf.php tests/SiteInfoTest.php
