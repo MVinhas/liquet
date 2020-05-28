@@ -3,7 +3,7 @@ namespace engine;
 
 class SiteInfo
 {
-    protected $flags;
+    public $flags;
 
     public function __construct()
     {
