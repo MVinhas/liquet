@@ -28,7 +28,7 @@ class CPanelController extends Controller
         $visits = $this->model->getVisits($timelapse);
         foreach ($visits as $k => $v) {
 
-            $out['visits'][$v['date']] = $v['value'];
+            $out['visits'][$v['date']] = $v['session'];
         }
  
         $cpanel = $this->getFile($this->path, __FUNCTION__);

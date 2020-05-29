@@ -64,58 +64,40 @@ class CPanel
 
     public function getVisits($timelapse)
     {
-        $month= date("m");
-
-        $day= date("d");
-
-        $year= date("Y");
-
         switch($timelapse) {
             case 'week':
                 $date1 = date('Y-m-d', strtotime('-1 week'));
                 $date2 = date('Y-m-d');
-                $data = array($date1, $date2);
-                $dates_query = $this->db->select('sessions', 'COUNT(session) AS session, firstvisit AS date', 'firstvisit BETWEEN ? AND ? GROUP BY firstvisit', $data);          
                 break;
             case 'last_week':
-        
                 $date1 = date('Y-m-d', strtotime('-2 weeks'));
                 $date2 = date('Y-m-d', strtotime('-1 week'));
-                $data = array($date1, $date2);
-                $dates_query = $this->db->select('sessions', 'COUNT(session) AS session, firstvisit AS date', 'firstvisit BETWEEN ? AND ? GROUP BY firstvisit', $data);          
                 break;
             default:
                 $date1 = date('Y-m-d', strtotime('-1 week'));
-                $date2 = date('Y-m-d');
-                $data = array($date1, $date2);
-                $dates_query = $this->db->select('sessions', 'COUNT(session) AS session, firstvisit AS date', 'firstvisit BETWEEN ? AND ? GROUP BY firstvisit', $data);          
+                $date2 = date('Y-m-d');          
                 break;
         }
+        
+        $data = array($date1, $date2);
+        $dates_query = $this->db->select('sessions', 'COUNT(session) AS session, firstvisit AS date', 'firstvisit BETWEEN ? AND ? GROUP BY firstvisit', $data);
+
         $date1 = strtotime($date1); 
         $date2 = strtotime($date2);
-        for ($currentDate = $date1; $currentDate <= $date2;  $currentDate += (86400)) {                           
+        for ($currentDate = $date1; $currentDate <= $date2;  $currentDate += (86400)) {
             $store = date('Y-m-d', $currentDate);
-            if (!empty($dates_query)) {
-                foreach ($dates_query as $k => $v) {
-                    if ($v['date'] === $store) {
-                        $dates[] = array(
-                            'date' => $store,
-                            'value' => $v['session']
-                        );
-                    } else {
-                        $dates[] = array(
-                            'date' => $store,
-                            'value' => 0
-                        );
-                    }
-                }
-        } else {
-            $dates[] = array(
-                'date' => $store,
-                'value' => 0
-            );
+            if(array_search($store, array_column($dates_query, 'date')) === false) {
+                $dates_query[] = array(
+                    'session' => 0,
+                    'date' => $store
+                );
+            }
+  
         }
-        }
-        return $dates; 
+        usort($dates_query, function($a, $b) {
+            return ($a['date'] < $b['date']) ? -1 : 1;
+        });                           
+
+        return $dates_query; 
     }
 }
