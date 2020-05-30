@@ -20,14 +20,8 @@ class CPanelController extends Controller
     public function index()
     {
         $out = array();
-        $timelapse = '';
-        if (!empty($_GET['timelapse']))
-            $timelapse = $_GET['timelapse'];
-        if (empty($timelapse))
-            $timelapse = 'week';
-        $visits = $this->model->getVisits($timelapse);
+        $visits = $this->model->getVisits();
         foreach ($visits as $k => $v) {
-
             $out['visits'][$v['date']] = $v['session'];
         }
  

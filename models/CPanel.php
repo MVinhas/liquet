@@ -62,23 +62,11 @@ class CPanel
         $this->db->delete('categories', 'id = ?', $data);
     }
 
-    public function getVisits($timelapse)
+    public function getVisits()
     {
-        switch($timelapse) {
-            case 'week':
-                $date1 = date('Y-m-d', strtotime('-1 week'));
-                $date2 = date('Y-m-d');
-                break;
-            case 'last_week':
-                $date1 = date('Y-m-d', strtotime('-2 weeks'));
-                $date2 = date('Y-m-d', strtotime('-1 week'));
-                break;
-            default:
-                $date1 = date('Y-m-d', strtotime('-1 week'));
-                $date2 = date('Y-m-d');          
-                break;
-        }
-        
+
+        $date1 = date('Y-m-d', strtotime('-1 week'));
+        $date2 = date('Y-m-d');        
         $data = array($date1, $date2);
         $dates_query = $this->db->select('sessions', 'COUNT(session) AS session, firstvisit AS date', 'firstvisit BETWEEN ? AND ? GROUP BY firstvisit', $data);
 
