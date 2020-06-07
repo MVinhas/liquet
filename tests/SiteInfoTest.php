@@ -9,34 +9,46 @@ class SiteInfoTest extends TestCase
     {
         $siteInfo = new \engine\SiteInfo;
         $this->assertIsObject($siteInfo->flags);
+        return $siteInfo;
     }
-    public function testReturnsAlwaysASiteName()
+
+    /**
+     * @depends testConfigFlagsIsObject
+     */
+    public function testReturnsAlwaysASiteName(\engine\SiteInfo $siteInfo): void
     {
-        $siteInfo = new \engine\SiteInfo;
         $this->assertNotEquals('', $siteInfo->getName());
     }
 
-    public function testReturnsAlwaysASiteVersion()
+    /**
+     * @depends testConfigFlagsIsObject
+     */
+    public function testReturnsAlwaysASiteVersion(\engine\SiteInfo $siteInfo): void
     {
-        $siteInfo = new \engine\SiteInfo;
         $this->assertNotEquals('', $siteInfo->getVersion());
     }
 
-    public function testReturnsAlwaysASiteAuthor()
+    /**
+     * @depends testConfigFlagsIsObject
+     */
+    public function testReturnsAlwaysASiteAuthor(\engine\SiteInfo $siteInfo): void
     {
-        $siteInfo = new \engine\SiteInfo;
         $this->assertNotEquals('', $siteInfo->getAuthor());
     }
 
-    public function testReturnsAlwaysASiteLaunchYear()
+    /**
+     * @depends testConfigFlagsIsObject
+     */
+    public function testReturnsAlwaysASiteLaunchYear(\engine\SiteInfo $siteInfo): void
     {
-        $siteInfo = new \engine\SiteInfo;
         $this->assertNotEquals('', $siteInfo->getLaunchYear());
     }
 
-    public function testCopyrightNotEmpty()
+    /**
+     * @depends testConfigFlagsIsObject
+     */
+    public function testCopyrightNotEmpty(\engine\SiteInfo $siteInfo): void
     {
-        $siteInfo = new \engine\SiteInfo;
         $this->assertNotEquals('', $siteInfo->getCopyright());
         $this->assertNotEquals('-', $siteInfo->getCopyright());
     }
