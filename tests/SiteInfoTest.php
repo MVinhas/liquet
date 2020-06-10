@@ -5,52 +5,42 @@ use PHPUnit\Framework\TestCase;
 class SiteInfoTest extends TestCase
 {
 
-    public function testConfigFlagsIsObject()
+    protected $siteInfo;
+
+    protected function setUp(): void
     {
-        $siteInfo = new \engine\SiteInfo;
-        $this->assertIsObject($siteInfo->flags);
-        return $siteInfo;
+        $this->siteInfo = new \engine\SiteInfo;
+    }
+    
+    public function testConfigFlagsIsObject(): void
+    {
+        $this->assertIsObject($this->siteInfo->flags);
     }
 
-    /**
-     * @depends testConfigFlagsIsObject
-     */
-    public function testReturnsAlwaysASiteName(\engine\SiteInfo $siteInfo): void
+    public function testReturnsAlwaysASiteName(): void
     {
-        $this->assertNotEquals('', $siteInfo->getName());
+        $this->assertNotEquals('', $this->siteInfo->getName());
     }
 
-    /**
-     * @depends testConfigFlagsIsObject
-     */
-    public function testReturnsAlwaysASiteVersion(\engine\SiteInfo $siteInfo): void
+    public function testReturnsAlwaysASiteVersion(): void
     {
-        $this->assertNotEquals('', $siteInfo->getVersion());
+        $this->assertNotEquals('', $this->siteInfo->getVersion());
     }
 
-    /**
-     * @depends testConfigFlagsIsObject
-     */
-    public function testReturnsAlwaysASiteAuthor(\engine\SiteInfo $siteInfo): void
+    public function testReturnsAlwaysASiteAuthor(): void
     {
-        $this->assertNotEquals('', $siteInfo->getAuthor());
+        $this->assertNotEquals('', $this->siteInfo->getAuthor());
     }
 
-    /**
-     * @depends testConfigFlagsIsObject
-     */
-    public function testReturnsAlwaysASiteLaunchYear(\engine\SiteInfo $siteInfo): void
+    public function testReturnsAlwaysASiteLaunchYear(): void
     {
-        $this->assertNotEquals('', $siteInfo->getLaunchYear());
+        $this->assertNotEquals('', $this->siteInfo->getLaunchYear());
     }
 
-    /**
-     * @depends testConfigFlagsIsObject
-     */
-    public function testCopyrightNotEmpty(\engine\SiteInfo $siteInfo): void
+    public function testCopyrightNotEmpty(): void
     {
-        $this->assertNotEquals('', $siteInfo->getCopyright());
-        $this->assertNotEquals('-', $siteInfo->getCopyright());
+        $this->assertNotEquals('', $this->siteInfo->getCopyright());
+        $this->assertNotEquals('-', $this->siteInfo->getCopyright());
     }
 
 }

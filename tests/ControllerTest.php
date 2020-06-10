@@ -5,22 +5,25 @@ use PHPUnit\Framework\TestCase;
 final class ControllerTest extends TestCase
 {
 
-    public function testFilePathHasCorrectFormat()
+    protected $controller;
+
+    protected function setUp(): void
+    {
+        $this->controller = new \controllers\Controller;
+    }
+    
+    public function testFilePathHasCorrectFormat(): void
     {
         $controller = new \controllers\Controller;
         $this->assertEquals(
             'teste/teste.php',
-            $controller->getFile('teste', 'teste.php')
+            $this->controller->getFile('teste', 'teste.php')
         );
-        return $controller;
     }
 
-    /**
-     * @depends testFilePathHasCorrectFormat
-     */
-    public function testDirectoryExists(\controllers\Controller $controller): void
+    public function testDirectoryExists(): void
     {
         $this->assertDirectoryExists('views/cpanel');
-        $this->assertEquals('cpanel', $controller->getDirectory('CPanelController'));
+        $this->assertEquals('cpanel', $this->controller->getDirectory('CPanelController'));
     }
 }
