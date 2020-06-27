@@ -34,7 +34,7 @@ class Home
     public function checkAdmin()
     {
         $data = array('admin');
-        $admin_exists = $this->db->select('users','*','role = ?', $data);
+        $admin_exists = $this->db->select('users','id','role = ?', $data);
         if (!empty($admin_exists))
             return '1';
         return '0';
