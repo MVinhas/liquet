@@ -21,6 +21,7 @@ class DbOperations
 
     public function create($table, $fields, $data)
     {
+        $data = $this->convert_htmlentities($data); 
         $data_array = array_values($data);
 
         $prepare_array = array();
@@ -53,6 +54,7 @@ class DbOperations
             if ($sql->execute()) {
                 $result = $sql->get_result();
                 $sql_fetch = $this->fetchQuery($result);
+                $sql_fetch = $this->htmlentities_to_utf8($sql_fetch);
                 return $sql_fetch;
             } else {
                 return "Error: ".$this->db->connection->error;
@@ -71,6 +73,7 @@ class DbOperations
         if ($sql->execute()) {
             $result = $sql->get_result();
             $sql_fetch = $this->fetchQuery($result);
+            $sql_fetch = $this->htmlentities_to_utf8($sql_fetch);
             return $sql_fetch;
         } else {
             return "Error: ".$this->db->connection->error;
@@ -79,6 +82,8 @@ class DbOperations
 
     public function update($table, $fields, $fields_value, $where, $where_value)
     {   
+        $fields_value = $this->convert_htmlentities($fields_value);
+        $where_value = $this->convert_htmlentities($where_value);
         $data_array = array_values($fields_value);
 
         if (is_array($where_value)) {
@@ -186,5 +191,25 @@ class DbOperations
         }
 
         return $sql;
+    }
+
+    private function convert_htmlentities($input)
+    {
+        array_walk_recursive(
+            $input, function (&$value) {
+                    $value = htmlentities($value);
+                }
+        );
+        return $input;
+    }
+
+    private function htmlentities_to_utf8($input)
+    {
+        array_walk_recursive(
+            $input, function (&$value) {
+                    $value = html_entity_decode($value);
+                }
+        );
+        return $input;
     }
 }
