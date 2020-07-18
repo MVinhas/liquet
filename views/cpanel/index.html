@@ -7,52 +7,11 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Dashboard</h1>
         </div>
-        <p class="h5">Visits this week</p>
+        <p class="h5">Visits today: {{sessions.today}}</p>
+        <p class="h5">Visits this week: {{sessions.week}}</p>
+        <p class="h5">Visits all time: {{sessions.alltime}}</p>
         <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="1539" height="649" style="display: block; width: 1539px; height: 649px;"></canvas>
         <hr>
       </main>
     </div>
   </div>
-    <!-- Graphs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script>
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: [{% for k, item in visits%}'{{k|raw}}'{% if not loop.last %},{% endif %}{% endfor%}],
-          datasets: [{
-            data: [{% for k, item in visits%}{{item}}{% if not loop.last %},{% endif %}{% endfor%}],
-            lineTension: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#007bff',
-            borderWidth: 4,
-            pointBackgroundColor: '#007bff'
-          }]
-        },
-        options: {
-          scales: {
-            xAxes: [{
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Date'
-              }
-            }],
-            yAxes: [{
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Visits'
-              },
-              ticks:{
-                stepSize: 1
-              }
-					}]
-          },
-          legend: {
-            display: false,
-          }
-        }
-      });
-    </script>

@@ -19,12 +19,22 @@ class CPanelController extends Controller
 
     public function index()
     {
-        $out = array();
+        $out['sessions'] = array();
+        $out['sessions']['today'] = 0;
+        $out['sessions']['week'] = 0;
+        $out['sessions']['alltime'] = 0;
         $visits = $this->model->getVisits();
+        
         foreach ($visits as $k => $v) {
-            $out['visits'][$v['date']] = $v['session'];
+            // Today
+            if ($v['date'] === date('Y-m-d')) $out['sessions']['today'] = $v['session'];
+            
+            // Week
+            if ($v['date'] <= date('Y-m-d') && $v['date'] >= date('Y-m-d', strtotime('-7 days'))) $out['sessions']['week'] += $v['session'];
+
+            // All time
+            $out['sessions']['alltime'] += $v['session'];
         }
- 
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         echo $this->callTemplate($cpanel, $out);
     }

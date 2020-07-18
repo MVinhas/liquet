@@ -63,29 +63,10 @@ class CPanel
     }
 
     public function getVisits()
-    {
-
-        $date1 = date('Y-m-d', strtotime('-1 week'));
-        $date2 = date('Y-m-d');        
-        $data = array($date1, $date2);
-        $dates_query = $this->db->select('sessions', 'COUNT(session) AS session, firstvisit AS date', 'firstvisit BETWEEN ? AND ? GROUP BY firstvisit', $data);
-
-        $date1 = strtotime($date1); 
-        $date2 = strtotime($date2);
-        for ($currentDate = $date1; $currentDate <= $date2;  $currentDate += (86400)) {
-            $store = date('Y-m-d', $currentDate);
-            if(array_search($store, array_column($dates_query, 'date')) === false) {
-                $dates_query[] = array(
-                    'session' => 0,
-                    'date' => $store
-                );
-            }
-  
-        }
-        usort($dates_query, function($a, $b) {
-            return ($a['date'] < $b['date']) ? -1 : 1;
-        });                           
-
+    {      
+        $data = array('1');
+        $dates_query = $this->db->select('sessions', 'COUNT(session) AS session, firstvisit AS date', '1=? GROUP BY firstvisit', $data);
+                       
         return $dates_query; 
     }
 }
