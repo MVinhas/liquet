@@ -21,7 +21,7 @@ class DbOperations
 
     public function create($table, $fields, $data)
     {
-        $data = $this->convert_htmlentities($data); 
+        $data = $this->convertHtmlEntities($data); 
         $data_array = array_values($data);
 
         $prepare_array = array();
@@ -54,7 +54,7 @@ class DbOperations
             if ($sql->execute()) {
                 $result = $sql->get_result();
                 $sql_fetch = $this->fetchQuery($result);
-                $sql_fetch = $this->htmlentities_to_utf8($sql_fetch);
+                $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
                 return $sql_fetch;
             } else {
                 return "Error: ".$this->db->connection->error;
@@ -73,7 +73,7 @@ class DbOperations
         if ($sql->execute()) {
             $result = $sql->get_result();
             $sql_fetch = $this->fetchQuery($result);
-            $sql_fetch = $this->htmlentities_to_utf8($sql_fetch);
+            $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
             return $sql_fetch;
         } else {
             return "Error: ".$this->db->connection->error;
@@ -82,8 +82,8 @@ class DbOperations
 
     public function update($table, $fields, $fields_value, $where, $where_value)
     {   
-        $fields_value = $this->convert_htmlentities($fields_value);
-        $where_value = $this->convert_htmlentities($where_value);
+        $fields_value = $this->convertHtmlEntities($fields_value);
+        $where_value = $this->convertHtmlEntities($where_value);
         $data_array = array_values($fields_value);
 
         if (is_array($where_value)) {
@@ -193,7 +193,7 @@ class DbOperations
         return $sql;
     }
 
-    private function convert_htmlentities($input)
+    private function convertHtmlEntities($input)
     {
         array_walk_recursive(
             $input, function (&$value) {
@@ -203,7 +203,7 @@ class DbOperations
         return $input;
     }
 
-    private function htmlentities_to_utf8($input)
+    private function htmlEntitiesToUTF8($input)
     {
         array_walk_recursive(
             $input, function (&$value) {
