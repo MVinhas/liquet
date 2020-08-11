@@ -3,7 +3,8 @@
     "description": "CMS Blog",
     "type": "project",
     "require": {
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "psr/log": "^1.1"
     },
     "license": "AGPL-3.0-or-later",
     "authors": [
