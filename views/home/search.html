@@ -1,1 +1,8 @@
+{% if header_results == -1 %}
+{% include 'post/no_results.html' %}
+{% else %}
+<div class="alert alert-info" role="alert">
+    Found {{number_results}} result(s)
+</div>
 {% include 'post/detail.html' %}
+{% endif %}
