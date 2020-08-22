@@ -98,14 +98,23 @@ class HomeController extends Controller
 
     public function search()
     {
-        $search_terms = explode(" ", $_POST['search']);
         $out = array();
-        $out['posts'] = $this->model->getPostsBySearch($search_terms);
         $out['categories'] = $this->model->getCategories();
         $out['about'] = $this->model->getAbout();
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
-        $search = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($search, $out);    
+        if (!empty($_POST['search'])) {
+            $search_terms = explode(" ", $_POST['search']);
+            $out['posts'] = $this->model->getPostsBySearch($search_terms);
+            if (empty($out['posts'])) {
+                $out['header_results'] = -1;    
+            } else {
+                $out['number_results'] = count($out['posts']);
+            }
+            $search = $this->getFile($this->path, __FUNCTION__);
+            echo $this->callTemplate($search, $out); 
+        } else{
+            $this->index();
+        } 
     }
 }
