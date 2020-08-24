@@ -55,6 +55,9 @@ class PostController extends Controller
     {
         $category = $_GET['category'];
         $out['posts'] = $this->model->getPostsByCategory($category);
+        if (empty($out['posts'])) {
+            $out['header_results'] = -1;
+        }
         $home = new \models\Home();
         $out['categories'] = $home->getCategories();
         $out['about'] = $home->getAbout();
