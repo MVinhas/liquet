@@ -26,8 +26,9 @@ $('#first-account').validate({
             equalTo: '#password'
         },
         'agree': {
-            required: true,
-            minlength: 1
+            terms: {
+                required: true
+            }
         }
     },
     messages : {
