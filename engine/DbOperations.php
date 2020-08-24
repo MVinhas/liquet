@@ -64,6 +64,7 @@ class DbOperations
         }
         if ($field_values != '') {
             $count_fields = substr_count($filter, '?');
+            $data_array = $this->convertHtmlEntities($data_array);
             $sql = $this->preparedStatement($sql, $count_fields, $data_array);
         } else {
             $sql = $this->db->prepare($sql);
