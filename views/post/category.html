@@ -1,1 +1,5 @@
+{% if header_results == -1 %}
+{% include 'post/no_results.html' %}
+{% else %}
 {% include 'post/detail.html' %}
+{% endif %}
