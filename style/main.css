@@ -6,7 +6,17 @@ body{
    sans-serif;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
- }
+}
+
+.debug{
+  z-index: 100;
+  position: absolute;
+  border: 1px solid dimgrey;
+  top: 100%;
+  background:gainsboro;
+  width: 100%;
+  left:0;  
+}
 
 .copyleft {
   display:inline-block;
@@ -27,7 +37,7 @@ body{
 form .error{
   width: 100%;
   margin-top: .25rem;
-  color: #dc3545;  
+  color: indianred;  
 }
 form label.error{
   font-size: 80%;
@@ -40,7 +50,7 @@ form label.error{
 
 .blog-header {
   line-height: 1;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid lavender;
 }
 
 .blog-header-logo {
@@ -142,3 +152,4 @@ h1, h2, h3, h4, h5, h6 {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
