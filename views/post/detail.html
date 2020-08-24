@@ -9,15 +9,10 @@
           <h2 class="blog-post-title">{{item.title|raw}}</h2>
           <p class="blog-post-meta">{{item.date}} by <a href="#">{{item.author|raw}}</a></p>
           <p>{{item.content|raw}}</p>
-        </div><!-- /.blog-post -->
+        </div>
+        {% if not loop.last %}<hr>{% endif %}
         {% endfor %}
-  
-        <nav class="blog-pagination">
-          <a class="btn btn-outline-primary" href="#">Older</a>
-          <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-        </nav>
-  
-      </div><!-- /.blog-main -->
+      </div>
   
       <aside class="col-md-4 blog-sidebar">
         <div class="p-4 mb-3 bg-light rounded">
@@ -44,8 +39,8 @@
             {% endfor %}
           </ol>
         </div>
-      </aside><!-- /.blog-sidebar -->
+      </aside>
   
-    </div><!-- /.row -->
+    </div>
   
   </main>
