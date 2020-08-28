@@ -12,50 +12,32 @@
 </div>
 {% endif %}
 <form id="first-account" method="POST" action="?Home/register" enctype="multipart/form-data">
-  <div class="row mt-4 form-group">
-
-    <div class="col-md-6">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" name="email" id="email" placeholder="email@example.com" required>
+  <div class="container col-sm-4 col-xs-12">
+    <div class="form-group">
+      <input type="email" id="email" name="email" class="form-control" placeholder="email@example.com" required>
+    </div>
+    <div class="form-group">
+      <input type="text" id="username" name="username" class="form-control"  placeholder="Username" required>
+    </div>
+    <div class="form-group">
+      <input type="password" id="password" name="password" class="form-control validate" placeholder="Password" minlength=6 required>
+    </div>  
+    <div class="form-group">  
+      <input type="password" id="confirm-password" name="confirm-password" class="form-control" placeholder="Repeat password" required>
     </div>
 
-  
-    <div class="col-md-6">
-      <label for="username">Username</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupPrepend">@</span>
-        </div>
-        <input type="text" class="form-control" name="username" id="username" placeholder="" aria-describedby="inputGroupPrepend" required>
-      </div>
-    </div>
- 
-  </div>
-  <div class="row mt-4 form-group">
+    <div class="form-group form-check">
 
-    <div class="col-md-6">
-      <label for="password">Password</label>
-      <div class="input-group">
-        <input type="password" id="password" name="password" class="form-control validate" minlength=6 required>
-      </div>
+      
+      <label class="form-check-label" for="agree">
+        <input type="checkbox" id="agree" name="agree" class="form-check-input" required>
+        <span>By submiting this form, you are agreeing with our <a href="?Site/terms" target="_blank"> Terms & Conditions</a></span>
+        <label class="error"></label>
+      </label>
+
     </div>
-  
- 
-    <div class="col-md-6">
-      <label for="confirm_password">Confirm Password</label>
-      <div class="input-group">
-        <input type="password" id="confirm-password" name="confirm-password" class="form-control" required>
-      </div>
-    </div>
-  
-  </div>
-  <div class="form-group form-check">
-    
-    <label class="form-check-label" for="agree">
-      <input type="checkbox" class="form-check-input" id="agree" name="agree" required>By submiting this form, you are agreeing with our <a href="?Site/terms" target="_blank"> Terms & Conditions</a>
-    </label>
   </div> 
-  <button id="submit" class="btn btn-primary" type="submit">Submit form</button>
+  <button type="submit" id="submit" class="btn btn-primary">Submit form</button>
 </form>
 <script defer src="scripts/home/setup.{% if debug_mode == 0 %}min.{% endif %}js"></script>
 {% endapply %}
