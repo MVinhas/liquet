@@ -35,12 +35,13 @@ body{
 }
 
 form .error{
-  width: 100%;
+ /* width: 100%;*/
   margin-top: .25rem;
   color: indianred;  
 }
 form label.error{
   font-size: 80%;
+  display: block;
 }
 
 /***********************
@@ -54,16 +55,11 @@ form label.error{
 }
 
 .blog-header-logo {
-  font-family: "Times New Roman", Times, serif;
   font-size: 2.25rem;
 }
 
 .blog-header-logo:hover {
   text-decoration: none;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Times New Roman", Times, serif;
 }
 
 .display-4 {
