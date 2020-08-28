@@ -28,7 +28,8 @@ $('#first-account').validate({
         'agree': {
             terms: {
                 required: true
-            }
+            },
+            errorLabelContainer: "label.error"
         }
     },
     messages : {
@@ -51,5 +52,6 @@ $('#first-account').validate({
         'agree': {
             required: 'You must accept our Terms & Conditions'
         }
-    }
+    },
+    
 });  
