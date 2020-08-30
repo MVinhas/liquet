@@ -52,7 +52,7 @@
         {% if item.featured == 0 and item.other_featured == 0%}
         <div class="blog-post">
           <h2 class="blog-post-title"><a class="text-dark" href="?Post/detail/&id={{item.id}}">{{item.title|raw}}</a></h2>
-          <p class="blog-post-meta">{{item.date}} by <a href="#">{{item.author|raw}}</a></p>
+          <p class="blog-post-meta">{{item.date}} by {{item.author|raw}}</p>
           <p>{{item.content|raw}}</p>
         </div><!-- /.blog-post -->
         {% endif %}

@@ -7,7 +7,7 @@
         {% for item in posts %}
         <div class="blog-post">
           <h2 class="blog-post-title">{{item.title|raw}}</h2>
-          <p class="blog-post-meta">{{item.date}} by <a href="#">{{item.author|raw}}</a></p>
+          <p class="blog-post-meta">{{item.date}} by {{item.author|raw}}</p>
           <p>{{item.content|raw}}</p>
         </div>
         {% if not loop.last %}<hr>{% endif %}
