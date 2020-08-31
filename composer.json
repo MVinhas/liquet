@@ -4,8 +4,6 @@
     "type": "project",
     "require": {
         "twig/twig": "^3.0",
-        "psr/log": "^1.1",
-        "psr/cache": "^1.0",
         "phpunit/phpunit": "^8",
         "deployer/deployer": "^6.7"
     },
