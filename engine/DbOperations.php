@@ -70,7 +70,7 @@ class DbOperations
             $sql = $this->db->prepare($sql);
             $sql->bind_param($values_type, ...$values);
         }
-        
+        if ($sql === false) return false;
         if ($sql->execute()) {
             $result = $sql->get_result();
             $sql_fetch = $this->fetchQuery($result);
