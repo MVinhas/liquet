@@ -1,3 +1,4 @@
+{% include '/site/head.html' %}
 {% apply spaceless %}
 <section id="dbconf_index">
     <div class="alert alert-danger h2" role="alert">
@@ -7,8 +8,8 @@
     </div>
     <div class="h4 mt-4 mb-4">Don't worry. Just take the next steps in order to successfully setup your environment.</div>
     <div class="h6">Using MySQL command line prompt as 'root':</div>
-    <pre><code class="card card-body">CREATE DATABASE seamus; 
-GRANT ALL ON seamus.* to 'seamus'@'localhost' IDENTIFIED BY 'seamus';
+    <pre><code class="card card-body">CREATE DATABASE mvinhasblog; 
+GRANT ALL ON mvinhasblog.* to 'mvinhas'@'localhost' IDENTIFIED BY 'mvinhas';
 FLUSH privileges;</code></pre>
 </section>
 {% endapply %}
