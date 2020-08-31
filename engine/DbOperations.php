@@ -51,6 +51,7 @@ class DbOperations
         if ($filter == '') {
             $sql = "SELECT $fields FROM $table";
             $sql = $this->db->prepare($sql);
+            if ($sql === false) return false;
             if ($sql->execute()) {
                 $result = $sql->get_result();
                 $sql_fetch = $this->fetchQuery($result);
