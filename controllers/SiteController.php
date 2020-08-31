@@ -7,10 +7,11 @@ use \config\Dispatcher;
 use \models\Header as Header;
 use \models\Footer as Footer;
 use \models\Site as Site;
+use \models\Home as Home;
 
 class SiteController extends Controller
 {
-    protected $path;
+    protected $path, $home, $model;
 
     public function __construct()
     {
@@ -18,33 +19,38 @@ class SiteController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Site();
+        $this->home = new Home();
     }
     public function index()
     {
-        $getKeys = array_keys($_GET);
-        $this->registerVisit();
-        $this->getMetadata();
-        $this->head();
-        $cpanel = false;
-        foreach ($getKeys as $key) {
-            $key = substr($key, 0, strpos($key, "/"));
-            if ($key === 'CPanel') {
-                $cpanel = true;
+        if ($this->home->checkUsers() === true) {
+            $getKeys = array_keys($_GET);
+            $this->registerVisit();
+            $this->getMetadata();
+            $this->head();
+            $cpanel = false;
+            foreach ($getKeys as $key) {
+                $key = substr($key, 0, strpos($key, "/"));
+                if ($key === 'CPanel') {
+                    $cpanel = true;
+                }
+            }
+            if ($cpanel === true) {
+                $cpanelController = new \controllers\CPanelController;
+                $cpanelController->header();
+            } else {
+                $this->header();
             }
         }
-        if ($cpanel === true) {
-            $cpanelController = new \controllers\CPanelController;
-            $cpanelController->header();
-        } else {
-            $this->header();
-        }
         Dispatcher::dispatch();
-
-        if ($cpanel === true) {
-            $cpanelController->footer();
-        } else {
-            $this->footer();
-        }
+        if ($this->home->checkUsers() !== true) {
+            if ($cpanel === true) {
+                $cpanelController->footer();
+            } else {
+                
+                    $this->footer();
+            }
+        }   
     }
 
     private function getMetadata()
