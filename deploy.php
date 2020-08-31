@@ -7,10 +7,10 @@ require 'recipe/common.php';
 set('allow_anonymous_stats', true);
 
 // Project name
-set('application', 'Seamus');
+set('application', 'mvinhas-blog');
 
 // Project repository
-set('repository', 'git@github.com:MVinhas/Seamus.git');
+set('repository', 'git@github.com:MVinhas/mvinhas-blog.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true); 
@@ -52,4 +52,4 @@ task('deploy', [
 after('deploy:failed', 'deploy:unlock');
 
 // Branch to deploy
-set('branch', 'master');
+set('branch', '0.1.0-alpha1');
