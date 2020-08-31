@@ -52,4 +52,4 @@ task('deploy', [
 after('deploy:failed', 'deploy:unlock');
 
 // Branch to deploy
-set('branch', '0.1.0-alpha1');
+set('branch', 'master');
