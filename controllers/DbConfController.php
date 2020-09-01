@@ -16,8 +16,12 @@ class DbConfController extends Controller
 
     public function index()
     {
-        
+        $out = array();
+        $out['DB_SERVER'] = DB_SERVER;
+        $out['DB_USERNAME'] = DB_USERNAME;
+        $out['DB_PASSWORD'] = DB_PASSWORD;
+        $out['DB_DATABASE'] = DB_DATABASE;
         $setup = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($setup);
+        echo $this->callTemplate($setup, $out);
     }
 }
