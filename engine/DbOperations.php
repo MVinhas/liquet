@@ -23,7 +23,7 @@ class DbOperations
     {
         $data = $this->convertHtmlEntities($data); 
         $data_array = array_values($data);
-
+        
         $prepare_array = array();
 
         foreach ($data_array as $k => $v) {
@@ -32,9 +32,8 @@ class DbOperations
         $prepare = implode(',', $prepare_array);
         $sql = "INSERT INTO $table ($fields) VALUES ($prepare)";
         $count_fields = substr_count($prepare, '?');
-
         $sql = $this->preparedStatement($sql, $count_fields, $data_array);
-
+        
         if ($sql->execute()) {
             return true;
         } else {

@@ -1,6 +1,6 @@
 {
-    "name": "mvinhas/seamus",
-    "description": "CMS Blog",
+    "name": "mvinhas/mvinhas-blog",
+    "description": "mvinhas-blog",
     "type": "project",
     "require": {
         "twig/twig": "^3.0",
@@ -11,7 +11,7 @@
     "authors": [
         {
             "name": "Micael Vinhas",
-            "email": "mvinhas.tirso@gmail.com"
+            "email": "dev.mvinhas@gmail.com"
         }
     ]
 }

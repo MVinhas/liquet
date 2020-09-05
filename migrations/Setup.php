@@ -17,6 +17,7 @@ class Setup
         $this->categories();
         $this->pages();
         $this->controllers();
+        $this->methods();
         $this->tags();
         $this->about();
         $this->social();
@@ -27,6 +28,7 @@ class Setup
         $this->insertCategories();
         $this->insertPosts();
         $this->insertAbout();
+        $this->insertAdmin();
     }
 
     private function users()
@@ -111,6 +113,16 @@ class Setup
         $this->db->createTable(__FUNCTION__, $fields);
     }
 
+    private function methods()
+    {
+        $fields = array(
+            'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
+            'name' => 'VARCHAR(64) NOT NULL UNIQUE KEY',
+            'controller' => 'INT(3) NOT NULL DEFAULT 0'
+        );
+        $this->db->createTable(__FUNCTION__, $fields);
+    }
+
     private function tags()
     {
         $fields = array(
@@ -154,13 +166,13 @@ class Setup
     {
         $table = 'controllers';
         $fields = 'name';
-        $values_1 = "'Admin'";
-        $values_2 = "'Home'";
-
+        $values_1 = array('Home');
+        $values_2 = array('Admin');
+        
         $this->db->create($table, $fields, $values_1);
         $this->db->create($table, $fields, $values_2);
     }
-    
+
     private function insertMethods()
     {
         $table = 'methods';
@@ -175,9 +187,9 @@ class Setup
     private function insertPages()
     {
         $table = 'pages';
-        $fields = '`name`, `short_content`, `content`, `method`, `active`, `header`, `menu`, `footer`';
-        $values_1 = array('Register', NULL, NULL, 1, 1, 1, 1, 0);
-        $values_2 = array('Login', NULL, NULL, 2, 1, 1, 1, 0);
+        $fields = '`name`, `method`, `active`, `header`, `menu`, `footer`';
+        $values_1 = array('Register', 1, 1, 1, 1, 0);
+        $values_2 = array('Login', 2, 1, 1, 1, 0);
 
         $this->db->create($table, $fields, $values_1);
         $this->db->create($table, $fields, $values_2);
@@ -187,17 +199,17 @@ class Setup
     {
         $table = 'categories';
         $fields = 'name';
-        $values_1 = "'Programming'";
-        $values_2 = "'Hardware'";
-        $values_3 = "'Mobility'";
-        $values_4 = "'Software'";
-        $values_5 = "'Linux'";
-        $values_6 = "'macOS'";
-        $values_7 = "'Windows'";
-        $values_8 = "'Gaming'";
-        $values_9 = "'Music'";
-        $values_10 = "'Lifestyle'";
-        $values_11 = "'PC Buyers Guide'";
+        $values_1 = array('Programming');
+        $values_2 = array('Hardware');
+        $values_3 = array('Mobility');
+        $values_4 = array('Software');
+        $values_5 = array('Linux');
+        $values_6 = array('macOS');
+        $values_7 = array('Windows');
+        $values_8 = array('Gaming');
+        $values_9 = array('Music');
+        $values_10 = array('Lifestyle');
+        $values_11 = array('PC Buyers Guide');
 
         $this->db->create($table, $fields, $values_1);
         $this->db->create($table, $fields, $values_2);
@@ -215,13 +227,13 @@ class Setup
     private function insertPosts()
     {
         $table = 'posts';
-        $fields = '`category`, `title`, `author`, `date`, `banner`, `short_content`, `content`, `tags`, `comments`, `likes`, `status`, `featured`, `other_featured`';
-        $values_1 = array(1, 'Fusce sit amet consectetur risus.', 'Micael Vinhas', '2020-04-07', NULL, '', 'Integer consequat interdum egestas. Sed mollis ornare erat non varius. Mauris congue, nunc quis porta condimentum, ligula tellus commodo velit, at cursus diam arcu in odio. Cras nisl quam, aliquam sit amet aliquam a, fermentum sit amet arcu. Integer molestie at tortor vel malesuada.', NULL, 0, 0, 1, 1, 0);
-        $values_2 = array(2, 'Vestibulum molestie efficitur facilisis.', 'Micael Vinhas', '2020-04-22', NULL, '', 'Nulla hendrerit lacus at elit viverra malesuada. Aliquam ut mattis velit. Etiam consequat mattis dapibus. Etiam cursus arcu in sodales gravida. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', NULL, 0, 0, 1, 0, 1);
-        $values_3 = array(3, 'Praesent in pretium arcu.', 'Micael Vinhas', '2020-04-30', NULL, '', 'Morbi maximus mauris sed dolor fringilla, in accumsan augue tempus. Ut pharetra tincidunt magna at imperdiet. Ut faucibus felis nulla, sit amet bibendum ex fermentum non. ', NULL, 0, 0, 1, 0, 1);
-        $values_4 = array(4, 'Curabitur sit amet lobortis purus.', 'Micael Vinhas', '2020-04-19', NULL, '', 'Vestibulum molestie efficitur facilisis. Sed finibus feugiat odio et blandit. Aenean at enim eget augue egestas pretium. Nunc eget tellus eget risus aliquam malesuada sed at turpis. Donec hendrerit ullamcorper mi, in rutrum tortor bibendum quis. Donec luctus consectetur turpis at sodales. Curabitur sit amet lobortis purus.', NULL, 0, 0, 1, 0, 0);
-        $values_5 = array(5, 'Ut auctor consequat arcu, at accumsan sem semper quis.', 'Micael Vinhas', '2020-04-11', NULL, '', 'Curabitur sit amet lobortis purus. Donec luctus, libero vitae faucibus dapibus, ante ligula iaculis libero, a ornare sapien urna at nunc.', NULL, 0, 0, 1, 0, 0);
-        $values_6 = array(5, 'Aliquam pretium odio ac lorem mattis pellentesque.', 'Micael Vinhas', '2020-04-04', NULL, '', 'Ut sollicitudin, dolor in interdum cursus, felis ante suscipit ante, non laoreet ex velit ac ligula. Maecenas turpis enim, luctus nec eleifend a, consequat in orci. Maecenas egestas accumsan lacinia. Duis a elit eget justo finibus dapibus sed at augue. Fusce porttitor ut nisl eu posuere.', NULL, 0, 0, 1, 0, 0);
+        $fields = '`category`, `title`, `author`, `date`, `content`, `comments`, `likes`, `status`, `featured`, `other_featured`';
+        $values_1 = array(1, 'Fusce sit amet consectetur risus.', 'Micael Vinhas', '2020-04-07', 'Integer consequat interdum egestas. Sed mollis ornare erat non varius. Mauris congue, nunc quis porta condimentum, ligula tellus commodo velit, at cursus diam arcu in odio. Cras nisl quam, aliquam sit amet aliquam a, fermentum sit amet arcu. Integer molestie at tortor vel malesuada.', 0, 0, 1, 1, 0);
+        $values_2 = array(2, 'Vestibulum molestie efficitur facilisis.', 'Micael Vinhas', '2020-04-22', 'Nulla hendrerit lacus at elit viverra malesuada. Aliquam ut mattis velit. Etiam consequat mattis dapibus. Etiam cursus arcu in sodales gravida. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 0, 0, 1, 0, 1);
+        $values_3 = array(3, 'Praesent in pretium arcu.', 'Micael Vinhas', '2020-04-30', 'Morbi maximus mauris sed dolor fringilla, in accumsan augue tempus. Ut pharetra tincidunt magna at imperdiet. Ut faucibus felis nulla, sit amet bibendum ex fermentum non. ', 0, 0, 1, 0, 1);
+        $values_4 = array(4, 'Curabitur sit amet lobortis purus.', 'Micael Vinhas', '2020-04-19', 'Vestibulum molestie efficitur facilisis. Sed finibus feugiat odio et blandit. Aenean at enim eget augue egestas pretium. Nunc eget tellus eget risus aliquam malesuada sed at turpis. Donec hendrerit ullamcorper mi, in rutrum tortor bibendum quis. Donec luctus consectetur turpis at sodales. Curabitur sit amet lobortis purus.',  0, 0, 1, 0, 0);
+        $values_5 = array(5, 'Ut auctor consequat arcu, at accumsan sem semper quis.', 'Micael Vinhas', '2020-04-11', 'Curabitur sit amet lobortis purus. Donec luctus, libero vitae faucibus dapibus, ante ligula iaculis libero, a ornare sapien urna at nunc.', 0, 0, 1, 0, 0);
+        $values_6 = array(5, 'Aliquam pretium odio ac lorem mattis pellentesque.', 'Micael Vinhas', '2020-04-04','Ut sollicitudin, dolor in interdum cursus, felis ante suscipit ante, non laoreet ex velit ac ligula. Maecenas turpis enim, luctus nec eleifend a, consequat in orci. Maecenas egestas accumsan lacinia. Duis a elit eget justo finibus dapibus sed at augue. Fusce porttitor ut nisl eu posuere.',  0, 0, 1, 0, 0);
         
         $this->db->create($table, $fields, $values_1);
         $this->db->create($table, $fields, $values_2);
@@ -234,8 +246,17 @@ class Setup
     private function insertAbout()
     {
         $table = 'about';
-        $fields = '`description`';
-        $values = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at enim ut.';
+        $fields = '`name`';
+        $values = array('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at enim ut.');
+
+        $this->db->create($table, $fields, $values);
+    }
+
+    private function insertAdmin()
+    {
+        $table = 'users';
+        $fields = '`email`, `username`, `password`, `role`, `reg_date`, `active`';
+        $values = array(OWNER, OWNER, password_hash(OWNER, PASSWORD_DEFAULT), 'admin', date('Y-m-d H:i:s'), 1);
 
         $this->db->create($table, $fields, $values);
     }

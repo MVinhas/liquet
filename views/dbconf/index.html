@@ -8,8 +8,8 @@
     </div>
     <div class="h4 mt-4 mb-4">Don't worry. Just take the next steps in order to successfully setup your environment.</div>
     <div class="h6">Using MySQL command line prompt as 'root':</div>
-    <pre><code class="card card-body">CREATE DATABASE mvinhasblog; 
-GRANT ALL ON mvinhasblog.* to 'mvinhas'@'localhost' IDENTIFIED BY 'mvinhas';
+    <pre><code class="card card-body">CREATE DATABASE {{DB_DATABASE}}; 
+GRANT ALL ON {{DB_DATABASE}}.* to '{{DB_USERNAME}}'@'{{DB_SERVER}}' IDENTIFIED BY '{{DB_PASSWORD}}';
 FLUSH privileges;</code></pre>
 </section>
 {% endapply %}

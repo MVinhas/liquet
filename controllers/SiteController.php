@@ -43,7 +43,7 @@ class SiteController extends Controller
             }
         }
         Dispatcher::dispatch();
-        if ($this->home->checkUsers() !== true) {
+        if ($this->home->checkUsers() === true) {
             if ($cpanel === true) {
                 $cpanelController->footer();
             } else {

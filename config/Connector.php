@@ -11,6 +11,7 @@ class Connector
 {
     private static $instance;
     private $link;
+    public $connection;
     private function __construct()
     {
         try {
@@ -35,8 +36,7 @@ class Connector
         if (method_exists($this->connection, $name)) {
             return call_user_func_array(array($this->connection,$name), $args);
         } else {
-            trigger_error('Unknown Method ' . $name . '()', E_USER_WARNING);
-            return false;
+            die();
         }
     }
 }
