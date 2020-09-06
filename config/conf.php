@@ -1,5 +1,5 @@
 <?php
-if (!defined('constant')) define('constant', 'value');
+if (!defined('OWNER')) define('OWNER', 'dev.mvinhas@gmail.com');
 
 $config_flags = new stdClass();
 $config_flags->debug_mode = 1; #0 - Production; 1 - Development
