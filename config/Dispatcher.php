@@ -24,23 +24,22 @@ class Dispatcher
     private static function getURI()
     {
         $url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-        
-        array_shift($url);
+    
         $siteInfo = new \engine\SiteInfo();
-       
-        //if using Apache/NGINX HomeDir, the second position is the site name, not the controller name
-        if ($url[0] == $siteInfo->getName()) {
-            array_shift($url);
-        }
+        $name = array_search($siteInfo->getName(), $url);
+
+        $ctrPos = isset($url[$name+1]) ? $url[$name+1] : null;
+        $mtdPos = isset($url[$name+2]) ? $url[$name+2] : null;
+        $argPos = isset($url[$name+3]) ? $url[$name+3] : null;
         
-        isset($url[0]) ? $url[0] = preg_replace('/\?/', '', $url[0]) : null;
+        isset($ctrPos) ? $ctrPos = preg_replace('/\?/', '', $ctrPos) : null;
         //check for controller
-        $controller = !empty($url[0]) ? "\controllers\\" . $url[0] . 'Controller' : '\controllers\HomeController';
+        $controller = !empty($ctrPos) ? "\controllers\\" . $ctrPos . 'Controller' : '\controllers\HomeController';
         //controller method
-        $method = !empty($url[1]) ? $url[1] : 'index';
+        $method = !empty($mtdPos) ? $mtdPos : 'index';
 
         //get argument
-        $arg = !empty($url[2]) ? $url[2] : null;
+        $arg = !empty($argPos) ? $argPos : null;
         
         $uri = new \stdClass();
         $uri->controller = $controller;
