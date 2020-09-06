@@ -11,7 +11,9 @@
     "authors": [
         {
             "name": "Micael Vinhas",
-            "email": "dev.mvinhas@gmail.com"
+            "email": "dev.mvinhas@gmail.com",
+            "homepage": "http://mvinhas-blog.com",
+            "role": "Developer"
         }
     ]
 }
