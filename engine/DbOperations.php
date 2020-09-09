@@ -75,9 +75,7 @@ class DbOperations
         $where_value = $this->convertHtmlEntities($where_value);
         $data_array = array_values($fields_value);
 
-        if (is_array($where_value)) {
-            $data_array_where = array_values($where_value);
-        }
+        $data_array_where = array_values($where_value);
 
         $sql = "UPDATE $table SET $fields WHERE $where";
 
