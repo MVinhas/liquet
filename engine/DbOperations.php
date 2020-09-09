@@ -146,6 +146,27 @@ class DbOperations
 
     private function preparedStatement($sql, $count_fields, $data_array, $count_fields_where = '', $data_array_where = array())
     {
+        $fields = $this->processValuesType($count_fields, $data_array);
+        
+        if (strlen($count_fields_where) > 0 ) {
+            $fields_where = $this->processValuesType($count_fields_where, $data_array_where);
+     
+            $values_type = $fields->values_type.$fields_where->values_type;
+
+            $sql_prepare = $this->db->prepare($sql);
+            
+            $sql_prepare->bind_param("$values_type", ...$fields->values, ...$fields_where->values);
+        } else {
+            $sql_prepare = $this->db->prepare($sql);
+        
+            $sql_prepare->bind_param($fields->values_type, ...$fields->values);
+        }
+
+        return $sql_prepare;
+    }
+
+    private function processValuesType($count_fields, $data_array)
+    {
         $values = array();
         $values_types = array();
         for ($i=0; $i < $count_fields; $i++) {
@@ -155,30 +176,12 @@ class DbOperations
             array_push($values, $field[$i]);
         }
         $values_type = implode('', $values_type);
-
-        if (strlen($count_fields_where) > 0 ) {
-            $values_where = array();
-            $values_type_where = array();
-            for ($i=0; $i < $count_fields_where; $i++) {
-                $field[$i] = ltrim($data_array_where[$i], ' ');
-                
-                $values_type_where[$i] = strtolower(substr(gettype($data_array_where[$i]), 0, 1));
-                array_push($values_where, $field[$i]);
-            }
-            $values_type_where = implode('', $values_type_where);
-     
-            $values_type = $values_type.$values_type_where;
-
-            $sql_prepare = $this->db->prepare($sql);
         
-            $sql_prepare->bind_param("$values_type", ...$values, ...$values_where);
-        } else {
-            $sql_prepare = $this->db->prepare($sql);
+        $valuesClass = new \stdClass();
+        $valuesClass->values = $values;
+        $valuesClass->values_type = $values_type;
         
-            $sql_prepare->bind_param("$values_type", ...$values);
-        }
-
-        return $sql;
+        return $valuesClass;
     }
 
     private function convertHtmlEntities($input)
