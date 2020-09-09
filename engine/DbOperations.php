@@ -12,7 +12,7 @@ class DbOperations
 
     protected function fetchQuery($query_res)
     {
-        $sql_fetch=array();
+        $sql_fetch = array();
         while ($sql_retrieve = $query_res->fetch_assoc()) {
             $sql_fetch[] = $sql_retrieve;
         }
@@ -37,47 +37,35 @@ class DbOperations
         if ($sql->execute()) {
             return true;
         } else {
-            return "Error: ".$this->db->connection->error;
+            return $this->db->connection->error;
         }
     }
 
     public function select($table, $fields = '*', $filter = '', $field_values = array())
     {
-
-        if (!empty($field_values)) {
-            $data_array = array_values($field_values); 
-        }
-        if ($filter == '') {
+        if (empty($filter)) {
             $sql = "SELECT $fields FROM $table";
-            $sql = $this->db->prepare($sql);
-            if ($sql === false) return false;
-            if ($sql->execute()) {
-                $result = $sql->get_result();
-                $sql_fetch = $this->fetchQuery($result);
-                $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
-                return $sql_fetch;
-            } else {
-                return "Error: ".$this->db->connection->error;
-            }
+            $sql_prepare = $this->db->prepare($sql);
+            if ($sql_prepare === false) 
+                return $this->db->connection->error;
         } else {
             $sql = "SELECT $fields FROM $table WHERE $filter";
         }
-        if ($field_values != '') {
+
+        if (!empty($field_values)) {
+            $data_array = array_values($field_values); 
             $count_fields = substr_count($filter, '?');
             $data_array = $this->convertHtmlEntities($data_array);
-            $sql = $this->preparedStatement($sql, $count_fields, $data_array);
-        } else {
-            $sql = $this->db->prepare($sql);
-            $sql->bind_param($values_type, ...$values);
+            $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array);
         }
-        if ($sql === false) return false;
-        if ($sql->execute()) {
-            $result = $sql->get_result();
+        
+        if ($sql_prepare->execute()) {
+            $result = $sql_prepare->get_result();
             $sql_fetch = $this->fetchQuery($result);
             $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
             return $sql_fetch;
         } else {
-            return "Error: ".$this->db->connection->error;
+            return $this->db->connection->error;
         }
     }
 
@@ -89,8 +77,6 @@ class DbOperations
 
         if (is_array($where_value)) {
             $data_array_where = array_values($where_value);
-        } else {
-            $data_array_where = explode(',', $where_value);
         }
 
         $sql = "UPDATE $table SET $fields WHERE $where";
@@ -98,12 +84,13 @@ class DbOperations
         $count_fields = substr_count($fields, '?');
         $count_fields_where = substr_count($where, '?');
 
-        $sql = $this->preparedStatement($sql, $count_fields, $data_array, $count_fields_where, $data_array_where);
-
-        if ($sql->execute()) {
+        $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array, $count_fields_where, $data_array_where);
+        if ($sql_prepare === false)
+            return $this->db->connection->error;
+        if ($sql_prepare->execute()) {
             return true;
         } else {
-            return "Error: ".$this->db->connection->error;
+            return $this->db->connection->error;
         }
     }
 
@@ -114,12 +101,14 @@ class DbOperations
          
         $count_fields = substr_count($condition, '?');
 
-        $sql = $this->preparedStatement($sql, $count_fields, $data_array);
-
-        if ($sql->execute()) {
+        $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array);
+        
+        if ($sql_prepare === false)
+            return $this->db->connection->error;
+        if ($sql_prepare->execute()) {
             return true;
         } else {
-            return "Error: ".$this->db->connection->error;
+            return $this->db->connection->error;
         }
     }
 
@@ -129,7 +118,7 @@ class DbOperations
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
         if ($this->db->connection->error) {
-            return false;
+            return $this->db->connection->error;
         }
         return true;
     }
