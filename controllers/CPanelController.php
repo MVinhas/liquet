@@ -27,11 +27,9 @@ class CPanelController extends Controller
         
         foreach ($visits as $k => $v) {
             // Today
-            if ($v['date'] === date('Y-m-d')) $out['sessions']['today'] = $v['session'];
-            
+            if ($v['date'] === date('Y-m-d')) $out['sessions']['today'] = $v['session']; 
             // Week
             if ($v['date'] <= date('Y-m-d') && $v['date'] >= date('Y-m-d', strtotime('-7 days'))) $out['sessions']['week'] += $v['session'];
-
             // All time
             $out['sessions']['alltime'] += $v['session'];
         }

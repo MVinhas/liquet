@@ -43,11 +43,12 @@ class HomeController extends Controller
         }
     }
 
-    public function setup()
+    public function setup($message = '')
     {
         
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
+        $out['message'] = $message;
         if ($this->model->checkUsers() != 1) {
             $out['first_account'] = 1;
         }
@@ -69,11 +70,9 @@ class HomeController extends Controller
         $values = array($_POST['email'], $_POST['username'], $password, $role, 1);
         $createUser = $this->model->createUser('users', $fields, $values);
         if ($createUser == '1') {
-            echo "Success!";
-            if ($this->config_flags->debug_mode == 0) {
-                mail($_POST['email'], "Registered successfully", "Hello, you've been registered successfuly on mvinhas-blog");
-            }
             $this->login();
+        } else {
+            $this->setup($createUser);
         }
     }
 
@@ -86,14 +85,14 @@ class HomeController extends Controller
                 'role' => 'admin'
             );
         }
-        header('Location: ?Home');
+        $this->index();
 
     }
 
     public function logout()
     {
         unset($_SESSION['users']);
-        header('Location: ?Home');
+        $this->index();
     }
 
     public function search()

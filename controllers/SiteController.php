@@ -46,9 +46,8 @@ class SiteController extends Controller
         if ($this->home->checkUsers() === true) {
             if ($cpanel === true) {
                 $cpanelController->footer();
-            } else {
-                
-                    $this->footer();
+            } else { 
+                $this->footer();
             }
         }   
     }

@@ -11,6 +11,11 @@
   <p class="lead">Please fill in your data in order to register you account.</p>
 </div>
 {% endif %}
+{% if message %}
+<div class="alert alert-danger" role="alert">
+  {{message}}
+</div>
+{% endif %}
 <form id="first-account" method="POST" action="?Home/register" enctype="multipart/form-data">
   <div class="container col-sm-4 col-xs-12">
     <div class="form-group">
