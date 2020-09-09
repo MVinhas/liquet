@@ -169,13 +169,13 @@ class DbOperations
      
             $values_type = $values_type.$values_type_where;
 
-            $sql = $this->db->prepare($sql);
+            $sql_prepare = $this->db->prepare($sql);
         
-            $sql->bind_param("$values_type", ...$values, ...$values_where);
+            $sql_prepare->bind_param("$values_type", ...$values, ...$values_where);
         } else {
-            $sql = $this->db->prepare($sql);
+            $sql_prepare = $this->db->prepare($sql);
         
-            $sql->bind_param("$values_type", ...$values);
+            $sql_prepare->bind_param("$values_type", ...$values);
         }
 
         return $sql;
