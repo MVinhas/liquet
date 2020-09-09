@@ -26,7 +26,7 @@ class HomeController extends Controller
             $migrations = new \migrations\Setup();
             $migrations->index();
             $home = $this->getFile($this->path, 'first_setup');
-            echo $this->callTemplate($home);
+            echo $this->callView($home);
         } else {
             $out['categories'] = $this->model->getCategories();
             $offset = 0;
@@ -39,7 +39,7 @@ class HomeController extends Controller
             $out['archives'] = $this->model->getArchives();
             $out['social'] = $this->model->getSocial();
             $home = $this->getFile($this->path, __FUNCTION__);
-            echo $this->callTemplate($home, $out);
+            echo $this->callView($home, $out);
         }
     }
 
@@ -53,7 +53,7 @@ class HomeController extends Controller
             $out['first_account'] = 1;
         }
         $setup = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($setup, $out);
+        echo $this->callView($setup, $out);
     }
 
     public function register()
@@ -111,7 +111,7 @@ class HomeController extends Controller
                 $out['number_results'] = count($out['posts']);
             }
             $search = $this->getFile($this->path, __FUNCTION__);
-            echo $this->callTemplate($search, $out); 
+            echo $this->callView($search, $out); 
         } else{
             $this->index();
         } 

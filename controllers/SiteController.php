@@ -62,7 +62,7 @@ class SiteController extends Controller
         $out['debug_mode'] = $this->config_flags->debug_mode;
         $out['page_title'] = $_SESSION['page_title'];
         $headTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($headTemplate, $out);
+        echo $this->callView($headTemplate, $out);
     }
 
     private function header()
@@ -75,7 +75,7 @@ class SiteController extends Controller
         if (!empty($_SESSION['users']))
             $out['session'] = $_SESSION['users'];
         $headerTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($headerTemplate, $out);
+        echo $this->callView($headerTemplate, $out);
     }
 
     protected function footer()
@@ -86,18 +86,18 @@ class SiteController extends Controller
         $out['siteversion'] = $site->getVersion();
         $out['debug_mode'] = $this->config_flags->debug_mode;
         $footerTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($footerTemplate, $out);
+        echo $this->callView($footerTemplate, $out);
     }
     public function terms()
     {
         $termsTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($termsTemplate);
+        echo $this->callView($termsTemplate);
     }
 
     public function subscribe()
     {
         $subscribe = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($subscribe);
+        echo $this->callView($subscribe);
     }
 
     private function registerVisit()

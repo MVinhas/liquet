@@ -34,7 +34,7 @@ class CPanelController extends Controller
             $out['sessions']['alltime'] += $v['session'];
         }
         $cpanel = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($cpanel, $out);
+        echo $this->callView($cpanel, $out);
     }
 
     public function header()
@@ -43,7 +43,7 @@ class CPanelController extends Controller
         $siteInfo = new SiteInfo();
         $out = array();
         $out['sitename'] = $siteInfo->getName();
-        echo $this->callTemplate($header, $out);
+        echo $this->callView($header, $out);
     }
 
     public function footer()
@@ -51,7 +51,7 @@ class CPanelController extends Controller
         $footer = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        echo $this->callTemplate($footer, $out);
+        echo $this->callView($footer, $out);
     }
 
     public function postsIndex()
@@ -59,7 +59,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $out['post_list'] = $this->model->getPosts();
-        echo $this->callTemplate($cpanel, $out);
+        echo $this->callView($cpanel, $out);
     }
 
     public function categoriesIndex()
@@ -67,7 +67,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $out['categories_list'] = $this->model->getCategories();
-        echo $this->callTemplate($cpanel, $out);
+        echo $this->callView($cpanel, $out);
     }
 
     public function postEditor()
@@ -82,7 +82,7 @@ class CPanelController extends Controller
         $out['categories'] = $home->getCategories();
         $out['author'] = $_SESSION['users']['username'];
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        echo $this->callTemplate($postCreate, $out); 
+        echo $this->callView($postCreate, $out); 
     }
 
     public function categoryEditor()
@@ -95,7 +95,7 @@ class CPanelController extends Controller
             $out['category'] = $home->getCategory($_GET['id']);
         }
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        echo $this->callTemplate($categoryCreate, $out); 
+        echo $this->callView($categoryCreate, $out); 
     }
 
     public function postEditorSubmit()
@@ -114,7 +114,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
         $out['post_list'] = $this->model->getPosts();
-        echo $this->callTemplate($cpanel, $out);
+        echo $this->callView($cpanel, $out);
     }
 
     public function categoryEditorSubmit()
@@ -130,7 +130,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
         $out['categories_list'] = $this->model->getCategories();
-        echo $this->callTemplate($cpanel, $out);
+        echo $this->callView($cpanel, $out);
     }
 
     public function postDelete()
@@ -140,7 +140,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
         $out['post_list'] = $this->model->getPosts();
-        echo $this->callTemplate($cpanel, $out);
+        echo $this->callView($cpanel, $out);
     }
 
     public function categoryDelete()
@@ -150,6 +150,6 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
         $out['categories_list'] = $this->model->getCategories();
-        echo $this->callTemplate($cpanel, $out);
+        echo $this->callView($cpanel, $out);
     }
 }
