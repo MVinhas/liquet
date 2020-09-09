@@ -27,7 +27,7 @@ class AdminController extends Controller
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
         $loginView = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($loginView, $out);
+        echo $this->callView($loginView, $out);
     }
 
     public function createSession()
