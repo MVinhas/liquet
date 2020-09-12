@@ -16,12 +16,12 @@ class Admin
     public function getUser($username, $password)
     {
         $data = array($username);
-        $user = $this->db->select('users', 'username, password', 'username = ?', $data);
+        $user = $this->db->select('users', 'username, email, password', 'username = ?', $data);
         
-        $password_verify = password_verify($password, $user[0]['password']);
+        $password_verify = password_verify($password, $user['password']);
         
         if ($password_verify) {
-            return true;
+            return $user;
         }
         return false;
     }
