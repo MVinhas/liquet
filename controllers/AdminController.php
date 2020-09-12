@@ -34,9 +34,9 @@ class AdminController extends Controller
     {
         $admin = new Admin();
         $user = $admin->getUser($_POST['username'], $_POST['password']);
-        if ($user === true) {
+        if (is_array($user)) {
             $home = new HomeController;
-            $home->login();
+            $home->login($user['email']);
         }
         
     }
