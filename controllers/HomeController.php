@@ -76,23 +76,23 @@ class HomeController extends Controller
         }
     }
 
-    public function login()
+    public function login($email)
     {
-        if (!$_SESSION['users']['email'] && $_POST['username']) {
+        if (!isset($_SESSION['users']['email']) && $_POST['username']) {
             $_SESSION['users'] = array(
-                'email' => $_POST['email'],
+                'email' => $email,
                 'username' => $_POST['username'],
                 'role' => 'admin'
             );
         }
-        $this->index();
+        header('Location: ?Home');
 
     }
 
     public function logout()
     {
         unset($_SESSION['users']);
-        $this->index();
+        header('Location: ?Home');
     }
 
     public function search()
