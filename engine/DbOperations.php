@@ -63,7 +63,10 @@ class DbOperations
             $result = $sql_prepare->get_result();
             $sql_fetch = $this->fetchQuery($result);
             $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
-            return $sql_fetch;
+            if (count($sql_fetch) === 1) 
+                return array_shift($sql_fetch);
+            else
+                return $sql_fetch;
         } else {
             return $this->db->connection->error;
         }
@@ -146,6 +149,7 @@ class DbOperations
 
     private function preparedStatement($sql, $count_fields, $data_array, $count_fields_where = '', $data_array_where = array())
     {
+
         $fields = $this->processValuesType($count_fields, $data_array);
         
         if (strlen($count_fields_where) > 0 ) {
@@ -170,6 +174,7 @@ class DbOperations
         $values = array();
         $values_types = array();
         for ($i=0; $i < $count_fields; $i++) {
+
             $field[$i] = ltrim($data_array[$i], ' ');
             
             $values_type[$i] = strtolower(substr(gettype($data_array[$i]), 0, 1));
