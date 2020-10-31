@@ -25,4 +25,4 @@ require_once 'engine/DbOperations.php';
 
 $loader = new \Twig\Loader\FilesystemLoader('views');
 
-$template = new \Twig\Environment($loader);
+$view = new \Twig\Environment($loader);

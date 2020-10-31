@@ -39,9 +39,9 @@ class Header
         foreach ($menu as $k => $v) {
             $data = array($v['method']);
             $method = $this->db->select('methods', 'name, controller', 'id = ?', $data);
-            $data = array($method[0]['controller']);
+            $data = array($method['controller']);
             $controller = $this->db->select('controllers', 'name', 'id = ?', $data);
-            $menu[$k]['class'] = $controller[0]['name'].'/'.$method[0]['name'];
+            $menu[$k]['class'] = $controller['name'].'/'.$method['name'];
         }
         if (!empty($menu)) {
             return $menu;

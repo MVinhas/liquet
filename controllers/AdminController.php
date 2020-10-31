@@ -26,17 +26,17 @@ class AdminController extends Controller
     {
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        $loginTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($loginTemplate, $out);
+        $loginView = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callView($loginView, $out);
     }
 
     public function createSession()
     {
         $admin = new Admin();
         $user = $admin->getUser($_POST['username'], $_POST['password']);
-        if ($user === true) {
+        if (is_array($user)) {
             $home = new HomeController;
-            $home->login();
+            $home->login($user['email']);
         }
         
     }

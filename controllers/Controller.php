@@ -7,7 +7,7 @@ class Controller
     {
         include 'config/conf.php';
         $this->config_flags = $config_flags;
-        $this->template = $template;
+        $this->view = $view;
     }
 
     public function getDirectory($filename)
@@ -22,9 +22,9 @@ class Controller
         return $path.'/'.$file;
     }
 
-    protected function callTemplate($template, $out = array())
+    protected function callView($view, $out = array())
     {
-        echo $this->template->render($template.'.html', $out);
+        echo $this->view->render($view.'.html', $out);
     }
 
     protected function callFooter()

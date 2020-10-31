@@ -64,7 +64,7 @@ class Home
         foreach ($posts as $k => $v) {
             $data = array($v['category']);
             $category = $this->db->select('categories','*','id = ?', $data);
-            $posts[$k]['category_name'] = $category[0]['name'];
+            $posts[$k]['category_name'] = $category['name'];
         }
         return $posts;
     }

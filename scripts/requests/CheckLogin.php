@@ -18,7 +18,6 @@ class CheckLogin
     {
         $data = array($username); 
         $getUsers = $this->db->select('users', 'username', "username = ?", $data);
- 
         return $getUsers;
     }
 
@@ -37,11 +36,9 @@ if (isset($_POST['username'])) {
     $username = $_POST['username'];
     $username_exists = $check->username($username);
     if (!empty($username_exists)) {
-        foreach ($username_exists as $k => $v) {
-            if (in_array($username, $v)) {
-                $exists = 1;
-                echo 'true';
-            }
+        if (in_array($username, $username_exists)) {
+            $exists = 1;
+            echo 'true';
         }
     }
     if (!isset($exists)) {
@@ -53,7 +50,7 @@ if (isset($_POST['password'])) {
     $password = explode('||',$_POST['password']);
     $username_exists = $check->password($password[0]);
     if (!empty($username_exists)) {
-        $password = password_verify($password[1], $username_exists[0]['password']);
+        $password = password_verify($password[1], $username_exists['password']);
         if ($password) {
             $exists = 1;
             echo 'true';

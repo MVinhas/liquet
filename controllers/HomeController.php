@@ -26,7 +26,7 @@ class HomeController extends Controller
             $migrations = new \migrations\Setup();
             $migrations->index();
             $home = $this->getFile($this->path, 'first_setup');
-            echo $this->callTemplate($home);
+            echo $this->callView($home);
         } else {
             $out['categories'] = $this->model->getCategories();
             $offset = 0;
@@ -39,20 +39,21 @@ class HomeController extends Controller
             $out['archives'] = $this->model->getArchives();
             $out['social'] = $this->model->getSocial();
             $home = $this->getFile($this->path, __FUNCTION__);
-            echo $this->callTemplate($home, $out);
+            echo $this->callView($home, $out);
         }
     }
 
-    public function setup()
+    public function setup($message = '')
     {
         
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
+        $out['message'] = $message;
         if ($this->model->checkUsers() != 1) {
             $out['first_account'] = 1;
         }
         $setup = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callTemplate($setup, $out);
+        echo $this->callView($setup, $out);
     }
 
     public function register()
@@ -69,19 +70,17 @@ class HomeController extends Controller
         $values = array($_POST['email'], $_POST['username'], $password, $role, 1);
         $createUser = $this->model->createUser('users', $fields, $values);
         if ($createUser == '1') {
-            echo "Success!";
-            if ($this->config_flags->debug_mode == 0) {
-                mail($_POST['email'], "Registered successfully", "Hello, you've been registered successfuly on mvinhas-blog");
-            }
             $this->login();
+        } else {
+            $this->setup($createUser);
         }
     }
 
-    public function login()
+    public function login($email)
     {
-        if (!$_SESSION['users']['email'] && $_POST['username']) {
+        if (!isset($_SESSION['users']['email']) && $_POST['username']) {
             $_SESSION['users'] = array(
-                'email' => $_POST['email'],
+                'email' => $email,
                 'username' => $_POST['username'],
                 'role' => 'admin'
             );
@@ -112,7 +111,7 @@ class HomeController extends Controller
                 $out['number_results'] = count($out['posts']);
             }
             $search = $this->getFile($this->path, __FUNCTION__);
-            echo $this->callTemplate($search, $out); 
+            echo $this->callView($search, $out); 
         } else{
             $this->index();
         } 
