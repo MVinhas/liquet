@@ -16,18 +16,11 @@ class Home
     {
         $getUsers = $this->db->select('users');
         $tableExists = false;
-            
-        if ($getUsers === false) {
-            $tableExists = $this->db->checkTable('users') ?? false;
-        }
-
-        if ($tableExists === true) {
-            return false;
+  
+        if (is_array($getUsers)) {
+            return true;
         } else {
-            if (!empty($getUsers)) {
-                return true;
-            }
-            return '-1';
+            return false;
         }
     }
 
