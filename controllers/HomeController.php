@@ -21,8 +21,6 @@ class HomeController extends Controller
     public function index()
     {
         if ($this->model->checkUsers() === false) {
-            $this->setup();
-        } elseif ($this->model->checkUsers() === '-1') {
             $migrations = new \migrations\Setup();
             $migrations->index();
             $home = $this->getFile($this->path, 'first_setup');
@@ -41,19 +39,6 @@ class HomeController extends Controller
             $home = $this->getFile($this->path, __FUNCTION__);
             echo $this->callView($home, $out);
         }
-    }
-
-    public function setup($message = '')
-    {
-        
-        $out = array();
-        $out['debug_mode'] = $this->config_flags->debug_mode;
-        $out['message'] = $message;
-        if ($this->model->checkUsers() != 1) {
-            $out['first_account'] = 1;
-        }
-        $setup = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($setup, $out);
     }
 
     public function register()
