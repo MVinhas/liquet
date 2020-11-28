@@ -23,12 +23,12 @@ class SiteController extends Controller
     }
     public function index()
     {
+        $cpanel = false;
         if ($this->home->checkUsers() === true) {
             $getKeys = array_keys($_GET);
             $this->registerVisit();
             $this->getMetadata();
             $this->head();
-            $cpanel = false;
             foreach ($getKeys as $key) {
                 $key = substr($key, 0, strpos($key, "/"));
                 if ($key === 'CPanel') {
