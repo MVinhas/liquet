@@ -6,15 +6,16 @@ final class ControllerTest extends TestCase
 {
 
     protected $controller;
-
+    
     protected function setUp(): void
     {
-        $this->controller = new \controllers\Controller;
+        $this->controller = new controllers\Controller;
     }
     
     public function testFilePathHasCorrectFormat(): void
     {
-        $controller = new \controllers\Controller;
+        
+        //$controller = new \controllers\Controller;
         $this->assertEquals(
             'teste/teste.php',
             $this->controller->getFile('teste', 'teste.php')
@@ -25,5 +26,12 @@ final class ControllerTest extends TestCase
     {
         $this->assertDirectoryExists('views/cpanel');
         $this->assertEquals('cpanel', $this->controller->getDirectory('CPanelController'));
+    }
+
+    //callFooter
+    public function testHeadViewIsCallable(): void
+    {
+        $this->assertFileExists('config/conf.php');
+        $this->assertNull($this->controller->callView('site/head'));
     }
 }
