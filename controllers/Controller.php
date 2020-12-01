@@ -22,7 +22,7 @@ class Controller
         return $path.'/'.$file;
     }
 
-    public function callView($view, $out = array())
+    protected function callView($view, $out = array())
     {
         echo $this->view->render($view.'.html', $out);
     }
