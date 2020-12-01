@@ -101,4 +101,17 @@ class HomeController extends Controller
             $this->index();
         } 
     }
+
+    public function setup($message = '')
+    {
+        
+        $out = array();
+        $out['debug_mode'] = $this->config_flags->debug_mode;
+        $out['message'] = $message;
+        if ($this->model->checkUsers() != 1) {
+            $out['first_account'] = 1;
+        }
+        $setup = $this->getFile($this->path, __FUNCTION__);
+        echo $this->callView($setup, $out);
+    }
 }
