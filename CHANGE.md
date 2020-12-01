@@ -6,4 +6,9 @@
 - Words with accents now return results
 - Categories without posts now return a message
 - Fixed a bug on the registration form where a form could be submitted without any data
-- Overall design improvements 
+- Overall design improvements
+
+## 0.1.0-alpha2
+### 2020-10-31
+- Color condute added
+- In archives, "Older" is no more clicable if there is no older posts
