@@ -26,37 +26,37 @@ class CPanel
         return $categories;    
     }
 
-    public function createPost($post)
+    public function createPost(array $post)
     {
         $post['date'] = date('Y-m-d');
     
         $this->db->create('posts', 'title, category, author, short_content, content, date', $post);
     }
     
-    public function editPost($id, $post)
+    public function editPost(int $id, array $post)
     {
         $data = array($id);
         $this->db->update('posts', 'title = ?, category = ?, short_content = ?, content = ?', $post, 'id = ?', $data); 
     }
 
-    public function createCategory($post)
+    public function createCategory(array $post)
     {
         $this->db->create('categories', 'name', $post);
     }
     
-    public function editCategory($id, $post)
+    public function editCategory(int $id, array $post)
     {
         $data = array($id);
         $this->db->update('categories', 'name = ?', $post, 'id = ?', $data); 
     }
 
-    public function deletePost($id)
+    public function deletePost(int $id)
     {
         $data = array($id);
         $this->db->delete('posts', 'id = ?', $data);
     }
 
-    public function deleteCategory($id)
+    public function deleteCategory(int $id)
     {
         $data = array($id);
         $this->db->delete('categories', 'id = ?', $data);
