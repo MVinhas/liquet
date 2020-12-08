@@ -4,10 +4,13 @@ namespace controllers;
 
 use \engine\SiteInfo;
 use \models\CPanel as CPanel;
+use \models\Site as Site;
 
 class CPanelController extends Controller
 {
     protected $path;
+    protected $model;
+    protected $site;
     
     public function __construct()
     {
@@ -15,6 +18,7 @@ class CPanelController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new CPanel();
+        $this->site = new Site();
     }
 
     public function index()
@@ -66,7 +70,7 @@ class CPanelController extends Controller
     {
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $out['categories_list'] = $this->model->getCategories();
+        $out['categories_list'] = $this->site->getCategories();
         echo $this->callView($cpanel, $out);
     }
 
@@ -74,12 +78,11 @@ class CPanelController extends Controller
     {
         $postCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $home = new \models\Home();
         if (!empty($_GET['id'])) {
             $out['post_id'] = $_GET['id'];
-            $out['post'] = $home->getPost($_GET['id']);
+            $out['post'] = $this->site->getPost($_GET['id']);
         }
-        $out['categories'] = $home->getCategories();
+        $out['categories'] = $this->site->getCategories();
         $out['author'] = $_SESSION['users']['username'];
         $out['debug_mode'] = $this->config_flags->debug_mode;
         echo $this->callView($postCreate, $out); 
@@ -89,10 +92,9 @@ class CPanelController extends Controller
     {
         $categoryCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $home = new \models\Home();
         if (!empty($_GET['id'])) {
             $out['category_id'] = $_GET['id'];
-            $out['category'] = $home->getCategory($_GET['id']);
+            $out['category'] = $this->site->getCategory($_GET['id']);
         }
         $out['debug_mode'] = $this->config_flags->debug_mode;
         echo $this->callView($categoryCreate, $out); 

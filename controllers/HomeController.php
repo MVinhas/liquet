@@ -3,12 +3,14 @@
 namespace controllers;
 
 use models\Home as Home;
+use models\Site as Site;
 
 class HomeController extends Controller
 {
 
     protected $path;
     protected $model;
+    protected $site;
 
     public function __construct()
     {
@@ -16,6 +18,7 @@ class HomeController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Home();
+        $this->site = new Site();
     }
 
     public function index()
@@ -26,7 +29,7 @@ class HomeController extends Controller
             $home = $this->getFile($this->path, 'first_setup');
             echo $this->callView($home);
         } else {
-            $out['categories'] = $this->model->getCategories();
+            $out['categories'] = $this->site->getCategories();
             $offset = 0;
             if (isset($_GET['page'])) {
                 $offset = $_GET['page'] * 5;
@@ -83,7 +86,7 @@ class HomeController extends Controller
     public function search()
     {
         $out = array();
-        $out['categories'] = $this->model->getCategories();
+        $out['categories'] = $this->site->getCategories();
         $out['about'] = $this->model->getAbout();
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();

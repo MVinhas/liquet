@@ -3,11 +3,13 @@
 namespace controllers;
 
 use models\Post as Post;
+use models\Site as Site;
 
 class PostController extends Controller
 {
     protected $path;
     protected $model;
+    protected $site;
 
     public function __construct()
     {
@@ -15,6 +17,7 @@ class PostController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Post();
+        $this->site = new Site();
     }
 
     public function archive()
@@ -40,9 +43,9 @@ class PostController extends Controller
     public function detail()
     {
         $id = $_GET['id'];
-        $out['posts'] = $this->model->getPost($id);
+        $out['posts'] = $this->site->getPost($id);
         $home = new \models\Home();
-        $out['categories'] = $home->getCategories();
+        $out['categories'] = $this->site->getCategories();
         $out['about'] = $home->getAbout();
         $out['archives'] = $home->getArchives();
         $out['social'] = $home->getSocial();
