@@ -5,13 +5,13 @@ use PHPUnit\Framework\TestCase;
 final class HeaderTest extends TestCase
 {
 
-    public function testCheckUsers(): void
+    public function testGetMenu(): void
     {
         $mock = $this->createMock(\models\Header::class);
 
-        $mock->method('checkUsers')->willReturn(true);
+        $mock->method('getMenu')->willReturn(true);
 
-        $result = $mock->checkUsers();
+        $result = $mock->getMenu();
 
         $this->assertTrue($result);
     }
