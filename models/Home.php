@@ -50,7 +50,7 @@ class Home
         return $categories;
     }
 
-    public function getPosts($offset = '0')
+    public function getPosts(int $offset = 0)
     {
         $data = array('1');
         $posts = $this->db->select('posts','*', 'status = ? ORDER BY id DESC LIMIT 5 OFFSET '.$offset, $data);
@@ -62,7 +62,7 @@ class Home
         return $posts;
     }
 
-    public function getPost($id)
+    public function getPost(int $id)
     {
         $data = array($id);
         $post = $this->db->select('posts', '*', 'id = ?', $data);
@@ -70,7 +70,7 @@ class Home
         return $post;
     }
 
-    public function getCategory($id)
+    public function getCategory(int $id)
     {
         $data = array($id);
         $category = $this->db->select('categories', '*', 'id = ?', $data);
@@ -99,7 +99,7 @@ class Home
         return $social;
     }
 
-    public function getPostsBySearch($search)
+    public function getPostsBySearch(array $search)
     {
         $sql = '';
         $data = array('1');

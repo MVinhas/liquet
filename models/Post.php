@@ -20,7 +20,7 @@ class Post
         return $posts;   
     }
 
-    public function getPost($id)
+    public function getPost(int $id)
     {
         $data = array($id);
         $post = $this->db->select('posts', '*', 'id = ?', $data);
@@ -28,7 +28,7 @@ class Post
         return $post;
     }
 
-    public function getPostsByCategory($category)
+    public function getPostsByCategory(string $category)
     {
         $data = array(
             'category' => $category,
