@@ -2,6 +2,7 @@
     namespace models;
 
     use \engine\DbOperations as DbOperations;
+    use \engine\Dry as Dry;
     use \controllers\CPanelController as CPanelController;
     
 class CPanel
@@ -10,6 +11,7 @@ class CPanel
     public function __construct()
     {
         $this->db = new DbOperations;
+        $this->dry = new Dry;
     }
 
     public function getPosts()
@@ -17,13 +19,6 @@ class CPanel
         $posts = $this->db->select('posts', '*');
 
         return $posts;    
-    }
-
-    public function getCategories()
-    {
-        $categories = $this->db->select('categories', '*');
-
-        return $categories;    
     }
 
     public function createPost(array $post)

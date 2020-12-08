@@ -33,7 +33,7 @@ class Home
         return '0';
     }
 
-    public function createUser($table = 'users', $fields, $values)
+    public function createUser(string $table = 'users', string $fields, array $values)
     {
         $createUser = $this->db->create('users', $fields, $values);
 
@@ -42,12 +42,6 @@ class Home
         } else {
             return $createUser;
         }
-    }
-
-    public function getCategories()
-    {
-        $categories = $this->db->select('categories','*');
-        return $categories;
     }
 
     public function getPosts(int $offset = 0)
@@ -60,22 +54,6 @@ class Home
             $posts[$k]['category_name'] = $category['name'];
         }
         return $posts;
-    }
-
-    public function getPost(int $id)
-    {
-        $data = array($id);
-        $post = $this->db->select('posts', '*', 'id = ?', $data);
-
-        return $post;
-    }
-
-    public function getCategory(int $id)
-    {
-        $data = array($id);
-        $category = $this->db->select('categories', '*', 'id = ?', $data);
-
-        return $category;
     }
 
     public function getAbout()
