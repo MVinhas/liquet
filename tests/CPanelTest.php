@@ -16,17 +16,6 @@ final class CPanelTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testGetCategories(): void
-    {
-        $mock = $this->createMock(\models\CPanel::class);
-
-        $mock->method('getCategories')->willReturn(true);
-
-        $result = $mock->getCategories();
-
-        $this->assertTrue($result);        
-    }
-
     public function testCreatePost(): void
     {
         $mock = $this->createMock(\models\CPanel::class);
