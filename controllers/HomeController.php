@@ -27,7 +27,7 @@ class HomeController extends Controller
             $migrations = new \migrations\Setup();
             $migrations->index();
             $home = $this->getFile($this->path, 'first_setup');
-            echo $this->callView($home);
+            echo $this->view($home);
         } else {
             $out['categories'] = $this->site->getCategories();
             $offset = 0;
@@ -40,7 +40,7 @@ class HomeController extends Controller
             $out['archives'] = $this->model->getArchives();
             $out['social'] = $this->model->getSocial();
             $home = $this->getFile($this->path, __FUNCTION__);
-            echo $this->callView($home, $out);
+            echo $this->view($home, $out);
         }
     }
 
@@ -99,7 +99,7 @@ class HomeController extends Controller
                 $out['number_results'] = count($out['posts']);
             }
             $search = $this->getFile($this->path, __FUNCTION__);
-            echo $this->callView($search, $out); 
+            echo $this->view($search, $out); 
         } else{
             $this->index();
         } 
@@ -115,6 +115,6 @@ class HomeController extends Controller
             $out['first_account'] = 1;
         }
         $setup = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($setup, $out);
+        echo $this->view($setup, $out);
     }
 }

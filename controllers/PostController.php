@@ -37,7 +37,7 @@ class PostController extends Controller
         $out['social'] = $home->getSocial();
 
         $posts = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($posts, $out);
+        echo $this->view($posts, $out);
     }
 
     public function detail()
@@ -51,7 +51,7 @@ class PostController extends Controller
         $out['social'] = $home->getSocial();
 
         $posts = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($posts, $out);
+        echo $this->view($posts, $out);
     }
 
     public function category()
@@ -68,7 +68,7 @@ class PostController extends Controller
         $out['social'] = $home->getSocial();
         
         $posts = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($posts, $out);
+        echo $this->view($posts, $out);
     }
 
 }
