@@ -19,10 +19,38 @@
     @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style>
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{sitename}}</a>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    {% if searchable == 1 %}
+    <input class="form-control form-control-dark w-100" id="search" type="search" placeholder="Search" aria-label="Search">
+    {% endif %}
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
         <a class="nav-link" href="?Home/logout">Sign out</a>
         </li>
     </ul>
 </nav>
+<script>
+  
+  document.getElementById("search").onkeyup = function() {
+    let value = this.value
+    Array.from(document.querySelectorAll('td[data-label="title"]')).forEach((ele) => {
+      console.log(ele);
+      if (value != '') {
+        ele.style.display = "table-cell"
+        if (ele.innerHTML.toLowerCase().includes(value.toLowerCase())) {
+          ele.style.display = "table-cell"
+        } else {
+          ele.style.display = "none"
+          ele.previousElementSibling.style.display = "none";
+          ele.nextElementSibling.style.display = "none"
+          ele.nextElementSibling.nextElementSibling.style.display = "none"
+        }
+      } else {
+        ele.style.display = "table-cell"
+        ele.previousElementSibling.style.display = "table-cell";
+        ele.nextElementSibling.style.display = "table-cell"
+        ele.nextElementSibling.nextElementSibling.style.display = "table-cell"
+      }
+    })
+  }
+
+  </script>

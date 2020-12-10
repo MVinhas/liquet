@@ -46,6 +46,9 @@ class CPanelController extends Controller
         $header = $this->getFile($this->path, __FUNCTION__);
         $siteInfo = new SiteInfo();
         $out = array();
+        if (!isset($_GET['CPanel/index'])) {
+            $out['searchable'] = 1;
+        }
         $out['sitename'] = $siteInfo->getName();
         echo $this->view($header, $out);
     }
