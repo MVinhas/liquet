@@ -20,7 +20,7 @@
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{sitename}}</a>
     {% if searchable == 1 %}
-    <input class="form-control form-control-dark w-100" id="search" type="search" placeholder="Search" aria-label="Search">
+    <input class="form-control form-control-dark w-100" id="search" type="search" placeholder="Search" aria-label="Search" onkeyup="searchForm()">
     {% endif %}
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -30,10 +30,9 @@
 </nav>
 <script>
   
-  document.getElementById("search").onkeyup = function() {
-    let value = this.value
+  function searchForm() {
+    let value = document.getElementById("search").value
     Array.from(document.querySelectorAll('td[data-label="title"]')).forEach((ele) => {
-      console.log(ele);
       if (value != '') {
         ele.style.display = "table-cell"
         if (ele.innerHTML.toLowerCase().includes(value.toLowerCase())) {
