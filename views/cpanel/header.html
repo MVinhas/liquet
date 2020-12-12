@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://getbootstrap.com/docs/4.4/examples/dashboard/dashboard.css" integrity="sha384-T74eNPnHl++XVVmE5qLDXKnVmIT2d1SUNdJrEsRv1nHI1dX4TOaDTBrR3UA9Oz+2" crossorigin="anonymous">
-<style>
+<!-- <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -14,13 +14,11 @@
         font-size: 3.5rem;
       }
     }
-  </style>
-<style type="text/css">/* Chart.js */
-    @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style>
+  </style> -->
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{sitename}}</a>
     {% if searchable == 1 %}
-    <input class="form-control form-control-dark w-100" id="search" type="search" placeholder="Search" aria-label="Search" onkeyup="searchForm()">
+    <input class="form-control form-control-dark w-100" id="search" type="search" placeholder="Search" aria-label="Search" onkeyup="searchTable()">
     {% endif %}
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -28,28 +26,3 @@
         </li>
     </ul>
 </nav>
-<script>
-  
-  function searchForm() {
-    let value = document.getElementById("search").value
-    Array.from(document.querySelectorAll('td[data-label="title"]')).forEach((ele) => {
-      if (value != '') {
-        ele.style.display = "table-cell"
-        if (ele.innerHTML.toLowerCase().includes(value.toLowerCase())) {
-          ele.style.display = "table-cell"
-        } else {
-          ele.style.display = "none"
-          ele.previousElementSibling.style.display = "none";
-          ele.nextElementSibling.style.display = "none"
-          ele.nextElementSibling.nextElementSibling.style.display = "none"
-        }
-      } else {
-        ele.style.display = "table-cell"
-        ele.previousElementSibling.style.display = "table-cell";
-        ele.nextElementSibling.style.display = "table-cell"
-        ele.nextElementSibling.nextElementSibling.style.display = "table-cell"
-      }
-    })
-  }
-
-  </script>
