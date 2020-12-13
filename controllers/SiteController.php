@@ -72,6 +72,7 @@ class SiteController extends Controller
         $header = new Header();
         $out['sitename'] = $siteInfo->getName();
         $out['header'] = $header->getMenu();
+        $out['categories'] = $this->model->getCategories();
         if (!empty($_SESSION['users']))
             $out['session'] = $_SESSION['users'];
         $headerTemplate = $this->getFile($this->path, __FUNCTION__);

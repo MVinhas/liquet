@@ -29,7 +29,6 @@ class HomeController extends Controller
             $home = $this->getFile($this->path, 'first_setup');
             echo $this->view($home);
         } else {
-            $out['categories'] = $this->site->getCategories();
             $offset = 0;
             if (isset($_GET['page'])) {
                 $offset = $_GET['page'] * 5;
