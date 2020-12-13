@@ -62,7 +62,7 @@ class PostController extends Controller
             $out['header_results'] = -1;
         }
         $home = new \models\Home();
-        $out['categories'] = $home->getCategories();
+        $out['categories'] = $this->site->getCategories();
         $out['about'] = $home->getAbout();
         $out['archives'] = $home->getArchives();
         $out['social'] = $home->getSocial();
