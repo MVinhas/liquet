@@ -97,6 +97,21 @@ final class DbOperationsTest extends TestCase
         $result = $mock->createTable($table, $fields);
         
         $this->assertTrue($result);
-    } 
+    }
+    
+    public function testeCreateTableIndex(): void
+    {
+        $mock = $this->createMock(\engine\DbOperations::class);
+
+        $mock->method('createIndex')->willReturn(true);
+
+        $table = 'pages';
+        $constraint = "constraint_name";
+        $value = "UNIQUE KEY(column1, column2)";
+
+        $result = $mock->createIndex($table, $constraint, $value);
+
+        $this->assertTrue($result);
+    }
 
 }
