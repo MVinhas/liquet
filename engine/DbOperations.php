@@ -147,6 +147,18 @@ class DbOperations
         }
     }
 
+    public function createIndex(string $table, string $constraint, string $value)
+    {
+        $sql = "ALTER TABLE $table ADD CONSTRAINT $constraint $value";
+        $sql = $this->db->real_escape_string($sql);
+        $sql_query = $this->db->query($sql);
+        if ($this->db->connection->errno) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private function preparedStatement($sql, $count_fields, $data_array, $count_fields_where = '', $data_array_where = array())
     {
 
