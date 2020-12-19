@@ -102,6 +102,8 @@ class Setup
             'footer' => 'INT(1) NOT NULL DEFAULT 0'
         );
         $this->db->createTable(__FUNCTION__, $fields);
+
+        $this->db->createIndex(__FUNCTION__, 'id_name', 'UNIQUE KEY(id, name)');
     }
 
     private function controllers()
