@@ -41,7 +41,7 @@ class Site
     public function getPost(int $id)
     {
         $data = array($id);
-        $category = $this->db->select('categories', '*', 'id = ?', $data);
+        $category = $this->db->select('posts', '*', 'id = ?', $data);
 
         return $category;
     }

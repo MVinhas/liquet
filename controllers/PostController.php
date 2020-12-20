@@ -29,7 +29,11 @@ class PostController extends Controller
         $monthName = $dateObj->format('F');
         $out = array();
         $out['posts'] = $this->model->getCurrentPosts($monthNum, $year);
-
+        if (!isset($out['posts'][0])) {
+            $temp = $out['posts'];
+            unset($out['posts']);
+            $out['posts'][0] = $temp;
+        }
         $home = new \models\Home();
         $out['categories'] = $home->getCategories();
         $out['about'] = $home->getAbout();
@@ -43,7 +47,7 @@ class PostController extends Controller
     public function detail()
     {
         $id = $_GET['id'];
-        $out['posts'] = $this->site->getPost($id);
+        $out['post'] = $this->site->getPost($id);
         $home = new \models\Home();
         $out['categories'] = $this->site->getCategories();
         $out['about'] = $home->getAbout();
@@ -58,6 +62,11 @@ class PostController extends Controller
     {
         $category = $_GET['category'];
         $out['posts'] = $this->model->getPostsByCategory($category);
+        if (!isset($out['posts'][0]) && !empty($out['posts'])) {
+            $temp = $out['posts'];
+            unset($out['posts']);
+            $out['posts'][0] = $temp;
+        }
         if (empty($out['posts'])) {
             $out['header_results'] = -1;
         }
