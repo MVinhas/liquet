@@ -73,15 +73,12 @@ class HomeController extends Controller
             );
         }
         header('Location: ?Home');
-        exit;
-
     }
 
     public function logout()
     {
         unset($_SESSION['users']);
         header('Location: ?Home');
-        exit;
     }
 
     public function search()

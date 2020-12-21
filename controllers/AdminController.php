@@ -38,6 +38,6 @@ class AdminController extends Controller
             $home = new HomeController;
             $home->login($user['email']);
         }
-        
+        return;
     }
 }

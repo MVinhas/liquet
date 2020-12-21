@@ -49,7 +49,7 @@ class SiteController extends Controller
             } else { 
                 $this->footer();
             }
-        }   
+        } 
     }
 
     private function getMetadata()
