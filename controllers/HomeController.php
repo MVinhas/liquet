@@ -72,13 +72,11 @@ class HomeController extends Controller
                 'role' => 'admin'
             );
         }
-        header('Location: ?Home');
     }
 
     public function logout()
     {
         unset($_SESSION['users']);
-        header('Location: ?Home');
     }
 
     public function search()

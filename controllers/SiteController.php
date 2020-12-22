@@ -26,15 +26,20 @@ class SiteController extends Controller
         $cpanel = false;
         if ($this->home->checkUsers() === true) {
             $getKeys = array_keys($_GET);
+            foreach ($getKeys as $key) {
+                $key_func = substr($key, 0, strpos($key, "/"));
+                if ($key_func === 'CPanel') {
+                    $cpanel = true;
+                }
+                $key_method = substr($key, strpos($key, "/") + 1);
+                if ($key_method === 'createSession' || $key_method === 'logout') {
+                    header('Location: ?');
+                } 
+            }
             $this->registerVisit();
             $this->getMetadata();
             $this->head();
-            foreach ($getKeys as $key) {
-                $key = substr($key, 0, strpos($key, "/"));
-                if ($key === 'CPanel') {
-                    $cpanel = true;
-                }
-            }
+
             if ($cpanel === true) {
                 $cpanelController = new \controllers\CPanelController;
                 $cpanelController->header();
