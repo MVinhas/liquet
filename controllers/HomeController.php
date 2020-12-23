@@ -91,7 +91,11 @@ class HomeController extends Controller
             $out['posts'] = $this->model->getPostsBySearch($search_terms);
             if (empty($out['posts'])) {
                 $out['header_results'] = -1;    
-            } else {
+            }
+            if (!isset($out['posts'][0]) && !empty($out['posts'])) {
+                $temp = $out['posts'];
+                unset($out['posts']);
+                $out['posts'][0] = $temp;
                 $out['number_results'] = count($out['posts']);
             }
             $search = $this->getFile($this->path, __FUNCTION__);
