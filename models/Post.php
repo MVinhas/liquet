@@ -12,7 +12,7 @@ class Post
         $this->db = new DbOperations;
     }
 
-    public function getCurrentPosts($month = '1', $year = '1970')
+    public function getCurrentPosts(int $month = 1, int $year = 1970)
     {
         $data = array($month, $year);
         $posts = $this->db->select('posts', '*', 'DATE_FORMAT(date, "%m") LIKE ? AND DATE_FORMAT(date, "%Y") LIKE ?', $data);
@@ -20,15 +20,7 @@ class Post
         return $posts;   
     }
 
-    public function getPost($id)
-    {
-        $data = array($id);
-        $post = $this->db->select('posts', '*', 'id = ?', $data);
-
-        return $post;
-    }
-
-    public function getPostsByCategory($category)
+    public function getPostsByCategory(string $category)
     {
         $data = array(
             'category' => $category,

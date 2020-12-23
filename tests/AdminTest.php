@@ -5,11 +5,15 @@ use PHPUnit\Framework\TestCase;
 final class AdminTest extends TestCase
 {
 
-    protected $admin;
-
-    protected function setUp(): void
+    public function testGetUser(): void
     {
-        $this->admin = new \controllers\AdminController;
+        $mock = $this->createMock(\models\Admin::class);
+
+        $mock->method('getUser')->willReturn(true);
+
+        $result = $mock->getUser('admin', '1234');
+
+        $this->assertTrue($result);
     }
 
 }

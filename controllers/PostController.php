@@ -3,11 +3,13 @@
 namespace controllers;
 
 use models\Post as Post;
+use models\Site as Site;
 
 class PostController extends Controller
 {
     protected $path;
     protected $model;
+    protected $site;
 
     public function __construct()
     {
@@ -15,6 +17,7 @@ class PostController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Post();
+        $this->site = new Site();
     }
 
     public function archive()
@@ -26,46 +29,55 @@ class PostController extends Controller
         $monthName = $dateObj->format('F');
         $out = array();
         $out['posts'] = $this->model->getCurrentPosts($monthNum, $year);
-
-        $home = new \models\Home();
-        $out['categories'] = $home->getCategories();
-        $out['about'] = $home->getAbout();
-        $out['archives'] = $home->getArchives();
-        $out['social'] = $home->getSocial();
-
-        $posts = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($posts, $out);
-    }
-
-    public function detail()
-    {
-        $id = $_GET['id'];
-        $out['posts'] = $this->model->getPost($id);
-        $home = new \models\Home();
-        $out['categories'] = $home->getCategories();
-        $out['about'] = $home->getAbout();
-        $out['archives'] = $home->getArchives();
-        $out['social'] = $home->getSocial();
-
-        $posts = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($posts, $out);
-    }
-
-    public function category()
-    {
-        $category = $_GET['category'];
-        $out['posts'] = $this->model->getPostsByCategory($category);
-        if (empty($out['posts'])) {
-            $out['header_results'] = -1;
+        if (!isset($out['posts'][0])) {
+            $temp = $out['posts'];
+            unset($out['posts']);
+            $out['posts'][0] = $temp;
         }
         $home = new \models\Home();
         $out['categories'] = $home->getCategories();
         $out['about'] = $home->getAbout();
         $out['archives'] = $home->getArchives();
         $out['social'] = $home->getSocial();
+
+        $posts = $this->getFile($this->path, __FUNCTION__);
+        echo $this->view($posts, $out);
+    }
+
+    public function detail()
+    {
+        $id = $_GET['id'];
+        $out['post'] = $this->site->getPost($id);
+        $home = new \models\Home();
+        $out['categories'] = $this->site->getCategories();
+        $out['about'] = $home->getAbout();
+        $out['archives'] = $home->getArchives();
+        $out['social'] = $home->getSocial();
+
+        $posts = $this->getFile($this->path, __FUNCTION__);
+        echo $this->view($posts, $out);
+    }
+
+    public function category()
+    {
+        $category = $_GET['category'];
+        $out['posts'] = $this->model->getPostsByCategory($category);
+        if (!isset($out['posts'][0]) && !empty($out['posts'])) {
+            $temp = $out['posts'];
+            unset($out['posts']);
+            $out['posts'][0] = $temp;
+        }
+        if (empty($out['posts'])) {
+            $out['header_results'] = -1;
+        }
+        $home = new \models\Home();
+        $out['categories'] = $this->site->getCategories();
+        $out['about'] = $home->getAbout();
+        $out['archives'] = $home->getArchives();
+        $out['social'] = $home->getSocial();
         
         $posts = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($posts, $out);
+        echo $this->view($posts, $out);
     }
 
 }

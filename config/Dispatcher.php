@@ -27,12 +27,11 @@ class Dispatcher
     
         $siteInfo = new \engine\SiteInfo();
         $name = array_search($siteInfo->getName(), $url);
-        if (empty($name)) $name = -1;
-
+        if (empty($name) && $name !== 0) $name = -1;
         $ctrPos = isset($url[(int)$name+1]) ? $url[(int)$name+1] : null;
         $mtdPos = isset($url[(int)$name+2]) ? $url[(int)$name+2] : null;
         $argPos = isset($url[(int)$name+3]) ? $url[(int)$name+3] : null;
-        
+
         isset($ctrPos) ? $ctrPos = preg_replace('/\?/', '', $ctrPos) : null;
         //check for controller
         $controller = !empty($ctrPos) ? "\controllers\\" . $ctrPos . 'Controller' : '\controllers\HomeController';

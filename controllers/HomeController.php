@@ -3,12 +3,14 @@
 namespace controllers;
 
 use models\Home as Home;
+use models\Site as Site;
 
 class HomeController extends Controller
 {
 
     protected $path;
     protected $model;
+    protected $site;
 
     public function __construct()
     {
@@ -16,19 +18,17 @@ class HomeController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Home();
+        $this->site = new Site();
     }
 
     public function index()
     {
         if ($this->model->checkUsers() === false) {
-            $this->setup();
-        } elseif ($this->model->checkUsers() === '-1') {
             $migrations = new \migrations\Setup();
             $migrations->index();
             $home = $this->getFile($this->path, 'first_setup');
-            echo $this->callView($home);
+            echo $this->view($home);
         } else {
-            $out['categories'] = $this->model->getCategories();
             $offset = 0;
             if (isset($_GET['page'])) {
                 $offset = $_GET['page'] * 5;
@@ -39,21 +39,8 @@ class HomeController extends Controller
             $out['archives'] = $this->model->getArchives();
             $out['social'] = $this->model->getSocial();
             $home = $this->getFile($this->path, __FUNCTION__);
-            echo $this->callView($home, $out);
+            echo $this->view($home, $out);
         }
-    }
-
-    public function setup($message = '')
-    {
-        
-        $out = array();
-        $out['debug_mode'] = $this->config_flags->debug_mode;
-        $out['message'] = $message;
-        if ($this->model->checkUsers() != 1) {
-            $out['first_account'] = 1;
-        }
-        $setup = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($setup, $out);
     }
 
     public function register()
@@ -85,20 +72,17 @@ class HomeController extends Controller
                 'role' => 'admin'
             );
         }
-        header('Location: ?Home');
-
     }
 
     public function logout()
     {
         unset($_SESSION['users']);
-        header('Location: ?Home');
     }
 
     public function search()
     {
         $out = array();
-        $out['categories'] = $this->model->getCategories();
+        $out['categories'] = $this->site->getCategories();
         $out['about'] = $this->model->getAbout();
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
@@ -107,13 +91,30 @@ class HomeController extends Controller
             $out['posts'] = $this->model->getPostsBySearch($search_terms);
             if (empty($out['posts'])) {
                 $out['header_results'] = -1;    
-            } else {
+            }
+            if (!isset($out['posts'][0]) && !empty($out['posts'])) {
+                $temp = $out['posts'];
+                unset($out['posts']);
+                $out['posts'][0] = $temp;
                 $out['number_results'] = count($out['posts']);
             }
             $search = $this->getFile($this->path, __FUNCTION__);
-            echo $this->callView($search, $out); 
+            echo $this->view($search, $out); 
         } else{
             $this->index();
         } 
+    }
+
+    public function setup($message = '')
+    {
+        
+        $out = array();
+        $out['debug_mode'] = $this->config_flags->debug_mode;
+        $out['message'] = $message;
+        if ($this->model->checkUsers() != 1) {
+            $out['first_account'] = 1;
+        }
+        $setup = $this->getFile($this->path, __FUNCTION__);
+        echo $this->view($setup, $out);
     }
 }

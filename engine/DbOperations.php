@@ -19,7 +19,7 @@ class DbOperations
         return $sql_fetch;
     }
 
-    public function create($table, $fields, $data)
+    public function create(string $table, string $fields, array $data)
     {
         $data = $this->convertHtmlEntities($data); 
         $data_array = array_values($data);
@@ -41,7 +41,7 @@ class DbOperations
         }
     }
 
-    public function select($table, $fields = '*', $filter = '', $field_values = array())
+    public function select(string $table, string $fields = '*', string $filter = '', array $field_values = array())
     {
         if (empty($filter)) {
             $sql = "SELECT $fields FROM $table";
@@ -72,7 +72,7 @@ class DbOperations
         }
     }
 
-    public function update($table, $fields, $fields_value, $where, $where_value)
+    public function update(string $table, string $fields, array $fields_value,  string $where, array $where_value)
     {   
         $fields_value = $this->convertHtmlEntities($fields_value);
         $where_value = $this->convertHtmlEntities($where_value);
@@ -95,10 +95,10 @@ class DbOperations
         }
     }
 
-    public function delete($table, $condition = '1 = ?', $condition_values = '1')
+    public function delete(string $table, string $condition = '1 = ?', array $condition_values = ['1'])
     {
         $sql = "DELETE FROM $table WHERE $condition";
-        $data_array = explode(',', $condition_values);
+        $data_array = array_values($condition_values);
          
         $count_fields = substr_count($condition, '?');
 
@@ -113,7 +113,7 @@ class DbOperations
         }
     }
 
-    public function checkTable($table)
+    public function checkTable(string $table)
     {
         $sql = "SELECT 1 FROM $table LIMIT 1";
         $sql = $this->db->real_escape_string($sql);
@@ -124,7 +124,7 @@ class DbOperations
         return true;
     }
     
-    public function createTable($table, $fields)
+    public function createTable(string $table, array $fields)
     {
         $numItems = count($fields);
         $i = 0;
@@ -138,6 +138,18 @@ class DbOperations
         }
         
         $sql = "CREATE TABLE $table ($values)";
+        $sql = $this->db->real_escape_string($sql);
+        $sql_query = $this->db->query($sql);
+        if ($this->db->connection->errno) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function createIndex(string $table, string $constraint, string $value)
+    {
+        $sql = "ALTER TABLE $table ADD CONSTRAINT $constraint $value";
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
         if ($this->db->connection->errno) {

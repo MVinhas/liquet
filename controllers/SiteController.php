@@ -23,18 +23,23 @@ class SiteController extends Controller
     }
     public function index()
     {
+        $cpanel = false;
         if ($this->home->checkUsers() === true) {
             $getKeys = array_keys($_GET);
+            foreach ($getKeys as $key) {
+                $key_func = substr($key, 0, strpos($key, "/"));
+                if ($key_func === 'CPanel') {
+                    $cpanel = true;
+                }
+                $key_method = substr($key, strpos($key, "/") + 1);
+                if ($key_method === 'createSession' || $key_method === 'logout') {
+                    header('Location: ?');
+                } 
+            }
             $this->registerVisit();
             $this->getMetadata();
             $this->head();
-            $cpanel = false;
-            foreach ($getKeys as $key) {
-                $key = substr($key, 0, strpos($key, "/"));
-                if ($key === 'CPanel') {
-                    $cpanel = true;
-                }
-            }
+
             if ($cpanel === true) {
                 $cpanelController = new \controllers\CPanelController;
                 $cpanelController->header();
@@ -49,7 +54,7 @@ class SiteController extends Controller
             } else { 
                 $this->footer();
             }
-        }   
+        } 
     }
 
     private function getMetadata()
@@ -62,7 +67,7 @@ class SiteController extends Controller
         $out['debug_mode'] = $this->config_flags->debug_mode;
         $out['page_title'] = $_SESSION['page_title'];
         $headTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($headTemplate, $out);
+        echo $this->view($headTemplate, $out);
     }
 
     private function header()
@@ -72,10 +77,11 @@ class SiteController extends Controller
         $header = new Header();
         $out['sitename'] = $siteInfo->getName();
         $out['header'] = $header->getMenu();
+        $out['categories'] = $this->model->getCategories();
         if (!empty($_SESSION['users']))
             $out['session'] = $_SESSION['users'];
         $headerTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($headerTemplate, $out);
+        echo $this->view($headerTemplate, $out);
     }
 
     protected function footer()
@@ -86,18 +92,18 @@ class SiteController extends Controller
         $out['siteversion'] = $site->getVersion();
         $out['debug_mode'] = $this->config_flags->debug_mode;
         $footerTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($footerTemplate, $out);
+        echo $this->view($footerTemplate, $out);
     }
     public function terms()
     {
         $termsTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($termsTemplate);
+        echo $this->view($termsTemplate);
     }
 
     public function subscribe()
     {
         $subscribe = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($subscribe);
+        echo $this->view($subscribe);
     }
 
     private function registerVisit()

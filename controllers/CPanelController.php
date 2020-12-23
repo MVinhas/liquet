@@ -4,10 +4,13 @@ namespace controllers;
 
 use \engine\SiteInfo;
 use \models\CPanel as CPanel;
+use \models\Site as Site;
 
 class CPanelController extends Controller
 {
     protected $path;
+    protected $model;
+    protected $site;
     
     public function __construct()
     {
@@ -15,6 +18,7 @@ class CPanelController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new CPanel();
+        $this->site = new Site();
     }
 
     public function index()
@@ -34,7 +38,7 @@ class CPanelController extends Controller
             $out['sessions']['alltime'] += $v['session'];
         }
         $cpanel = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($cpanel, $out);
+        echo $this->view($cpanel, $out);
     }
 
     public function header()
@@ -42,8 +46,11 @@ class CPanelController extends Controller
         $header = $this->getFile($this->path, __FUNCTION__);
         $siteInfo = new SiteInfo();
         $out = array();
+        if (!isset($_GET['CPanel/index'])) {
+            $out['searchable'] = 1;
+        }
         $out['sitename'] = $siteInfo->getName();
-        echo $this->callView($header, $out);
+        echo $this->view($header, $out);
     }
 
     public function footer()
@@ -51,7 +58,7 @@ class CPanelController extends Controller
         $footer = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        echo $this->callView($footer, $out);
+        echo $this->view($footer, $out);
     }
 
     public function postsIndex()
@@ -59,43 +66,41 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $out['post_list'] = $this->model->getPosts();
-        echo $this->callView($cpanel, $out);
+        echo $this->view($cpanel, $out);
     }
 
     public function categoriesIndex()
     {
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $out['categories_list'] = $this->model->getCategories();
-        echo $this->callView($cpanel, $out);
+        $out['categories_list'] = $this->site->getCategories();
+        echo $this->view($cpanel, $out);
     }
 
     public function postEditor()
     {
         $postCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $home = new \models\Home();
         if (!empty($_GET['id'])) {
             $out['post_id'] = $_GET['id'];
-            $out['post'] = $home->getPost($_GET['id']);
+            $out['post'] = $this->site->getPost($_GET['id']);
         }
-        $out['categories'] = $home->getCategories();
+        $out['categories'] = $this->site->getCategories();
         $out['author'] = $_SESSION['users']['username'];
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        echo $this->callView($postCreate, $out); 
+        echo $this->view($postCreate, $out); 
     }
 
     public function categoryEditor()
     {
         $categoryCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $home = new \models\Home();
         if (!empty($_GET['id'])) {
             $out['category_id'] = $_GET['id'];
-            $out['category'] = $home->getCategory($_GET['id']);
+            $out['category'] = $this->site->getCategory($_GET['id']);
         }
         $out['debug_mode'] = $this->config_flags->debug_mode;
-        echo $this->callView($categoryCreate, $out); 
+        echo $this->view($categoryCreate, $out); 
     }
 
     public function postEditorSubmit()
@@ -114,7 +119,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
         $out['post_list'] = $this->model->getPosts();
-        echo $this->callView($cpanel, $out);
+        echo $this->view($cpanel, $out);
     }
 
     public function categoryEditorSubmit()
@@ -130,7 +135,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
         $out['categories_list'] = $this->model->getCategories();
-        echo $this->callView($cpanel, $out);
+        echo $this->view($cpanel, $out);
     }
 
     public function postDelete()
@@ -140,7 +145,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
         $out['post_list'] = $this->model->getPosts();
-        echo $this->callView($cpanel, $out);
+        echo $this->view($cpanel, $out);
     }
 
     public function categoryDelete()
@@ -150,6 +155,6 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
         $out['categories_list'] = $this->model->getCategories();
-        echo $this->callView($cpanel, $out);
+        echo $this->view($cpanel, $out);
     }
 }

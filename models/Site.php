@@ -22,4 +22,27 @@ class Site
             $this->db->create('sessions', 'session, firstvisit', $data);
         }
     }
+
+    public function getCategories()
+    {
+        $categories = $this->db->select('categories', '*');
+
+        return $categories;
+    }
+    
+    public function getCategory(int $id)
+    {
+        $data = array($id);
+        $category = $this->db->select('categories', '*', 'id = ?', $data);
+
+        return $category;
+    }
+
+    public function getPost(int $id)
+    {
+        $data = array($id);
+        $category = $this->db->select('posts', '*', 'id = ?', $data);
+
+        return $category;
+    }
 }

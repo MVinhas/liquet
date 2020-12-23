@@ -16,18 +16,11 @@ class Home
     {
         $getUsers = $this->db->select('users');
         $tableExists = false;
-            
-        if ($getUsers === false) {
-            $tableExists = $this->db->checkTable('users') ?? false;
-        }
-
-        if ($tableExists === true) {
-            return false;
+  
+        if (is_array($getUsers)) {
+            return true;
         } else {
-            if (!empty($getUsers)) {
-                return true;
-            }
-            return '-1';
+            return false;
         }
     }
 
@@ -40,7 +33,7 @@ class Home
         return '0';
     }
 
-    public function createUser($table = 'users', $fields, $values)
+    public function createUser(string $table = 'users', string $fields, array $values)
     {
         $createUser = $this->db->create('users', $fields, $values);
 
@@ -51,13 +44,7 @@ class Home
         }
     }
 
-    public function getCategories()
-    {
-        $categories = $this->db->select('categories','*');
-        return $categories;
-    }
-
-    public function getPosts($offset = '0')
+    public function getPosts(int $offset = 0)
     {
         $data = array('1');
         $posts = $this->db->select('posts','*', 'status = ? ORDER BY id DESC LIMIT 5 OFFSET '.$offset, $data);
@@ -67,22 +54,6 @@ class Home
             $posts[$k]['category_name'] = $category['name'];
         }
         return $posts;
-    }
-
-    public function getPost($id)
-    {
-        $data = array($id);
-        $post = $this->db->select('posts', '*', 'id = ?', $data);
-
-        return $post;
-    }
-
-    public function getCategory($id)
-    {
-        $data = array($id);
-        $category = $this->db->select('categories', '*', 'id = ?', $data);
-
-        return $category;
     }
 
     public function getAbout()
@@ -106,7 +77,7 @@ class Home
         return $social;
     }
 
-    public function getPostsBySearch($search)
+    public function getPostsBySearch(array $search)
     {
         $sql = '';
         $data = array('1');

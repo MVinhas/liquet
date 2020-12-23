@@ -27,7 +27,7 @@ class AdminController extends Controller
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
         $loginView = $this->getFile($this->path, __FUNCTION__);
-        echo $this->callView($loginView, $out);
+        echo $this->view($loginView, $out);
     }
 
     public function createSession()
@@ -38,6 +38,5 @@ class AdminController extends Controller
             $home = new HomeController;
             $home->login($user['email']);
         }
-        
     }
 }

@@ -4,14 +4,13 @@
         <h3 class="pb-4 mb-4 font-italic border-bottom">
           Post
         </h3>
-        {% for item in posts %}
+     
         <div class="blog-post">
-          <h2 class="blog-post-title">{{item.title|raw}}</h2>
-          <p class="blog-post-meta">{{item.date}} by {{item.author|raw}}</p>
-          <p>{{item.content|raw}}</p>
+          <h2 class="blog-post-title">{{post.title|raw}}</h2>
+          <p class="blog-post-meta">{{post.date}} by {{post.author|raw}}</p>
+          <p>{{post.content|raw}}</p>
         </div>
-        {% if not loop.last %}<hr>{% endif %}
-        {% endfor %}
+    
       </div>
   
       <aside class="col-md-4 blog-sidebar">

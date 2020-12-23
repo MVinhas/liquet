@@ -6,15 +6,15 @@ final class ControllerTest extends TestCase
 {
 
     protected $controller;
-
+    
     protected function setUp(): void
     {
-        $this->controller = new \controllers\Controller;
+        $this->controller = new controllers\Controller;
     }
     
     public function testFilePathHasCorrectFormat(): void
     {
-        $controller = new \controllers\Controller;
+
         $this->assertEquals(
             'teste/teste.php',
             $this->controller->getFile('teste', 'teste.php')

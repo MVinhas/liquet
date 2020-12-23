@@ -13,7 +13,7 @@ class Admin
     }
         
 
-    public function getUser($username, $password)
+    public function getUser(string $username, string $password)
     {
         $data = array($username);
         $user = $this->db->select('users', 'username, email, password', 'username = ?', $data);

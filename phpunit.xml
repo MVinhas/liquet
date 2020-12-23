@@ -1,6 +1,6 @@
 <phpunit bootstrap="config/conf.php">
   <testsuites>
-    <testsuite name="Test Suite">
+    <testsuite name="tests">
       <directory>tests</directory>
     </testsuite>
   </testsuites>

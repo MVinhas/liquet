@@ -22,15 +22,8 @@ class Controller
         return $path.'/'.$file;
     }
 
-    protected function callView($view, $out = array())
+    protected function view($view, $out = array())
     {
         echo $this->view->render($view.'.html', $out);
-    }
-
-    protected function callFooter()
-    {
-        $footer = new SiteController();
-        $footer->footer();
-        exit;
     }
 }
