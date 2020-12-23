@@ -12,3 +12,11 @@
 ### 2020-10-31
 - Color condute added
 - In archives, "Older" is no more clicable if there is no older posts
+
+## 0.1.0-alpha3
+### 2020-12-23
+- All public functions with return values are now tested
+- Search available on the control panel
+- User email saved in session
+- New table index function
+- Other small fixes
