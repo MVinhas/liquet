@@ -106,12 +106,7 @@ class CPanelController extends Controller
     public function postEditorSubmit()
     {
         if (!empty($_GET['id'])) {
-            $post = array();
-            $post['title'] = $_POST['title'];
-            $post['category'] = $_POST['category'];
-            $post['short_content'] = $_POST['short_content'];
-            $post['content'] = $_POST['content'];
-            $this->model->editPost($_GET['id'], $post);
+            $this->model->editPost($_GET['id'], $_POST);
         } else {
             $this->model->createPost($_POST);
         }
