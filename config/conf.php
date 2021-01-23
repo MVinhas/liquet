@@ -10,7 +10,7 @@ $config_flags->launchyear = '2019';
 
 if ($config_flags->debug_mode === 1) {
     ini_set("display_errors", "On");
-    ini_set("error_prepend_string","<div class='debugger'>");
+    ini_set("error_prepend_string","<div class='debug-silent' style='display:none;'>");
     ini_set("error_append_string","</div>");
     mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_STRICT); 
     error_reporting(E_ALL);   
