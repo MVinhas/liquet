@@ -57,7 +57,7 @@ class HomeController extends Controller
         $values = array($_POST['email'], $_POST['username'], $password, $role, 1);
         $createUser = $this->model->createUser('users', $fields, $values);
         if ($createUser == '1') {
-            $this->login();
+            $this->login($_POST['email']);
         } else {
             $this->setup($createUser);
         }
