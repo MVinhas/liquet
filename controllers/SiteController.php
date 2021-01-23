@@ -96,8 +96,11 @@ class SiteController extends Controller
     }
     public function terms()
     {
+        $out = array();
+        $out['site_name'] = $this->config_flags->sitename;
+        $out['email'] = $this->config_flags->email;
         $termsTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($termsTemplate);
+        echo $this->view($termsTemplate, $out);
     }
 
     public function subscribe()
