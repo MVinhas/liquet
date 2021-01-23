@@ -4,7 +4,7 @@ if (!defined('OWNER')) define('OWNER', 'dev.mvinhas@gmail.com');
 $config_flags = new stdClass();
 $config_flags->debug_mode = 1; #0 - Production; 1 - Development
 $config_flags->sitename = 'mvinhas-blog';
-$config_flags->siteversion = '0.1.0-alpha3';
+$config_flags->siteversion = '0.1.0-alpha4';
 $config_flags->siteauthor = 'Micael Vinhas';
 $config_flags->launchyear = '2019';
 
