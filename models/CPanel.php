@@ -29,7 +29,7 @@ class CPanel
     public function editPost(int $id, array $post)
     {
         $data = array($id);
-        $this->db->update('posts', 'title = ?, category = ?, short_content = ?, content = ?', $post, 'id = ?', $data); 
+        $this->db->update('posts', 'title = ?, category = ?, author = ?, short_content = ?, content = ?, featured = ?', $post, 'id = ?', $data); 
     }
 
     public function createCategory(array $post)
