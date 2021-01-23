@@ -22,14 +22,11 @@
     echo "</pre>";
 ?>
 <script>
-    let divs = document.getElementsByClassName("debugger");
+    let divs = document.getElementsByClassName("debug-silent");
     let elem = document.querySelector('#php-sql-errors');
     for (i=0;i<divs.length;i++) {
         var str = divs[i].innerText;
         elem.innerHTML = elem.innerHTML + str;
         divs[i].innerHTML = '';
-    }
-    while (divs[0]) {
-        divs[0].parentNode.removeChild(divs[0]);
     }
  </script>
