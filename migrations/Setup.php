@@ -61,8 +61,7 @@ class Setup
             'comments' => 'INT(11) NOT NULL',
             'likes' => 'INT(11) NOT NULL',
             'status' => 'INT(1) NOT NULL',
-            'featured' => 'INT(1) NOT NULL DEFAULT 0',
-            'other_featured' => 'INT(1) NOT NULL DEFAULT 0'
+            'featured' => 'INT(1) NOT NULL DEFAULT 0'
         );
         $this->db->createTable(__FUNCTION__, $fields);
     }
@@ -230,13 +229,13 @@ class Setup
     private function insertPosts()
     {
         $table = 'posts';
-        $fields = '`category`, `title`, `author`, `date`, `short_content`, `content`, `comments`, `likes`, `status`, `featured`, `other_featured`';
-        $values_1 = array(1, 'Fusce sit amet consectetur risus.', 'Micael Vinhas', '2020-04-07', 'Integer consequat interdum egestas.', 'Integer consequat interdum egestas. Sed mollis ornare erat non varius. Mauris congue, nunc quis porta condimentum, ligula tellus commodo velit, at cursus diam arcu in odio. Cras nisl quam, aliquam sit amet aliquam a, fermentum sit amet arcu. Integer molestie at tortor vel malesuada.', 0, 0, 1, 1, 0);
-        $values_2 = array(2, 'Vestibulum molestie efficitur facilisis.', 'Micael Vinhas', '2020-04-22', 'Sed enim justo, dapibus vel elementum quis, feugiat id elit.', 'Nunc non vestibulum ipsum, a vulputate enim.', 'Nulla hendrerit lacus at elit viverra malesuada. Aliquam ut mattis velit. Etiam consequat mattis dapibus. Etiam cursus arcu in sodales gravida. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 0, 0, 1, 0, 1);
-        $values_3 = array(3, 'Praesent in pretium arcu.', 'Micael Vinhas', '2020-04-30', 'Aliquam erat volutpat.', 'Morbi maximus mauris sed dolor fringilla, in accumsan augue tempus. Ut pharetra tincidunt magna at imperdiet. Ut faucibus felis nulla, sit amet bibendum ex fermentum non. ', 0, 0, 1, 0, 1);
-        $values_4 = array(4, 'Curabitur sit amet lobortis purus.', 'Micael Vinhas', '2020-04-19', 'Morbi non mattis nisi.', 'Vestibulum molestie efficitur facilisis. Sed finibus feugiat odio et blandit. Aenean at enim eget augue egestas pretium. Nunc eget tellus eget risus aliquam malesuada sed at turpis. Donec hendrerit ullamcorper mi, in rutrum tortor bibendum quis. Donec luctus consectetur turpis at sodales. Curabitur sit amet lobortis purus.',  0, 0, 1, 0, 0);
-        $values_5 = array(5, 'Ut auctor consequat arcu, at accumsan sem semper quis.', 'Micael Vinhas', '2020-04-11', 'Nam vehicula blandit lorem, at gravida lorem rutrum sit amet.', 'Curabitur sit amet lobortis purus. Donec luctus, libero vitae faucibus dapibus, ante ligula iaculis libero, a ornare sapien urna at nunc.', 0, 0, 1, 0, 0);
-        $values_6 = array(6, 'Aliquam pretium odio ac lorem mattis pellentesque.', 'Micael Vinhas', '2020-04-04', 'Donec tincidunt venenatis venenatis.', 'Ut sollicitudin, dolor in interdum cursus, felis ante suscipit ante, non laoreet ex velit ac ligula. Maecenas turpis enim, luctus nec eleifend a, consequat in orci. Maecenas egestas accumsan lacinia. Duis a elit eget justo finibus dapibus sed at augue. Fusce porttitor ut nisl eu posuere.',  0, 0, 1, 0, 0);
+        $fields = '`category`, `title`, `author`, `date`, `short_content`, `content`, `comments`, `likes`, `status`, `featured`';
+        $values_1 = array(1, 'Fusce sit amet consectetur risus.', 'Micael Vinhas', '2020-04-07', 'Integer consequat interdum egestas.', 'Integer consequat interdum egestas. Sed mollis ornare erat non varius. Mauris congue, nunc quis porta condimentum, ligula tellus commodo velit, at cursus diam arcu in odio. Cras nisl quam, aliquam sit amet aliquam a, fermentum sit amet arcu. Integer molestie at tortor vel malesuada.', 0, 0, 1, 2);
+        $values_2 = array(2, 'Vestibulum molestie efficitur facilisis.', 'Micael Vinhas', '2020-04-22', 'Sed enim justo, dapibus vel elementum quis, feugiat id elit.', 'Nunc non vestibulum ipsum, a vulputate enim.', 'Nulla hendrerit lacus at elit viverra malesuada. Aliquam ut mattis velit. Etiam consequat mattis dapibus. Etiam cursus arcu in sodales gravida. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 0, 0, 1, 1);
+        $values_3 = array(3, 'Praesent in pretium arcu.', 'Micael Vinhas', '2020-04-30', 'Aliquam erat volutpat.', 'Morbi maximus mauris sed dolor fringilla, in accumsan augue tempus. Ut pharetra tincidunt magna at imperdiet. Ut faucibus felis nulla, sit amet bibendum ex fermentum non. ', 0, 0, 1, 1);
+        $values_4 = array(4, 'Curabitur sit amet lobortis purus.', 'Micael Vinhas', '2020-04-19', 'Morbi non mattis nisi.', 'Vestibulum molestie efficitur facilisis. Sed finibus feugiat odio et blandit. Aenean at enim eget augue egestas pretium. Nunc eget tellus eget risus aliquam malesuada sed at turpis. Donec hendrerit ullamcorper mi, in rutrum tortor bibendum quis. Donec luctus consectetur turpis at sodales. Curabitur sit amet lobortis purus.',  0, 0, 1, 0);
+        $values_5 = array(5, 'Ut auctor consequat arcu, at accumsan sem semper quis.', 'Micael Vinhas', '2020-04-11', 'Nam vehicula blandit lorem, at gravida lorem rutrum sit amet.', 'Curabitur sit amet lobortis purus. Donec luctus, libero vitae faucibus dapibus, ante ligula iaculis libero, a ornare sapien urna at nunc.', 0, 0, 1, 0);
+        $values_6 = array(6, 'Aliquam pretium odio ac lorem mattis pellentesque.', 'Micael Vinhas', '2020-04-04', 'Donec tincidunt venenatis venenatis.', 'Ut sollicitudin, dolor in interdum cursus, felis ante suscipit ante, non laoreet ex velit ac ligula. Maecenas turpis enim, luctus nec eleifend a, consequat in orci. Maecenas egestas accumsan lacinia. Duis a elit eget justo finibus dapibus sed at augue. Fusce porttitor ut nisl eu posuere.',  0, 0, 1, 0);
         
         $this->db->create($table, $fields, $values_1);
         $this->db->create($table, $fields, $values_2);
