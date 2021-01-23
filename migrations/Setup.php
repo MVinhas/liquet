@@ -29,6 +29,7 @@ class Setup
         $this->insertPosts();
         $this->insertAbout();
         $this->insertAdmin();
+        $this->insertSocial();
     }
 
     private function users()
@@ -260,6 +261,14 @@ class Setup
         $fields = '`email`, `username`, `password`, `role`, `reg_date`, `active`';
         $values = array(OWNER, OWNER, password_hash(OWNER, PASSWORD_DEFAULT), 'admin', date('Y-m-d H:i:s'), 1);
 
+        $this->db->create($table, $fields, $values);
+    }
+
+    private function insertSocial()
+    {
+        $table = 'social';
+        $fields = '`name`, `link`, `visible`';
+        $values = array('LinkedIn', 'https://www.linkedin.com/in/micael-vinhas-74bab1112', 1);
         $this->db->create($table, $fields, $values);
     }
 }
