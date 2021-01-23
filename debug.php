@@ -28,5 +28,6 @@
         var str = divs[i].innerText;
         elem.innerHTML = elem.innerHTML + str;
         divs[i].innerHTML = '';
+        divs[i].style.visibility = 'hidden';
     }
  </script>
