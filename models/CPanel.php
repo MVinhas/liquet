@@ -23,7 +23,7 @@ class CPanel
     {
         $post['date'] = date('Y-m-d');
     
-        $this->db->create('posts', 'title, category, author, short_content, content, date', $post);
+        $this->db->create('posts', 'title, category, author, short_content, content, featured, date', $post);
     }
     
     public function editPost(int $id, array $post)
