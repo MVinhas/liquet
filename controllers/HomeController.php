@@ -57,18 +57,19 @@ class HomeController extends Controller
         $values = array($_POST['email'], $_POST['username'], $password, $role, 1);
         $createUser = $this->model->createUser('users', $fields, $values);
         if ($createUser == '1') {
-            $this->login($_POST['email']);
+            $this->login($email, $role);
         } else {
             $this->setup($createUser);
         }
     }
 
-    public function login($email)
+    public function login($email, $role)
     {
         if (!isset($_SESSION['users']['email']) && $_POST['username']) {
             $_SESSION['users'] = array(
                 'email' => $email,
-                'username' => $_POST['username']
+                'username' => $_POST['username'],
+                'role' => $role
             );
         }
     }

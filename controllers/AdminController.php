@@ -36,7 +36,7 @@ class AdminController extends Controller
         $user = $admin->getUser($_POST['username'], $_POST['password']);
         if (is_array($user)) {
             $home = new HomeController;
-            $home->login($user['email']);
+            $home->login($user['email'], $user['role']);
         }
     }
 }
