@@ -38,10 +38,12 @@ if (isset($_POST['username'])) {
     if (!empty($username_exists)) {
         if (in_array($username, $username_exists)) {
             $exists = 1;
+            ob_clean();
             echo 'true';
         }
     }
     if (!isset($exists)) {
+        ob_clean();
         echo 'false';
     }
 }
@@ -53,10 +55,12 @@ if (isset($_POST['password'])) {
         $password = password_verify($password[1], $username_exists['password']);
         if ($password) {
             $exists = 1;
+            ob_clean();
             echo 'true';
         }
     }
     if (!isset($exists)) {
+        ob_clean();
         echo 'false';
     }
     

@@ -68,8 +68,7 @@ class HomeController extends Controller
         if (!isset($_SESSION['users']['email']) && $_POST['username']) {
             $_SESSION['users'] = array(
                 'email' => $email,
-                'username' => $_POST['username'],
-                'role' => 'admin'
+                'username' => $_POST['username']
             );
         }
     }
