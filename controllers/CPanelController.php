@@ -81,7 +81,7 @@ class CPanelController extends Controller
         $postCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         if (!empty($_GET['id'])) {
-            $out['post_id'] = $_GET['id'];
+            $out['post']['id'] = $_GET['id'];
             $out['post'] = $this->site->getPost($_GET['id']);
         }
         $out['categories'] = $this->site->getCategories();
@@ -104,7 +104,6 @@ class CPanelController extends Controller
 
     public function postEditorSubmit()
     {
-        if ($_POST['featured'] == 'On')
         if (!empty($_GET['id'])) {
             $this->model->editPost($_GET['id'], $_POST);
         } else {
@@ -129,7 +128,7 @@ class CPanelController extends Controller
         
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
-        $out['categories_list'] = $this->model->getCategories();
+        $out['categories_list'] = $this->site->getCategories();
         echo $this->view($cpanel, $out);
     }
 
@@ -149,7 +148,7 @@ class CPanelController extends Controller
         $this->model->deleteCategory($category_id);
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
-        $out['categories_list'] = $this->model->getCategories();
+        $out['categories_list'] = $this->site->getCategories();
         echo $this->view($cpanel, $out);
     }
 }
