@@ -28,12 +28,11 @@ class CPanelController extends Controller
         $out['sessions']['week'] = 0;
         $out['sessions']['alltime'] = 0;
         $visits = $this->model->getVisits();
-        
         foreach ($visits as $k => $v) {
             // Today
-            if ($v['date'] === date('Y-m-d')) $out['sessions']['today'] = $v['session']; 
+            if ($v['date'] == date('Y-m-d 00:00:00')) $out['sessions']['today'] = $v['session']; 
             // Week
-            if ($v['date'] <= date('Y-m-d') && $v['date'] >= date('Y-m-d', strtotime('-7 days'))) $out['sessions']['week'] += $v['session'];
+            if ($v['date'] <= date('Y-m-d 00:00:00') && $v['date'] >= date('Y-m-d 00:00:00', strtotime('-7 days'))) $out['sessions']['week'] += $v['session'];
             // All time
             $out['sessions']['alltime'] += $v['session'];
         }
@@ -105,6 +104,7 @@ class CPanelController extends Controller
 
     public function postEditorSubmit()
     {
+        if ($_POST['featured'] == 'On')
         if (!empty($_GET['id'])) {
             $this->model->editPost($_GET['id'], $_POST);
         } else {
