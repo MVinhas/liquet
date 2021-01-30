@@ -20,3 +20,13 @@
 - User email saved in session
 - New table index function
 - Other small fixes
+
+## 0.1.0-alpha4
+### 2021-01-31
+- About, Archive and Elsewhere now are filled
+- Fixed footer, was hidden sometimes
+- Featured posts now have a little description
+- Featured posts management
+- Dynamic T&C
+- New debugger on footer panel
+- Multiple bug fixes
