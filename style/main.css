@@ -10,12 +10,12 @@ body{
 
 .debug{
   z-index: 100;
-  position: absolute;
   border: 1px solid dimgrey;
   top: 100%;
   background:gainsboro;
   width: 100%;
-  left:0;  
+  left:0;
+  position: sticky;  
 }
 
 .copyleft {

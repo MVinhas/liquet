@@ -28,12 +28,11 @@ class CPanelController extends Controller
         $out['sessions']['week'] = 0;
         $out['sessions']['alltime'] = 0;
         $visits = $this->model->getVisits();
-        
         foreach ($visits as $k => $v) {
             // Today
-            if ($v['date'] === date('Y-m-d')) $out['sessions']['today'] = $v['session']; 
+            if ($v['date'] == date('Y-m-d 00:00:00')) $out['sessions']['today'] = $v['session']; 
             // Week
-            if ($v['date'] <= date('Y-m-d') && $v['date'] >= date('Y-m-d', strtotime('-7 days'))) $out['sessions']['week'] += $v['session'];
+            if ($v['date'] <= date('Y-m-d 00:00:00') && $v['date'] >= date('Y-m-d 00:00:00', strtotime('-7 days'))) $out['sessions']['week'] += $v['session'];
             // All time
             $out['sessions']['alltime'] += $v['session'];
         }
@@ -82,7 +81,7 @@ class CPanelController extends Controller
         $postCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         if (!empty($_GET['id'])) {
-            $out['post_id'] = $_GET['id'];
+            $out['post']['id'] = $_GET['id'];
             $out['post'] = $this->site->getPost($_GET['id']);
         }
         $out['categories'] = $this->site->getCategories();
@@ -106,12 +105,7 @@ class CPanelController extends Controller
     public function postEditorSubmit()
     {
         if (!empty($_GET['id'])) {
-            $post = array();
-            $post['title'] = $_POST['title'];
-            $post['category'] = $_POST['category'];
-            $post['short_content'] = $_POST['short_content'];
-            $post['content'] = $_POST['content'];
-            $this->model->editPost($_GET['id'], $post);
+            $this->model->editPost($_GET['id'], $_POST);
         } else {
             $this->model->createPost($_POST);
         }
@@ -134,7 +128,7 @@ class CPanelController extends Controller
         
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
-        $out['categories_list'] = $this->model->getCategories();
+        $out['categories_list'] = $this->site->getCategories();
         echo $this->view($cpanel, $out);
     }
 
@@ -154,7 +148,7 @@ class CPanelController extends Controller
         $this->model->deleteCategory($category_id);
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
-        $out['categories_list'] = $this->model->getCategories();
+        $out['categories_list'] = $this->site->getCategories();
         echo $this->view($cpanel, $out);
     }
 }
