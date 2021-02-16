@@ -11,6 +11,7 @@ class Setup
 
     public function index()
     {
+        $this->config();
         $this->users();
         $this->posts();
         $this->comments();
@@ -22,6 +23,7 @@ class Setup
         $this->about();
         $this->social();
         $this->sessions();
+        $this->insertConfig();
         $this->insertControllers();
         $this->insertMethods();
         $this->insertPages();
@@ -30,6 +32,19 @@ class Setup
         $this->insertAbout();
         $this->insertAdmin();
         $this->insertSocial();
+    }
+
+    private function config()
+    {
+        $fields = array(
+            'debug_mode' => 'INT(1) NOT NULL DEFAULT 1',
+            'sitename' => 'VARCHAR(50) NOT NULL',
+            'email' => 'VARCHAR(50) NOT NULL',
+            'siteversion' => 'VARCHAR(100) NOT NULL',
+            'siteauthor' => 'VARCHAR(100) NOT NULL',
+            'launchyear' => 'INT(4) NOT NULL DEFAULT '.date('Y')
+        );
+        $this->db->createTable(__FUNCTION__, $fields);
     }
 
     private function users()
@@ -162,6 +177,15 @@ class Setup
             'firstvisit' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP'
         );
         $this->db->createTable(__FUNCTION__, $fields); 
+    }
+
+    private function insertConfig()
+    {
+        $table = 'config';
+        $fields = 'sitename, email, siteversion, siteauthor';
+        $values = array('My CMS Blog', 'jackblogle@example.com', '1.0.0', 'Jack Bogle');
+
+        $this->db->create($table, $fields, $values);
     }
 
     private function insertControllers()
