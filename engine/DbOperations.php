@@ -21,6 +21,7 @@ class DbOperations
 
     public function create(string $table, string $fields, array $data)
     {
+        
         $data = $this->convertHtmlEntities($data); 
         $data_array = array_values($data);
         

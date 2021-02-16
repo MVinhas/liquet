@@ -80,7 +80,7 @@ class CPanelController extends Controller
     {
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $out['config_list'] = $this->site->getConfig();
+        $out['config'] = $this->site->getConfig();
         echo $this->view($cpanel, $out);
     }
 

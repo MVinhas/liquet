@@ -54,8 +54,9 @@ class CPanel
             $this->db->update('config', 'debugmode = ?, sitename = ?, email = ?, siteversion = ?, siteauthor = ?, launchyear = ?', $post, 'id = ?', $data);
         } else {
             $post['id'] = 1;
+            $this->db->create('config', 'debugmode, sitename, email, siteversion, siteauthor, launchyear, id', $post); 
         }
-        $this->db->create('config', 'id, debug_mode, sitename, email, siteversion, siteauthor, launchyear', $post); 
+        
     }
 
     public function deletePost(int $id)
