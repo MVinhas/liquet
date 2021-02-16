@@ -16,14 +16,14 @@ $__CONFIG = $config_flags->select('config', '*');
 if (empty($__CONFIG))
     trigger_error("No Config found. Please check your DB Connection");
 
-$config_flags->debug_mode = $__CONFIG['debug_mode'] ? $__CONFIG['debug_mode'] : 1;
+$config_flags->debugmode = $__CONFIG['debugmode'] ? $__CONFIG['debugmode'] : 1;
 $config_flags->sitename = $__CONFIG['sitename'] ? $__CONFIG['sitename'] : '(no name found)';
 $config_flags->email = $__CONFIG['email'] ? $__CONFIG['email'] : '(no email found)';
 $config_flags->siteversion = $__CONFIG['siteversion'] ? $__CONFIG['siteversion'] : '(no version found)';
 $config_flags->siteauthor = $__CONFIG['siteauthor'] ? $__CONFIG['siteversion'] : '(no author found)';
 $config_flags->launchyear = $__CONFIG['launchyear'] ? $__CONFIG['launchyear'] : date('Y');
 
-if ((int)$__CONFIG['debug_mode'] === 1 || empty($__CONFIG)) {
+if ((int)$__CONFIG['debugmode'] === 1 || empty($__CONFIG)) {
     $time_start = microtime(true);
     ini_set("display_errors", "On");
     ini_set("error_prepend_string","<div class='debug-silent'>");

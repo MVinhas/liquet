@@ -45,6 +45,19 @@ class CPanel
         $this->db->update('categories', 'name = ?', $post, 'id = ?', $data); 
     }
 
+    public function editConfig(array $post)
+    {
+        $exists = $this->db->select('config', '*');
+
+        if (!empty($exists)) {
+            $data = array('1');
+            $this->db->update('config', 'debugmode = ?, sitename = ?, email = ?, siteversion = ?, siteauthor = ?, launchyear = ?', $post, 'id = ?', $data);
+        } else {
+            $post['id'] = 1;
+        }
+        $this->db->create('config', 'id, debug_mode, sitename, email, siteversion, siteauthor, launchyear', $post); 
+    }
+
     public function deletePost(int $id)
     {
         $data = array($id);

@@ -76,6 +76,14 @@ class CPanelController extends Controller
         echo $this->view($cpanel, $out);
     }
 
+    public function configEditor()
+    {
+        $cpanel = $this->getFile($this->path, __FUNCTION__);
+        $out = array();
+        $out['config_list'] = $this->site->getConfig();
+        echo $this->view($cpanel, $out);
+    }
+
     public function postEditor()
     {
         $postCreate = $this->getFile($this->path, __FUNCTION__);
@@ -130,6 +138,12 @@ class CPanelController extends Controller
         $out = array();
         $out['categories_list'] = $this->site->getCategories();
         echo $this->view($cpanel, $out);
+    }
+
+    public function configEditorSubmit()
+    {
+        $this->model->editConfig($_POST);
+        $this->index();
     }
 
     public function postDelete()
