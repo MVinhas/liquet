@@ -56,7 +56,7 @@ class CPanelController extends Controller
     {
         $footer = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $out['debug_mode'] = $this->config_flags->debug_mode;
+        $out['debugmode'] = $this->config_flags->debugmode;
         echo $this->view($footer, $out);
     }
 
@@ -94,7 +94,7 @@ class CPanelController extends Controller
         }
         $out['categories'] = $this->site->getCategories();
         $out['author'] = $_SESSION['users']['username'];
-        $out['debug_mode'] = $this->config_flags->debug_mode;
+        $out['debugmode'] = $this->config_flags->debugmode;
         echo $this->view($postCreate, $out); 
     }
 
@@ -106,7 +106,7 @@ class CPanelController extends Controller
             $out['category_id'] = $_GET['id'];
             $out['category'] = $this->site->getCategory($_GET['id']);
         }
-        $out['debug_mode'] = $this->config_flags->debug_mode;
+        $out['debugmode'] = $this->config_flags->debugmode;
         echo $this->view($categoryCreate, $out); 
     }
 
