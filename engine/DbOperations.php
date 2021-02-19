@@ -58,8 +58,9 @@ class DbOperations
             $count_fields = substr_count($filter, '?');
             $data_array = $this->convertHtmlEntities($data_array);
             $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array);
+            if ($sql_prepare === false) 
+                return $this->db->connection->error;
         }
-        
         if ($sql_prepare->execute()) {
             $result = $sql_prepare->get_result();
             $sql_fetch = $this->fetchQuery($result);
