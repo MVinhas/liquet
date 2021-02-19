@@ -47,7 +47,7 @@ class DbOperations
         if (empty($filter)) {
             $sql = "SELECT $fields FROM $table";
             $sql_prepare = $this->db->prepare($sql);
-            if ($sql_prepare === false) 
+            if ($sql_prepare === false || $sql_prepare === null) 
                 return $this->db->connection->error;
         } else {
             $sql = "SELECT $fields FROM $table WHERE $filter";
@@ -58,7 +58,7 @@ class DbOperations
             $count_fields = substr_count($filter, '?');
             $data_array = $this->convertHtmlEntities($data_array);
             $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array);
-            if ($sql_prepare === false) 
+            if ($sql_prepare === false || $sql_prepare === null) 
                 return $this->db->connection->error;
         }
         if ($sql_prepare->execute()) {
