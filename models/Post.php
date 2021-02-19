@@ -12,11 +12,10 @@ class Post
         $this->db = new DbOperations;
     }
 
-    public function getCurrentPosts(int $month = 1, int $year = 1970)
+    public function getCurrentPosts(string $month = '01', int $year = 1970)
     {
         $data = array($month, $year);
         $posts = $this->db->select('posts', '*', 'DATE_FORMAT(date, "%m") LIKE ? AND DATE_FORMAT(date, "%Y") LIKE ?', $data);
-
         return $posts;   
     }
 
