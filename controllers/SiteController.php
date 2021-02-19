@@ -64,7 +64,7 @@ class SiteController extends Controller
     private function head()
     {
         $out = array();
-        $out['debug_mode'] = $this->config_flags->debug_mode;
+        $out['debug_mode'] = $this->config_flags->debugmode;
         $out['page_title'] = $_SESSION['page_title'];
         $headTemplate = $this->getFile($this->path, __FUNCTION__);
         echo $this->view($headTemplate, $out);
@@ -90,7 +90,7 @@ class SiteController extends Controller
         $site = new SiteInfo();
         $out['copyleft'] = $site->getCopyright();
         $out['siteversion'] = $site->getVersion();
-        $out['debug_mode'] = $this->config_flags->debug_mode;
+        $out['debug_mode'] = $this->config_flags->debugmode;
         $footerTemplate = $this->getFile($this->path, __FUNCTION__);
         echo $this->view($footerTemplate, $out);
     }
