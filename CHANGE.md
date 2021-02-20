@@ -30,3 +30,14 @@
 - Dynamic T&C
 - New debugger on footer panel
 - Multiple bug fixes
+
+## 0.1.0-alpha5
+### 2021-02-20
+- New site configuration table
+- More indexes in tables for performance improvement
+- Archives error fixed
+- Posts now support images
+- Debugger container adjusted
+- New debug metric: time consumed processing code
+- New CPanel area: config editor
+- Some minor improvements

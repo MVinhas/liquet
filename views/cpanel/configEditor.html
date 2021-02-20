@@ -1,0 +1,45 @@
+<div class="container-fluid">
+    <div class="row">
+        {% set active = 'Config' %}
+        {% include 'cpanel/sidebar.html' %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Edit Site Configuration</h1>
+    </div>
+    <form id="config_create" class="needs-validation" action="?CPanel/configEditorSubmit" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="debug_mode">Debug Mode</label>
+          <input type="text" class="form-control required" id="debug_mode" name="debug_mode" aria-describedby="debug_modeHelp" value="{{config.debugmode}}" required>
+          <small id="debug_modeHelp" class="form-text text-muted">0 - Production; 1 - Development</small>
+        </div>
+        <div class="form-group">
+          <label for="sitename">CMS Blog Name</label>
+          <input type="text" class="form-control required" id="sitename" name="sitename" aria-describedby="sitenameHelp" value="{{config.sitename}}" required>
+          <small id="sitenameHelp" class="form-text text-muted">Name of your CMS Site</small>
+        </div>
+        <div class="form-group"> 
+          <label for="authoremail">Email</label>
+          <input type="email" class="form-control required" id="authoremail" name="authoremail" aria-describedby="authoremailHelp"  value="{{config.email}}" required>
+          <small id="authoremailHelp" class="form-text text-muted">Author email</small>
+        </div>
+        <div class="form-group">
+          <label for="version">Version</label>
+          <input type="text" class="form-control required" id="version" name="version" aria-describedby="versionHelp"  value="{{config.siteversion}}" required>
+          <small id="versionHelp" class="form-text text-muted">Version. Example: 1.0.0</small>
+        </div>
+          <div class="form-group">
+          <label for="authorname">Author Name</label>
+          <input type="text" class="form-control required" id="authorname" name="authorname" aria-describedby="authornameHelp" value="{{config.siteauthor}}" required>
+          <small id="authornameHelp" class="form-text text-muted">Example: John Bogle</small>
+        </div>  
+        <div class="form-group">
+          <label for="launchyear">Launch Year</label>
+          <input type="text" class="form-control required" id="launchyear" name="launchyear" aria-describedby="launchyearHelp"  value="{{config.launchyear}}" required>
+          <small id="launchyearHelp" class="form-text text-muted">Example: 2019</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</main>
+</div>
+</div>
+<script defer src="scripts/cpanel/categoryEditor.{% if debug_mode == 0 %}min.{% endif %}js"></script>

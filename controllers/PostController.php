@@ -35,11 +35,10 @@ class PostController extends Controller
             $out['posts'][0] = $temp;
         }
         $home = new \models\Home();
-        $out['categories'] = $home->getCategories();
+        $out['categories'] = $this->site->getCategories();
         $out['about'] = $home->getAbout();
         $out['archives'] = $home->getArchives();
         $out['social'] = $home->getSocial();
-
         $posts = $this->getFile($this->path, __FUNCTION__);
         echo $this->view($posts, $out);
     }

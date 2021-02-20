@@ -6,5 +6,5 @@ require_once 'config/conf.php';
 $site = new \controllers\SiteController;
 $site->index();
 
-if ($config_flags->debug_mode === 1)
+if ((int)$__CONFIG['debugmode'] === 1 || empty($__CONFIG))
     include 'debug.php';

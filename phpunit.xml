@@ -1,4 +1,5 @@
-<phpunit bootstrap="config/conf.php">
+<phpunit bootstrap="config/conf.php"
+         convertWarningsToExceptions="false">
   <testsuites>
     <testsuite name="tests">
       <directory>tests</directory>

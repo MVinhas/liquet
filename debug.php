@@ -1,6 +1,7 @@
 
 <?php
     echo "<pre class='debug'>";
+    echo "<br><b>Script running time:</b> ". (round(microtime(true) - $time_start,3)).' seconds';
     echo "<br><b>PHP and MYSQL:</b>";
     print_r('<div id="php-sql-errors"></div>');
     echo "<br><b>SESSION:</b>";

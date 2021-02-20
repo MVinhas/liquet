@@ -21,7 +21,7 @@ final class PostTest extends TestCase
         $mock = $this->createMock(\models\Post::class);
 
         $mock->method('getCurrentPosts')->willReturn(true);
-        $month = 12;
+        $month = '12';
         $year = 2020;
         $result = $mock->getCurrentPosts($month, $year);
 

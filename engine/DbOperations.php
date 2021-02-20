@@ -21,6 +21,7 @@ class DbOperations
 
     public function create(string $table, string $fields, array $data)
     {
+        
         $data = $this->convertHtmlEntities($data); 
         $data_array = array_values($data);
         
@@ -33,9 +34,8 @@ class DbOperations
         $sql = "INSERT INTO $table ($fields) VALUES ($prepare)";
         $count_fields = substr_count($prepare, '?');
         $sql = $this->preparedStatement($sql, $count_fields, $data_array);
-        
         if ($sql->execute()) {
-            return true;
+            return $sql->insert_id;
         } else {
             return $this->db->connection->error;
         }
@@ -46,7 +46,7 @@ class DbOperations
         if (empty($filter)) {
             $sql = "SELECT $fields FROM $table";
             $sql_prepare = $this->db->prepare($sql);
-            if ($sql_prepare === false) 
+            if ($sql_prepare === false || $sql_prepare === null) 
                 return $this->db->connection->error;
         } else {
             $sql = "SELECT $fields FROM $table WHERE $filter";
@@ -57,8 +57,9 @@ class DbOperations
             $count_fields = substr_count($filter, '?');
             $data_array = $this->convertHtmlEntities($data_array);
             $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array);
+            if ($sql_prepare === false || $sql_prepare === null) 
+                return $this->db->connection->error;
         }
-        
         if ($sql_prepare->execute()) {
             $result = $sql_prepare->get_result();
             $sql_fetch = $this->fetchQuery($result);

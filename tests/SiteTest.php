@@ -49,4 +49,15 @@ final class SiteTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testGetConfig(): void
+    {
+        $mock = $this->createMock(\models\Site::class);
+
+        $mock->method('getConfig')->willReturn(true);
+        
+        $result = $mock->getConfig();
+
+        $this->assertTrue($result);
+    }
+
 }

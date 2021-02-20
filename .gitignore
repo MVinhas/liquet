@@ -3,3 +3,4 @@ composer.lock
 .git/
 deploy.php
 .phpunit.result.cache
+images/

@@ -11,6 +11,7 @@ class Setup
 
     public function index()
     {
+        $this->config();
         $this->users();
         $this->posts();
         $this->comments();
@@ -22,6 +23,7 @@ class Setup
         $this->about();
         $this->social();
         $this->sessions();
+        $this->insertConfig();
         $this->insertControllers();
         $this->insertMethods();
         $this->insertPages();
@@ -30,6 +32,19 @@ class Setup
         $this->insertAbout();
         $this->insertAdmin();
         $this->insertSocial();
+    }
+
+    private function config()
+    {
+        $fields = array(
+            'debug_mode' => 'INT(1) NOT NULL DEFAULT 1',
+            'sitename' => 'VARCHAR(50) NOT NULL',
+            'email' => 'VARCHAR(50) NOT NULL',
+            'siteversion' => 'VARCHAR(100) NOT NULL',
+            'siteauthor' => 'VARCHAR(100) NOT NULL',
+            'launchyear' => 'INT(4) NOT NULL DEFAULT '.date('Y')
+        );
+        $this->db->createTable(__FUNCTION__, $fields);
     }
 
     private function users()
@@ -64,6 +79,8 @@ class Setup
             'featured' => 'INT(1) NOT NULL DEFAULT 0'
         );
         $this->db->createTable(__FUNCTION__, $fields);
+        $this->db->createIndex(__FUNCTION__, 'status', '(status)');
+        $this->db->createIndex(__FUNCTION__, 'category_status', '(category, status)';
     }
 
     private function comments()
@@ -104,6 +121,7 @@ class Setup
         $this->db->createTable(__FUNCTION__, $fields);
 
         $this->db->createIndex(__FUNCTION__, 'id_name', 'UNIQUE KEY(id, name)');
+        $this->db->createIndex(__FUNCTION__, 'header', '(header)';
     }
 
     private function controllers()
@@ -151,7 +169,8 @@ class Setup
             'link' => 'VARCHAR(256) NOT NULL',
             'visible' => 'INT(1) NOT NULL DEFAULT 1'
         );
-        $this->db->createTable(__FUNCTION__, $fields); 
+        $this->db->createTable(__FUNCTION__, $fields);
+        $this->db->createIndex(__FUNCTION__, 'visible', '(visible)')
     }
 
     private function sessions()
@@ -161,7 +180,18 @@ class Setup
             'session' => 'VARCHAR(32) NOT NULL',
             'firstvisit' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP'
         );
-        $this->db->createTable(__FUNCTION__, $fields); 
+        $this->db->createTable(__FUNCTION__, $fields);
+
+        $this->db->createIndex(__FUNCTION__, 'session', '(session)');
+    }
+
+    private function insertConfig()
+    {
+        $table = 'config';
+        $fields = 'sitename, email, siteversion, siteauthor';
+        $values = array('My CMS Blog', 'jackblogle@example.com', '1.0.0', 'Jack Bogle');
+
+        $this->db->create($table, $fields, $values);
     }
 
     private function insertControllers()
