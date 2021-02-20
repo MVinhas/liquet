@@ -25,13 +25,34 @@ class CPanel
         $post['comments'] = 0;
         $post['likes'] = 0;
         $post['status'] = 1;
-        $this->db->create('posts', 'title, category, author, short_content, content, featured, date, comments, likes, status', $post);
+        $insert_id = $this->db->create('posts', 'title, category, author, short_content, content, featured, date, comments, likes, status', $post);
+        if (isset($_FILES['avatar'])) {
+            $directory = 'images/post';
+            $img = explode('.', $_FILES['avatar']['name']);
+            $name = 'post_'.$insert_id.'.'.$img[1];
+            $tmp_name = $_FILES['avatar']['tmp_name'];
+            move_uploaded_file($tmp_name, "$directory/$name");
+            $data['banner'] = "$directory/$name";
+            $this->db->update('posts', 'banner = ?', $data, 'id = ?', array($insert_id));
+        }
+
     }
     
     public function editPost(int $id, array $post)
     {
         $data = array($id);
-        $this->db->update('posts', 'title = ?, category = ?, author = ?, short_content = ?, content = ?, featured = ?', $post, 'id = ?', $data); 
+        if (isset($_FILES['avatar'])) {
+            $directory = 'images/post';
+            $img = explode('.', $_FILES['avatar']['name']);
+            $name = 'post_'.$id.'.'.$img[1];
+            $tmp_name = $_FILES['avatar']['tmp_name'];
+            move_uploaded_file($tmp_name, "$directory/$name");
+            $post['banner'] = "$directory/$name";
+            $this->db->update('posts', 'title = ?, category = ?, author = ?, short_content = ?, content = ?, featured = ?, banner = ?', $post, 'id = ?', $data);
+        } else {
+            $this->db->update('posts', 'title = ?, category = ?, author = ?, short_content = ?, content = ?, featured = ?', $post, 'id = ?', $data);
+        }
+        
     }
 
     public function createCategory(array $post)
