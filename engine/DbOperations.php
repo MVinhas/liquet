@@ -34,9 +34,8 @@ class DbOperations
         $sql = "INSERT INTO $table ($fields) VALUES ($prepare)";
         $count_fields = substr_count($prepare, '?');
         $sql = $this->preparedStatement($sql, $count_fields, $data_array);
-        
         if ($sql->execute()) {
-            return true;
+            return $sql->insert_id;
         } else {
             return $this->db->connection->error;
         }
