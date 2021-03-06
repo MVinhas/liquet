@@ -15,3 +15,5 @@ function autoload($className)
         require_once $fileName;
     }
 }
+
+spl_autoload_register('autoload');

@@ -5,8 +5,6 @@ require_once 'Connector.php';
 
 require_once 'autoloader.php';
 
-spl_autoload_register('autoload');
-
 require_once 'vendor/autoload.php';
 
 require_once 'engine/DbOperations.php';

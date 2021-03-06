@@ -1,4 +1,4 @@
-<phpunit bootstrap="config/conf.php"
+<phpunit bootstrap="config/autoloader.php"
          convertWarningsToExceptions="false">
   <testsuites>
     <testsuite name="tests">
