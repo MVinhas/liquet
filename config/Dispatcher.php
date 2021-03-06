@@ -24,14 +24,10 @@ class Dispatcher
     private static function getURI()
     {
         $url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-    
-        $siteInfo = new \engine\SiteInfo();
-        $name = array_search($siteInfo->getName(), $url);
-      
-        if (empty($name) && $name !== 0 && !empty($__CONFIG)) $name = -1;
-        $ctrPos = isset($url[(int)$name+1]) ? $url[(int)$name+1] : null;
-        $mtdPos = isset($url[(int)$name+2]) ? $url[(int)$name+2] : null;
-        $argPos = isset($url[(int)$name+3]) ? $url[(int)$name+3] : null;
+
+        $ctrPos = isset($url[1]) ? $url[1] : null;
+        $mtdPos = isset($url[2]) ? $url[2] : null;
+        $argPos = isset($url[3]) ? $url[3] : null;
 
         isset($ctrPos) ? $ctrPos = preg_replace('/\?/', '', $ctrPos) : null;
         //check for controller
