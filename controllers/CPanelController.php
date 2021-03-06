@@ -143,7 +143,7 @@ class CPanelController extends Controller
     public function configEditorSubmit()
     {
         $this->model->editConfig($_POST);
-        $this->index();
+        header('Location: ?CPanel/index');
     }
 
     public function postDelete()
