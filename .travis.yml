@@ -1,9 +1,10 @@
 language: php
-
+os: linux
+dist: bionic
 php:
   - 7.3
   - 7.4
 install:
   - composer update
 script:
-  - phpunit --configuration phpunit.xml --testsuite tests
+  - ./vendor/phpunit/phpunit/phpunit --configuration phpunit.xml --testsuite tests
