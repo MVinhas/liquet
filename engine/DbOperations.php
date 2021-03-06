@@ -43,6 +43,11 @@ class DbOperations
 
     public function select(string $table, string $fields = '*', string $filter = '', array $field_values = array())
     {
+        if ($fields === '*' && $filter === '') {
+            mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_STRICT ^ MYSQLI_REPORT_INDEX);     
+        } else {
+            mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_STRICT); 
+        }
         if (empty($filter)) {
             $sql = "SELECT $fields FROM $table";
             $sql_prepare = $this->db->prepare($sql);
