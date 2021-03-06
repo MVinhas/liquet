@@ -1,5 +1,7 @@
 
 <?php
+    if (isset($db_error))
+        if (!empty($db_error)) echo $db_error;
     echo "<pre class='debug'>";
     echo "<br><b>Script running time:</b> ". (round(microtime(true) - $time_start,3)).' seconds';
     echo "<br><b>PHP and MYSQL:</b>";

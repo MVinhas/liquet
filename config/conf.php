@@ -12,7 +12,7 @@ require_once 'engine/DbOperations.php';
 $config_flags = new \engine\DbOperations();
 $__CONFIG = $config_flags->select('config', '*');
 if (empty($__CONFIG))
-    trigger_error("No Config found. Please check your DB Connection");
+    $db_error = "No Config found. Please check your DB Connection";
 
 $config_flags->debugmode = $__CONFIG['debugmode'] ? $__CONFIG['debugmode'] : 1;
 $config_flags->sitename = $__CONFIG['sitename'] ? $__CONFIG['sitename'] : '(no name found)';
