@@ -20,7 +20,7 @@ $config_flags->debugmode = $__CONFIG['debugmode'] ? $__CONFIG['debugmode'] : 1;
 $config_flags->sitename = $__CONFIG['sitename'] ? $__CONFIG['sitename'] : '(no name found)';
 $config_flags->email = $__CONFIG['email'] ? $__CONFIG['email'] : '(no email found)';
 $config_flags->siteversion = $__CONFIG['siteversion'] ? $__CONFIG['siteversion'] : '(no version found)';
-$config_flags->siteauthor = $__CONFIG['siteauthor'] ? $__CONFIG['siteversion'] : '(no author found)';
+$config_flags->siteauthor = $__CONFIG['siteauthor'] ? $__CONFIG['siteauthor'] : '(no author found)';
 $config_flags->launchyear = $__CONFIG['launchyear'] ? $__CONFIG['launchyear'] : date('Y');
 
 if ((int)$__CONFIG['debugmode'] === 1 || empty($__CONFIG)) {

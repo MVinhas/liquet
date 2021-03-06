@@ -41,3 +41,13 @@
 - New debug metric: time consumed processing code
 - New CPanel area: config editor
 - Some minor improvements
+
+## 0.1.0-alpha6
+### 2021-03-06
+Note: this is the last alpha release
+- Version repeated fixed
+- PHP 8.0 support
+- Removed PHP 7.2 support (first version used to program this, I'll miss you)
+- Login redirects the user to control panel
+- Unnecessary index warnings removed
+- When saving new configurations, page refreshes to see the changes immediately

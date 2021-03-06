@@ -32,7 +32,10 @@ class SiteController extends Controller
                     $cpanel = true;
                 }
                 $key_method = substr($key, strpos($key, "/") + 1);
-                if ($key_method === 'createSession' || $key_method === 'logout') {
+                if ($key_method === 'createSession') {
+                    header('Location: ?CPanel/index');
+                }
+                if ($key_method === 'logout') {
                     header('Location: ?');
                 } 
             }
