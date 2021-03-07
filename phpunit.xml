@@ -1,5 +1,4 @@
-<phpunit bootstrap="config/autoloader.php"
-         convertWarningsToExceptions="false">
+<phpunit bootstrap="config/autoloader.php">
   <testsuites>
     <testsuite name="tests">
       <directory>tests</directory>
