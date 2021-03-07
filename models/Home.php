@@ -33,7 +33,7 @@ class Home
         return '0';
     }
 
-    public function createUser(string $table = 'users', string $fields, array $values)
+    public function createUser(string $fields, array $values, string $table = 'users')
     {
         $createUser = $this->db->create('users', $fields, $values);
 
