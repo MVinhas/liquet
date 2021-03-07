@@ -1,6 +1,4 @@
 <?php
-use \engine\DbOperations as DbOperations;
-
 if (!defined('OWNER')) define('OWNER', 'dev.mvinhas@gmail.com');
 
 require_once 'Connector.php';
@@ -9,9 +7,10 @@ require_once 'autoloader.php';
 
 require_once 'vendor/autoload.php';
 
-$config_flags = new DbOperations();
-$__CONFIG = $config_flags->select('config', '*');
+require_once 'engine/DbOperations.php';
 
+$config_flags = new \engine\DbOperations();
+$__CONFIG = $config_flags->select('config', '*');
 if (empty($__CONFIG))
     $db_error = "No Config found. Please check your DB Connection";
 

@@ -80,7 +80,7 @@ class Setup
         );
         $this->db->createTable(__FUNCTION__, $fields);
         $this->db->createIndex(__FUNCTION__, 'status', '(status)');
-        $this->db->createIndex(__FUNCTION__, 'category_status', '(category, status)';
+        $this->db->createIndex(__FUNCTION__, 'category_status', '(category, status)');
     }
 
     private function comments()
@@ -121,7 +121,7 @@ class Setup
         $this->db->createTable(__FUNCTION__, $fields);
 
         $this->db->createIndex(__FUNCTION__, 'id_name', 'UNIQUE KEY(id, name)');
-        $this->db->createIndex(__FUNCTION__, 'header', '(header)';
+        $this->db->createIndex(__FUNCTION__, 'header', '(header)');
     }
 
     private function controllers()
@@ -170,7 +170,7 @@ class Setup
             'visible' => 'INT(1) NOT NULL DEFAULT 1'
         );
         $this->db->createTable(__FUNCTION__, $fields);
-        $this->db->createIndex(__FUNCTION__, 'visible', '(visible)')
+        $this->db->createIndex(__FUNCTION__, 'visible', '(visible)');
     }
 
     private function sessions()

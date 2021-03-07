@@ -5,9 +5,11 @@ class Controller
 {
     public function __construct()
     {
-        include 'config/conf.php';
+        global $config_flags;
+        global $view;
         $this->config_flags = $config_flags;
         $this->view = $view;
+        
     }
 
     public function getDirectory($filename)
