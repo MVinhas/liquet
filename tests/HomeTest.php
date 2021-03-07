@@ -32,10 +32,9 @@ final class HomeTest extends TestCase
         $mock = $this->createMock(\models\Home::class);
 
         $mock->method('createUser')->willReturn(true);
-        $table = 'users';
         $fields = 'name, age';
         $values = ['Joana', '30'];
-        $result = $mock->createUser($table, $fields, $values);
+        $result = $mock->createUser($fields, $values);
 
         $this->assertTrue($result);
     }
