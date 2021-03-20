@@ -10,15 +10,12 @@ class HomeController extends Controller
 
     protected $path;
     protected $model;
-    protected $site;
-
     public function __construct()
     {
         parent::__construct();
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Home();
-        $this->site = new Site();
     }
 
     public function index()
