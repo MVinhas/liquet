@@ -3,13 +3,15 @@ namespace controllers;
 
 class Controller
 {
+    protected $config_flags;
+    protected $twig;
+
     public function __construct()
     {
         global $config_flags;
-        global $view;
+        global $twig;
         $this->config_flags = $config_flags;
-        $this->view = $view;
-        
+        $this->twig = $twig;
     }
 
     public function getDirectory($filename)
@@ -26,6 +28,6 @@ class Controller
 
     protected function view($view, $out = array())
     {
-        echo $this->view->render($view.'.html', $out);
+        echo $this->twig->render($view.'.html', $out);
     }
 }
