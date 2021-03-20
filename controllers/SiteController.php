@@ -19,51 +19,33 @@ class SiteController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Site();
-        $this->home = new Home();
     }
     public function index()
     {
-        $cpanel = false;
-        if ($this->home->checkUsers() === true) {
-            $getKeys = array_keys($_GET);
-            foreach ($getKeys as $key) {
-                $key_func = substr($key, 0, strpos($key, "/"));
-                if ($key_func === 'CPanel') {
-                    $cpanel = true;
-                }
-                $key_method = substr($key, strpos($key, "/") + 1);
-                if ($key_method === 'createSession') {
-                    header('Location: ?CPanel/index');
-                }
-                if ($key_method === 'logout') {
-                    header('Location: ?');
-                } 
-            }
-            $this->registerVisit();
-            $this->getMetadata();
-            $this->head();
+        $this->model->visitCounter();
+        Dispatcher::metadata();
+        $this->head();
 
-            if ($cpanel === true) {
-                $cpanelController = new \controllers\CPanelController;
-                $cpanelController->header();
-            } else {
-                $this->header();
-            }
+        $getKeys = array_keys($_GET);
+        
+        $key_method = substr($getKeys[0], strpos($getKeys[0], "/") + 1);
+        if ($key_method === 'createSession') {
+            header('Location: ?CPanel/index');
+        }
+        if ($key_method === 'logout') {
+            header('Location: ?');
+        }
+        $key_func = substr($getKeys[0], 0, strpos($getKeys[0], "/"));
+        if ($key_func === 'CPanel') {
+            $cpanelController = new \controllers\CPanelController;
+            $cpanelController->header();
+        } else {
+            $this->header();    
         }
         Dispatcher::dispatch();
-        if ($this->home->checkUsers() === true) {
-            if ($cpanel === true) {
-                $cpanelController->footer();
-            } else { 
-                $this->footer();
-            }
-        } 
+        $this->footer();   
     }
 
-    private function getMetadata()
-    {
-        $metadata = Dispatcher::metadata();
-    }
     private function head()
     {
         $out = array();
@@ -110,10 +92,5 @@ class SiteController extends Controller
     {
         $subscribe = $this->getFile($this->path, __FUNCTION__);
         echo $this->view($subscribe);
-    }
-
-    private function registerVisit()
-    {
-        $this->model->visitCounter();
     }
 }
