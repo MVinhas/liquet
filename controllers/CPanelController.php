@@ -30,9 +30,11 @@ class CPanelController extends Controller
         $visits = $this->model->getVisits();
         foreach ($visits as $k => $v) {
             // Today
-            if ($v['date'] == date('Y-m-d 00:00:00')) $out['sessions']['today'] = $v['session']; 
+            if ($v['date'] == date('Y-m-d 00:00:00')) 
+                $out['sessions']['today'] = $v['session']; 
             // Week
-            if ($v['date'] <= date('Y-m-d 00:00:00') && $v['date'] >= date('Y-m-d 00:00:00', strtotime('-7 days'))) $out['sessions']['week'] += $v['session'];
+            if ($v['date'] <= date('Y-m-d 00:00:00') && $v['date'] >= date('Y-m-d 00:00:00', strtotime('-7 days'))) 
+                $out['sessions']['week'] += $v['session'];
             // All time
             $out['sessions']['alltime'] += $v['session'];
         }
@@ -45,9 +47,9 @@ class CPanelController extends Controller
         $header = $this->getFile($this->path, __FUNCTION__);
         $siteInfo = new SiteInfo();
         $out = array();
-        if (!isset($_GET['CPanel/index'])) {
+        if (!isset($_GET['CPanel/index']))
             $out['searchable'] = 1;
-        }
+
         $out['sitename'] = $siteInfo->getName();
         echo $this->view($header, $out);
     }
@@ -112,11 +114,7 @@ class CPanelController extends Controller
 
     public function postEditorSubmit()
     {
-        if (!empty($_GET['id'])) {
-            $this->model->editPost($_GET['id'], $_POST);
-        } else {
-            $this->model->createPost($_POST);
-        }
+        !empty($_GET['id'] ? $this->model->editPost($_GET['id'], $_POST) : $this->model->createPost($_POST);
         
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();

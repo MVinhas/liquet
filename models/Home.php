@@ -29,8 +29,8 @@ class Home
         $data = array('admin');
         $admin_exists = $this->db->select('users','id','role = ?', $data);
         if (!empty($admin_exists))
-            return '1';
-        return '0';
+            return 1;
+        return 0;
     }
 
     public function createUser(string $fields, array $values)
@@ -38,7 +38,7 @@ class Home
         $createUser = $this->db->create('users', $fields, $values);
 
         if ($createUser === true) {
-            return "1";
+            return 1;
         } else {
             return $createUser;
         }

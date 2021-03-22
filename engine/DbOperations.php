@@ -69,10 +69,7 @@ class DbOperations
             $result = $sql_prepare->get_result();
             $sql_fetch = $this->fetchQuery($result);
             $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
-            if (count($sql_fetch) === 1) 
-                return array_shift($sql_fetch);
-            else
-                return $sql_fetch;
+            return $sql_fetch;
         } else {
             return $this->db->connection->error;
         }

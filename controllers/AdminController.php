@@ -17,9 +17,8 @@ class AdminController extends Controller
 
     public function index()
     {
-        if (!isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user']))
             $this->login();
-        }
     }
     
     public function login()

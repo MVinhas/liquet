@@ -16,21 +16,17 @@ class HomeController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Home();
+        $this->site = new Site();
     }
 
     public function index()
     {
         if ($this->model->checkUsers() === false) {
-            $migrations = new \migrations\Setup();
-            $migrations->index();
-            $home = $this->getFile($this->path, 'first_setup');
-            echo $this->view($home);
+            $this->migrations();
         } else {
             $offset = 0;
-            if (isset($_GET['page'])) {
-                $offset = $_GET['page'] * 5;
-                $out['page'] = $_GET['page'];
-            }
+            $offset += ($_GET['page'] * 5);
+            $out['page'] = $_GET['page'];
             $out['posts'] = $this->model->getPosts($offset);
             $out['about'] = $this->model->getAbout();
             $out['archives'] = $this->model->getArchives();
@@ -45,30 +41,21 @@ class HomeController extends Controller
         $fields = 'email, username, password, role, active';
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $admin_exists = $this->model->checkAdmin();
-        if ($admin_exists == 1) {
-            $role = 'user';
-        } else {
-            $role = 'admin';
-        }
+        $admin_exists === 1 ? $role = 'user' : $role = 'admin'; 
 
         $values = array($_POST['email'], $_POST['username'], $password, $role, 1);
         $createUser = $this->model->createUser($fields, $values);
-        if ($createUser == '1') {
-            $this->login($email, $role);
-        } else {
-            $this->setup($createUser);
-        }
+        $createUser === 1 ? $this->login($email, $role) : $this->setup($createUser);
     }
 
     public function login($email, $role)
     {
-        if (!isset($_SESSION['users']['email']) && $_POST['username']) {
+        if (!isset($_SESSION['users']['email']) && $_POST['username'])
             $_SESSION['users'] = array(
                 'email' => $email,
                 'username' => $_POST['username'],
                 'role' => $role
             );
-        }
     }
 
     public function logout()
@@ -83,23 +70,23 @@ class HomeController extends Controller
         $out['about'] = $this->model->getAbout();
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
-        if (!empty($_POST['search'])) {
+        if (empty($_POST['search'])) {
+            $this->index();    
+        } else {
             $search_terms = explode(" ", $_POST['search']);
             $out['posts'] = $this->model->getPostsBySearch($search_terms);
-            if (empty($out['posts'])) {
-                $out['header_results'] = -1;    
-            }
-            if (!isset($out['posts'][0]) && !empty($out['posts'])) {
-                $temp = $out['posts'];
-                unset($out['posts']);
-                $out['posts'][0] = $temp;
+            echo "<pre>";print_r($out['posts']);"</pre>"; 
+            //if (!isset($out['posts'][0]) && !empty($out['posts'])) {
+                //$temp = $out['posts'];
+                //unset($out['posts']);
+                
+                //$out['posts'][0] = $temp;
                 $out['number_results'] = count($out['posts']);
-            }
+                echo "<pre>";print_r($out['posts']);
+            //}
             $search = $this->getFile($this->path, __FUNCTION__);
             echo $this->view($search, $out); 
-        } else{
-            $this->index();
-        } 
+        }
     }
 
     public function setup($message = '')
@@ -113,5 +100,13 @@ class HomeController extends Controller
         }
         $setup = $this->getFile($this->path, __FUNCTION__);
         echo $this->view($setup, $out);
+    }
+
+    private function migrations()
+    {
+        $migrations = new \migrations\Setup();
+        $migrations->index();
+        $home = $this->getFile($this->path, 'first_setup');
+        echo $this->view($home);
     }
 }

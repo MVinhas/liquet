@@ -29,12 +29,12 @@ class SiteController extends Controller
         $getKeys = array_keys($_GET);
         
         $key_method = substr($getKeys[0], strpos($getKeys[0], "/") + 1);
-        if ($key_method === 'createSession') {
+        
+        if ($key_method === 'createSession') 
             header('Location: ?CPanel/index');
-        }
-        if ($key_method === 'logout') {
+        if ($key_method === 'logout') 
             header('Location: ?');
-        }
+
         $key_func = substr($getKeys[0], 0, strpos($getKeys[0], "/"));
         if ($key_func === 'CPanel') {
             $cpanelController = new \controllers\CPanelController;
