@@ -66,7 +66,7 @@ class Home
     public function getArchives()
     {
         $data = array(1);
-        $rows = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year ', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y")', $data);
+        $rows = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year ', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y") ORDER BY year, month ASC', $data);
         $archives = array();
         array_key_exists('Total', $rows) ? $archives[0] = $rows : $archives = $rows;
         return $archives;
