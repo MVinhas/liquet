@@ -15,9 +15,10 @@ class DbOperations
         $sql_fetch = array();
         if ($query_res->num_rows === 1) 
             return $query_res->fetch_assoc();
-        while ($sql_retrieve = $query_res->fetch_assoc()) {
+        
+        while ($sql_retrieve = $query_res->fetch_assoc()) 
             $sql_fetch[] = $sql_retrieve;
-        }
+
         return $sql_fetch;
     }
 
@@ -36,37 +37,29 @@ class DbOperations
         $sql = "INSERT INTO $table ($fields) VALUES ($prepare)";
         $count_fields = substr_count($prepare, '?');
         $sql = $this->preparedStatement($sql, $count_fields, $data_array);
-        if ($sql->execute()) {
+        
+        if ($sql->execute())
             return $sql->insert_id;
-        } else {
-            return $this->db->connection->error;
-        }
+        else
+            return $this->db->connection->error;  
     }
 
-    public function select(string $table, string $fields = '*', string $filter = '', array $field_values = array())
+    public function select(string $table, string $fields = '*', string $filter = '1=?', array $field_values = array(1))
     {
-        if ($fields === '*' && $filter === '') {
+        if ($fields === '*' && $filter === '1=?')
             mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_STRICT ^ MYSQLI_REPORT_INDEX);     
-        } else {
+        else
             mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_STRICT); 
-        }
-        if (empty($filter)) {
-            $sql = "SELECT $fields FROM $table";
-            $sql_prepare = $this->db->prepare($sql);
-            if ($sql_prepare === false || $sql_prepare === null) 
-                return $this->db->connection->error;
-        } else {
-            $sql = "SELECT $fields FROM $table WHERE $filter";
-        }
+        
+        $sql = "SELECT $fields FROM $table WHERE $filter";
 
-        if (!empty($field_values)) {
-            $data_array = array_values($field_values); 
-            $count_fields = substr_count($filter, '?');
-            $data_array = $this->convertHtmlEntities($data_array);
-            $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array);
-            if ($sql_prepare === false || $sql_prepare === null) 
-                return $this->db->connection->error;
-        }
+        $data_array = array_values($field_values); 
+        $count_fields = substr_count($filter, '?');
+        $data_array = $this->convertHtmlEntities($data_array);
+        $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array);
+        if ($sql_prepare === false || $sql_prepare === null) 
+            return $this->db->connection->error;
+       
         if ($sql_prepare->execute()) {
             $result = $sql_prepare->get_result();
             $sql_fetch = $this->fetchQuery($result);
@@ -77,7 +70,7 @@ class DbOperations
         }
     }
 
-    public function update(string $table, string $fields, array $fields_value,  string $where, array $where_value)
+    public function update(string $table, string $fields, array $fields_value, string $where = '1=?', array $where_value = array(1))
     {   
         $fields_value = $this->convertHtmlEntities($fields_value);
         $where_value = $this->convertHtmlEntities($where_value);
@@ -100,7 +93,7 @@ class DbOperations
         }
     }
 
-    public function delete(string $table, string $condition = '1 = ?', array $condition_values = ['1'])
+    public function delete(string $table, string $condition = '1=?', array $condition_values = array(1))
     {
         $sql = "DELETE FROM $table WHERE $condition";
         $data_array = array_values($condition_values);
@@ -111,11 +104,11 @@ class DbOperations
         
         if ($sql_prepare === false)
             return $this->db->connection->error;
-        if ($sql_prepare->execute()) {
+        
+        if ($sql_prepare->execute())
             return true;
-        } else {
+        else
             return $this->db->connection->error;
-        }
     }
 
     public function checkTable(string $table)
@@ -123,9 +116,9 @@ class DbOperations
         $sql = "SELECT 1 FROM $table LIMIT 1";
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        if ($this->db->connection->error) {
+        if ($this->db->connection->error)
             return $this->db->connection->error;
-        }
+
         return true;
     }
     
@@ -133,23 +126,18 @@ class DbOperations
     {
         $numItems = count($fields);
         $i = 0;
-        $values = '';
+        $values = array();
         foreach ($fields as $k => $v) {
-            if (++$i !== $numItems) {
-                $values .= $k.' '.$v.',';
-            } else {
-                $values .= $k.' '.$v;
-            }
+            $values[] = $k.' '.$v;
         }
         
-        $sql = "CREATE TABLE $table ($values)";
+        $sql = "CREATE TABLE $table (".implode(',',$values).")";
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        if ($this->db->connection->errno) {
+        if ($this->db->connection->errno)
             return false;
-        } else {
+        else
             return true;
-        }
     }
 
     public function createIndex(string $table, string $constraint, string $value)
@@ -157,11 +145,10 @@ class DbOperations
         $sql = "ALTER TABLE $table ADD CONSTRAINT $constraint $value";
         $sql = $this->db->real_escape_string($sql);
         $sql_query = $this->db->query($sql);
-        if ($this->db->connection->errno) {
+        if ($this->db->connection->errno)
             return false;
-        } else {
+        else
             return true;
-        }
     }
 
     private function preparedStatement($sql, $count_fields, $data_array, $count_fields_where = '', $data_array_where = array())
@@ -171,16 +158,12 @@ class DbOperations
         
         if (strlen($count_fields_where) > 0 ) {
             $fields_where = $this->processValuesType($count_fields_where, $data_array_where);
-     
-            $values_type = $fields->values_type.$fields_where->values_type;
-
+            $values_type = $fields['values_type'].$fields_where['values_type'];
             $sql_prepare = $this->db->prepare($sql);
-            
             $sql_prepare->bind_param("$values_type", ...$fields->values, ...$fields_where->values);
         } else {
             $sql_prepare = $this->db->prepare($sql);
-        
-            $sql_prepare->bind_param($fields->values_type, ...$fields->values);
+            $sql_prepare->bind_param($fields['values_type'], ...$fields['values']);
         }
 
         return $sql_prepare;
@@ -199,9 +182,9 @@ class DbOperations
         }
         $values_type = implode('', $values_type);
         
-        $valuesClass = new \stdClass();
-        $valuesClass->values = $values;
-        $valuesClass->values_type = $values_type;
+        $valuesClass = array();
+        $valuesClass['values'] = $values;
+        $valuesClass['values_type'] = $values_type;
         
         return $valuesClass;
     }
