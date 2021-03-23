@@ -153,13 +153,12 @@ class DbOperations
 
     private function preparedStatement($sql, $number_of_fields, $data, $number_of_fields_where = '', $data_where = array())
     {
-
-        $fields = $this->getValuesType($number_of_fields, $data);
+        $fields = $this->getValueTypes($number_of_fields, $data);
         if (strlen($number_of_fields_where) > 0 ) {
-            $fields_where = $this->getValuesType($number_of_fields_where, $data_where);
-            $values_type = $fields.$fields_where;
+            $fields_where = $this->getValueTypes($number_of_fields_where, $data_where);
+            $value_types = $fields.$fields_where;
             $sql_prepare = $this->db->prepare($sql);
-            $sql_prepare->bind_param("$values_type", ...$data, ...$data_where);
+            $sql_prepare->bind_param($value_types, ...$data, ...$data_where);
         } else {
             $sql_prepare = $this->db->prepare($sql);
             $sql_prepare->bind_param($fields, ...$data);
@@ -168,16 +167,16 @@ class DbOperations
         return $sql_prepare;
     }
 
-    private function getValuesType($number_of_fields, $data)
+    private function getValueTypes($number_of_fields, $data)
     {
-        $values_types = array();
+        $value_types = array();
         for ($i=0; $i < $number_of_fields; $i++) {
-            $values_type[$i] = strtolower(substr(gettype($data[$i]), 0, 1));
+            $value_types[$i] = strtolower(substr(gettype($data[$i]), 0, 1));
         }
         
-        $values_type = implode('', $values_type);
+        $value_types = implode('', $value_types);
         
-        return $values_type;
+        return $value_types;
     }
 
     private function convertHtmlEntities($input)
