@@ -25,12 +25,12 @@ class DbOperations
     public function create(string $table, string $fields, array $data)
     {
 
-        $data = array_values($this->convertHtmlEntities($data));
         
+        $data = array_values($this->convertHtmlEntities($data));
         $prepare_array = array();
 
         foreach ($data as $k => $v) {
-            $prepare_array[$k] = str_replace($v, '?', $data_array[$k]);
+            $prepare_array[$k] = str_replace($v, '?', $data[$k]);
         }
         $prepare = implode(',', $prepare_array);
         $sql = "INSERT INTO $table ($fields) VALUES ($prepare)";
