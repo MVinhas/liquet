@@ -114,7 +114,7 @@ class CPanelController extends Controller
 
     public function postEditorSubmit()
     {
-        !empty($_GET['id'] ? $this->model->editPost($_GET['id'], $_POST) : $this->model->createPost($_POST);
+        !empty($_GET['id']) ? $this->model->editPost($_GET['id'], $_POST) : $this->model->createPost($_POST);
         
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
