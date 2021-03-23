@@ -1,3 +1,4 @@
+{% apply spaceless %}
 {% if number_results == 0 %}
 {% include 'post/no_results.html' %}
 {% else %}
@@ -6,3 +7,4 @@
 </div>
 {% include 'post/list.html' %}
 {% endif %}
+{% endapply %}

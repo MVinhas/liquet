@@ -1,30 +1,58 @@
+{% apply spaceless %}
 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-    <div class="sidebar-sticky">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link {% if active == 'Dashboard'%}active{% endif%}" href="?CPanel/index">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            Dashboard <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if active == 'Posts'%}active{% endif%}" href="?CPanel/postsIndex">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            Posts
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if active == 'Categories'%}active{% endif%}" href="?CPanel/categoriesIndex">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-            Categories
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if active == 'Config'%}active{% endif%}" href="?CPanel/configEditor">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tool"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-            Config
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link {% if active == 'Dashboard'%}active{% endif%}" href="?CPanel/index">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z">
+            </path>
+            <polyline points="9 22 9 12 15 12 15 22">
+            </polyline>
+          </svg>
+          Dashboard 
+          <span class="sr-only">(current)
+          </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if active == 'Posts'%}active{% endif%}" href="?CPanel/postsIndex">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
+            </path>
+          </svg>
+          Posts
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if active == 'Categories'%}active{% endif%}" href="?CPanel/categoriesIndex">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+            <line x1="8" y1="6" x2="21" y2="6">
+            </line>
+            <line x1="8" y1="12" x2="21" y2="12">
+            </line>
+            <line x1="8" y1="18" x2="21" y2="18">
+            </line>
+            <line x1="3" y1="6" x2="3.01" y2="6">
+            </line>
+            <line x1="3" y1="12" x2="3.01" y2="12">
+            </line>
+            <line x1="3" y1="18" x2="3.01" y2="18">
+            </line>
+          </svg>
+          Categories
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if active == 'Config'%}active{% endif%}" href="?CPanel/configEditor">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tool">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
+            </path>
+          </svg>
+          Config
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+{% endapply %}

@@ -1,16 +1,23 @@
 {% include '/site/head.html' %}
 {% apply spaceless %}
 <section id="dbconf_index">
-    <div class="alert alert-danger h2" role="alert">
-        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
-        <span class="sr-only">Error:</span>
-        Looks Like your database is not correctly configured
-    </div>
-    <div class="h4 mt-4 mb-4">Don't worry. Just take the next steps in order to successfully setup your environment.</div>
-    <div class="h6">Using MySQL command line prompt as 'root':</div>
-    <pre><code class="card card-body">CREATE DATABASE {{DB_DATABASE}}; 
+  <div class="alert alert-danger h2" role="alert">
+    <span class="fa fa-exclamation-triangle" aria-hidden="true">
+    </span>
+    <span class="sr-only">Error:
+    </span>
+    Looks Like your database is not correctly configured
+  </div>
+  <div class="h4 mt-4 mb-4">Don't worry. Just take the next steps in order to successfully setup your environment.
+  </div>
+  <div class="h6">Using MySQL command line prompt as 'root':
+  </div>
+  <pre>
+<code class="card card-body">CREATE DATABASE {{DB_DATABASE}}; 
 CREATE USER '{{DB_USERNAME}}'@'{{DB_SERVER}}' IDENTIFIED BY '{{DB_PASSWORD}}';
 GRANT ALL PRIVILEGES ON {{DB_DATABASE}}. * TO '{{DB_USERNAME}}'@'{{DB_SERVER}}';
-FLUSH privileges;</code></pre>
+FLUSH privileges;
+</code>
+</pre>
 </section>
 {% endapply %}

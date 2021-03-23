@@ -1,56 +1,75 @@
+{% apply spaceless %}
 <div class="container">
   <header class="blog-header py-3">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
         <a class="text-muted" href="#" aria-label="Search">
-          
           <form action="?Home/search" method="POST" class="bd-search d-flex align-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="M21 21l-5.2-5.2"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false">
+              <title>Search
+              </title>
+              <circle cx="10.5" cy="10.5" r="7.5">
+              </circle>
+              <path d="M21 21l-5.2-5.2">
+              </path>
+            </svg>
             <input type="search" name="search" class="form-control ds-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off" data-docs-version="4.2" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-owns="algolia-autocomplete-listbox-0" dir="auto" style="position: relative; vertical-align: top;">
-            <button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-2" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false" role="img"><title>Menu</title><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path></svg>
-          </button>
+            <button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-2" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false" role="img">
+                <title>Menu
+                </title>
+                <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22">
+                </path>
+              </svg>
+            </button>
           </form>  
         </a>
       </div>
       <div class="col-4 text-center">
-        <a class="blog-header-logo text-dark" href="?">{{sitename|raw}}</a>
+        <a class="blog-header-logo text-dark" href="?">{{sitename|raw}}
+        </a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center">
-        
         {% for k, item in header %}
-          {% if item.menu == 0 %}
-            <a class="btn btn-sm btn-outline-secondary" href="?{{item.class}}">{{item.name|raw}}</a>
-          {% endif %}
+        {% if item.menu == 0 %}
+        <a class="btn btn-sm btn-outline-secondary" href="?{{item.class}}">{{item.name|raw}}
+        </a>
+        {% endif %}
         {% endfor %}
         {% if session != '' %}
-            <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{session.username|raw}}
-            </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="user">
-              <a class="dropdown-item waves-effect waves-light" href="?CPanel/index">Control Panel</a>
-              <a class="dropdown-item waves-effect waves-light" href="?Home/logout">Quit</a>
-            </div>
+        <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{session.username|raw}}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="user">
+          <a class="dropdown-item waves-effect waves-light" href="?CPanel/index">Control Panel
+          </a>
+          <a class="dropdown-item waves-effect waves-light" href="?Home/logout">Quit
+          </a>
+        </div>
         {% else %}
-            <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Menu
-            </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="menu">
-              {% for item in header %}
-                {% if item.menu == 1%}
-                  <a class="dropdown-item waves-effect waves-light" href="?{{item.class}}">{{item.name|raw}}</a>
-                {% endif %}
-              {% endfor %}
-            </div>
+        <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Menu
+        </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="menu">
+          {% for item in header %}
+          {% if item.menu == 1%}
+          <a class="dropdown-item waves-effect waves-light" href="?{{item.class}}">{{item.name|raw}}
+          </a>
+          {% endif %}
+          {% endfor %}
+        </div>
         {% endif %}
       </div>
     </div>
   </header>
   <div class="nav-scroller py-1 mb-2">
-      <nav class="nav d-flex justify-content-between">
-        {% for item in categories %}
-        <a class="p-2 text-muted" href="?Post/category/&category={{item.id}}">{{item.name|raw}}</a>
-        {% endfor %}
-      </nav>
+    <nav class="nav d-flex justify-content-between">
+      {% for item in categories %}
+      <a class="p-2 text-muted" href="?Post/category/&category={{item.id}}">{{item.name|raw}}
+      </a>
+      {% endfor %}
+    </nav>
   </div>
 </div>
 <main role="main" class="container"> {# closes on Footer #}
+{% endapply %}
