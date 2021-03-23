@@ -66,9 +66,6 @@ class PostController extends Controller
             unset($out['posts']);
             $out['posts'][0] = $temp;
         }
-        if (empty($out['posts'])) {
-            $out['header_results'] = -1;
-        }
         $home = new \models\Home();
         $out['categories'] = $this->site->getCategories();
         $out['about'] = $home->getAbout();
