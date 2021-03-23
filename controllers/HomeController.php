@@ -21,19 +21,21 @@ class HomeController extends Controller
 
     public function index()
     {
-        if ($this->model->checkUsers() === false) {
-            $this->migrations();
-        } else {
-            $offset = 0;
+        if ($this->model->checkUsers() === false)
+            return $this->migrations();
+        
+        $offset = 0;
+        if (isset($_GET['page'])) {
             $offset += ($_GET['page'] * 5);
             $out['page'] = $_GET['page'];
-            $out['posts'] = $this->model->getPosts($offset);
-            $out['about'] = $this->model->getAbout();
-            $out['archives'] = $this->model->getArchives();
-            $out['social'] = $this->model->getSocial();
-            $home = $this->getFile($this->path, __FUNCTION__);
-            echo $this->view($home, $out);
         }
+
+        $out['posts'] = $this->model->getPosts($offset);
+        $out['about'] = $this->model->getAbout();
+        $out['archives'] = $this->model->getArchives();
+        $out['social'] = $this->model->getSocial();
+        $home = $this->getFile($this->path, __FUNCTION__);
+        echo $this->view($home, $out);
     }
 
     public function register()
@@ -65,28 +67,25 @@ class HomeController extends Controller
 
     public function search()
     {
+        if (empty($_POST['search'])) 
+            return $this->index();
         $out = array();
         $out['categories'] = $this->site->getCategories();
         $out['about'] = $this->model->getAbout();
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
-        if (empty($_POST['search'])) {
-            $this->index();    
-        } else {
-            $search_terms = explode(" ", $_POST['search']);
-            $out['posts'] = $this->model->getPostsBySearch($search_terms);
-            echo "<pre>";print_r($out['posts']);"</pre>"; 
-            //if (!isset($out['posts'][0]) && !empty($out['posts'])) {
-                //$temp = $out['posts'];
-                //unset($out['posts']);
-                
-                //$out['posts'][0] = $temp;
-                $out['number_results'] = count($out['posts']);
-                echo "<pre>";print_r($out['posts']);
-            //}
-            $search = $this->getFile($this->path, __FUNCTION__);
-            echo $this->view($search, $out); 
+        $search_terms = explode(" ", $_POST['search']);
+        $out['posts'] = $this->model->getPostsBySearch($search_terms);
+        if (!isset($out['posts'][0]) && !empty($out['posts'])) {
+            $temp = $out['posts'];
+            unset($out['posts']);
+            $out['posts'][0] = $temp;
+            $out['number_results'] = count($out['posts']);
+        } elseif (!empty($out['posts'])) {
+            $out['number_results'] = count($out['posts']);
         }
+        $search = $this->getFile($this->path, __FUNCTION__);
+        echo $this->view($search, $out); 
     }
 
     public function setup($message = '')

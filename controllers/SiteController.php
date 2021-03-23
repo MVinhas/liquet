@@ -27,16 +27,17 @@ class SiteController extends Controller
         $this->head();
 
         $getKeys = array_keys($_GET);
-        
-        $key_method = substr($getKeys[0], strpos($getKeys[0], "/") + 1);
-        
-        if ($key_method === 'createSession') 
-            header('Location: ?CPanel/index');
-        if ($key_method === 'logout') 
-            header('Location: ?');
+        if (!empty($getKeys[0])) {
+            $key_method = substr($getKeys[0], strpos($getKeys[0], "/") + 1);
+            $key_func = substr($getKeys[0], 0, strpos($getKeys[0], "/"));   
+        }
 
-        $key_func = substr($getKeys[0], 0, strpos($getKeys[0], "/"));
-        if ($key_func === 'CPanel') {
+        if (isset($key_method) && $key_method === 'createSession') 
+            header('Location: ?CPanel/index');
+        if (isset($key_method) && $key_method === 'logout') 
+            header('Location: ?');
+        
+        if (isset($key_func) && $key_func === 'CPanel') {
             $cpanelController = new \controllers\CPanelController;
             $cpanelController->header();
         } else {
