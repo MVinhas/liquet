@@ -13,6 +13,8 @@ class DbOperations
     protected function fetchQuery($query_res)
     {
         $sql_fetch = array();
+        if ($query_res->num_rows === 1) 
+            return $query_res->fetch_assoc();
         while ($sql_retrieve = $query_res->fetch_assoc()) {
             $sql_fetch[] = $sql_retrieve;
         }
