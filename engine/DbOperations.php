@@ -24,19 +24,18 @@ class DbOperations
 
     public function create(string $table, string $fields, array $data)
     {
-        
-        $data = $this->convertHtmlEntities($data); 
-        $data_array = array_values($data);
+
+        $data = array_values($this->convertHtmlEntities($data));
         
         $prepare_array = array();
 
-        foreach ($data_array as $k => $v) {
+        foreach ($data as $k => $v) {
             $prepare_array[$k] = str_replace($v, '?', $data_array[$k]);
         }
         $prepare = implode(',', $prepare_array);
         $sql = "INSERT INTO $table ($fields) VALUES ($prepare)";
-        $count_fields = substr_count($prepare, '?');
-        $sql = $this->preparedStatement($sql, $count_fields, $data_array);
+        $number_of_fields = substr_count($prepare, '?');
+        $sql = $this->preparedStatement($sql, $number_of_fields, $data);
         
         if ($sql->execute())
             return $sql->insert_id;
@@ -53,10 +52,11 @@ class DbOperations
         
         $sql = "SELECT $fields FROM $table WHERE $filter";
 
-        $data_array = array_values($field_values); 
-        $count_fields = substr_count($filter, '?');
-        $data_array = $this->convertHtmlEntities($data_array);
-        $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array);
+        $data = array_values($field_values);
+        $number_of_fields = substr_count($filter, '?');
+        $data = $this->convertHtmlEntities($data);
+
+        $sql_prepare = $this->preparedStatement($sql, $number_of_fields, $data);
         if ($sql_prepare === false || $sql_prepare === null) 
             return $this->db->connection->error;
        
@@ -74,16 +74,16 @@ class DbOperations
     {   
         $fields_value = $this->convertHtmlEntities($fields_value);
         $where_value = $this->convertHtmlEntities($where_value);
-        $data_array = array_values($fields_value);
+        $data = array_values($fields_value);
 
-        $data_array_where = array_values($where_value);
+        $data_where = array_values($where_value);
 
         $sql = "UPDATE $table SET $fields WHERE $where";
 
-        $count_fields = substr_count($fields, '?');
-        $count_fields_where = substr_count($where, '?');
+        $number_of_fields = substr_count($fields, '?');
+        $number_of_fields_where = substr_count($where, '?');
 
-        $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array, $count_fields_where, $data_array_where);
+        $sql_prepare = $this->preparedStatement($sql, $number_of_fields, $data, $number_of_fields_where, $data_where);
         if ($sql_prepare === false)
             return $this->db->connection->error;
         if ($sql_prepare->execute()) {
@@ -96,11 +96,11 @@ class DbOperations
     public function delete(string $table, string $condition = '1=?', array $condition_values = array(1))
     {
         $sql = "DELETE FROM $table WHERE $condition";
-        $data_array = array_values($condition_values);
+        $data = array_values($condition_values);
          
-        $count_fields = substr_count($condition, '?');
+        $number_of_fields = substr_count($condition, '?');
 
-        $sql_prepare = $this->preparedStatement($sql, $count_fields, $data_array);
+        $sql_prepare = $this->preparedStatement($sql, $number_of_fields, $data);
         
         if ($sql_prepare === false)
             return $this->db->connection->error;
@@ -151,49 +151,41 @@ class DbOperations
             return true;
     }
 
-    private function preparedStatement($sql, $count_fields, $data_array, $count_fields_where = '', $data_array_where = array())
+    private function preparedStatement($sql, $number_of_fields, $data, $number_of_fields_where = '', $data_where = array())
     {
 
-        $fields = $this->processValuesType($count_fields, $data_array);
-        
-        if (strlen($count_fields_where) > 0 ) {
-            $fields_where = $this->processValuesType($count_fields_where, $data_array_where);
-            $values_type = $fields['values_type'].$fields_where['values_type'];
+        $fields = $this->getValuesType($number_of_fields, $data);
+        if (strlen($number_of_fields_where) > 0 ) {
+            $fields_where = $this->getValuesType($number_of_fields_where, $data_where);
+            $values_type = $fields.$fields_where;
             $sql_prepare = $this->db->prepare($sql);
-            $sql_prepare->bind_param("$values_type", ...$fields->values, ...$fields_where->values);
+            $sql_prepare->bind_param("$values_type", ...$data, ...$data_where);
         } else {
             $sql_prepare = $this->db->prepare($sql);
-            $sql_prepare->bind_param($fields['values_type'], ...$fields['values']);
+            $sql_prepare->bind_param($fields, ...$data);
         }
 
         return $sql_prepare;
     }
 
-    private function processValuesType($count_fields, $data_array)
+    private function getValuesType($number_of_fields, $data)
     {
-        $values = array();
         $values_types = array();
-        for ($i=0; $i < $count_fields; $i++) {
-
-            $field[$i] = ltrim($data_array[$i], ' ');
-            
-            $values_type[$i] = strtolower(substr(gettype($data_array[$i]), 0, 1));
-            array_push($values, $field[$i]);
+        for ($i=0; $i < $number_of_fields; $i++) {
+            $values_type[$i] = strtolower(substr(gettype($data[$i]), 0, 1));
         }
+        
         $values_type = implode('', $values_type);
         
-        $valuesClass = array();
-        $valuesClass['values'] = $values;
-        $valuesClass['values_type'] = $values_type;
-        
-        return $valuesClass;
+        return $values_type;
     }
 
     private function convertHtmlEntities($input)
     {
         array_walk_recursive(
             $input, function (&$value) {
-                    $value = htmlentities($value);
+                    if (gettype($value) === 'string')
+                        $value = htmlentities($value);
                 }
         );
         return $input;
@@ -203,7 +195,8 @@ class DbOperations
     {
         array_walk_recursive(
             $input, function (&$value) {
-                    $value = html_entity_decode($value);
+                    if (gettype($value) === 'string')    
+                        $value = html_entity_decode($value);
                 }
         );
         return $input;
