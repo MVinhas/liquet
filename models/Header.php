@@ -14,7 +14,7 @@ class Header
 
     public function getMenu()
     {
-        $data = array('1');
+        $data = array(1);
         $menu = $this->db->select('pages', '*', 'header = ?', $data);
 
         foreach ($menu as $k => $v) {

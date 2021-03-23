@@ -71,7 +71,7 @@ class CPanel
         $exists = $this->db->select('config', '*');
 
         if (!empty($exists)) {
-            $data = array('1');
+            $data = array(1);
             $this->db->update('config', 'debugmode = ?, sitename = ?, email = ?, siteversion = ?, siteauthor = ?, launchyear = ?', $post, 'id = ?', $data);
         } else {
             $post['id'] = 1;
@@ -94,7 +94,7 @@ class CPanel
 
     public function getVisits()
     {      
-        $data = array('1');
+        $data = array(1);
         $dates_query = $this->db->select('sessions', 'COUNT(session) AS session, firstvisit AS date', '1=? GROUP BY firstvisit', $data);
                        
         return $dates_query; 

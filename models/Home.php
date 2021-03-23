@@ -46,7 +46,7 @@ class Home
 
     public function getPosts(int $offset = 0)
     {
-        $data = array('1');
+        $data = array(1);
         $posts = $this->db->select('posts','*', 'status = ? ORDER BY id DESC LIMIT 5 OFFSET '.$offset, $data);
         foreach ($posts as $k => $v) {
             $data = array($v['category']);
@@ -58,14 +58,14 @@ class Home
 
     public function getAbout()
     {   
-        $data = array('1');
+        $data = array(1);
         $about = $this->db->select('about','*','id = ?', $data);
         return $about;
     }
 
     public function getArchives()
     {
-        $data = array('1');
+        $data = array(1);
         $rows = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year ', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y")', $data);
         $archives = array();
         array_key_exists('Total', $rows) ? $archives[0] = $rows : $archives = $rows;
@@ -74,7 +74,7 @@ class Home
 
     public function getSocial()
     {
-        $data = array('1');
+        $data = array(1);
         $rows = $this->db->select('social', '*', 'visible = ?', $data);
         $social = array();
         array_key_exists('name', $rows) ? $social[0] = $rows : $social = $rows;
@@ -84,7 +84,7 @@ class Home
     public function getPostsBySearch(array $search)
     {
         $sql = '';
-        $data = array('1');
+        $data = array(1);
         foreach ($search as $k => $v) {
             if ($v !== "") {
                 $sql .= " AND title LIKE CONCAT('%',?,'%') ";
