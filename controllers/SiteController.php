@@ -98,4 +98,12 @@ class SiteController extends Controller
         $subscribe = $this->getFile($this->path, __FUNCTION__);
         echo $this->view($subscribe);
     }
+
+    private function migrations()
+    {
+        $migrations = new \migrations\Setup();
+        $migrations->index();
+        $home = $this->getFile($this->path, 'first_setup');
+        echo $this->view($home);
+    }
 }

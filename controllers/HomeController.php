@@ -21,9 +21,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        if ($this->model->checkUsers() === false)
-            return $this->migrations();
-        
         $offset = 0;
         if (isset($_GET['page'])) {
             $offset += ($_GET['page'] * 5);
