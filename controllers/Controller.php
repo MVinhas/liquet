@@ -26,14 +26,6 @@ class Controller
         return $path.'/'.$file;
     }
 
-    public function migrations()
-    {
-        $migrations = new \migrations\Setup();
-        $migrations->index();
-        $home = $this->getFile($this->path, 'first_setup');
-        echo $this->view($home);
-    }
-
     protected function view($view, $out = array())
     {
         echo $this->twig->render($view.'.html', $out);
