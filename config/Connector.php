@@ -15,6 +15,7 @@ class Connector
     private function __construct()
     {
         try {  
+            mysqli_report(MYSQLI_REPORT_STRICT); 
             $this->connection = new \mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
         } catch (\mysqli_sql_exception $e) {
             $dbConf = new \controllers\DbConfController;
@@ -25,6 +26,7 @@ class Connector
     public static function init()
     {
         if (is_null(self::$instance)) {
+            
             self::$instance = new Connector();
         }
         return self::$instance;
