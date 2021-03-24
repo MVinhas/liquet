@@ -101,11 +101,4 @@ class HomeController extends Controller
         echo $this->view($setup, $out);
     }
 
-    private function migrations()
-    {
-        $migrations = new \migrations\Setup();
-        $migrations->index();
-        $home = $this->getFile($this->path, 'first_setup');
-        echo $this->view($home);
-    }
 }

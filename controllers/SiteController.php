@@ -22,7 +22,11 @@ class SiteController extends Controller
     }
     public function index()
     {
-        $this->model->visitCounter();
+        try {
+            $this->model->visitCounter();
+        } catch (\Error $e) {
+            return $this->migrations();
+        }
         Dispatcher::metadata();
         $this->head();
 
