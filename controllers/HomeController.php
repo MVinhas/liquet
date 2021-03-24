@@ -10,6 +10,7 @@ class HomeController extends Controller
 
     protected $path;
     protected $model;
+    protected $site;
     public function __construct()
     {
         parent::__construct();
