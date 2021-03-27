@@ -22,6 +22,10 @@ class Query
 
     public $offset;
 
+    public $one;
+
+    public $sql;
+
     protected $db;
     
     public function __construct()
@@ -31,28 +35,46 @@ class Query
 
     public function select($columns)
     {
-        $select = "SELECT $columns";
-
-        return $select;
+        $this->sql = "SELECT $columns";
+        return $this;
     }
 
     public function from($table)
     {
-        $from = "FROM $table";
-
-        return $from;
+        $this->sql .= "FROM $table";
+        return $this;
     }
 
     public function where($clause)
     {
-        $where = "WHERE $clause";
-
-        return $where;
+        $this->where = "WHERE $clause";
+        return $this;
     }
 
-    public function orderBy($columns, $sort)
+    public function orderBy($columns)
     {
-        
+        foreach ($columns as $k => $v) {
+            $order[] = "$k $v";
+        }
+        $this->orderBy = "ORDER BY ".implode(',', $order); 
+        return $this;  
+    }
+
+    public function limit($limit)
+    {
+        $this->limit = "LIMIT $limit";  
+        return $this;     
+    }
+
+    public function offset($offset)
+    {
+        $this->offset = "OFFSET $offset";
+        return $this;
+    }
+
+    public function one()
+    {
+        echo "<pre>";print_r($this);"</pre>";
     }
 
 }
