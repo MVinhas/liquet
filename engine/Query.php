@@ -80,7 +80,7 @@ class Query
         $field_count = substr_count($sql, '?');
         $data = $this->convertHtmlEntities($data);
 
-        $sql_prepare = $this->preparedStatement($sql, $number_of_fields, $data);
+        $sql_prepare = $this->preparedStatement($sql, $field_count, $data);
         if ($sql_prepare === false || $sql_prepare === null)
             return $this->db->connection->error;
 
@@ -94,11 +94,11 @@ class Query
         }
     }
 
-    private function preparedStatement($sql, $number_of_fields, $data, $number_of_fields_where = '', $data_where = array())
+    private function preparedStatement($sql, $field_count, $data, $field_count_where = '', $data_where = array())
     {
-        $fields = $this->getValueTypes($number_of_fields, $data);
-        if (strlen($number_of_fields_where) > 0 ) {
-            $fields_where = $this->getValueTypes($number_of_fields_where, $data_where);
+        $fields = $this->getValueTypes($field_count, $data);
+        if (strlen($field_count_where) > 0 ) {
+            $fields_where = $this->getValueTypes($field_count_where, $data_where);
             $value_types = $fields.$fields_where;
             $sql_prepare = $this->db->prepare($sql);
             $sql_prepare->bind_param($value_types, ...$data, ...$data_where);
@@ -110,10 +110,10 @@ class Query
         return $sql_prepare;
     }
 
-    private function getValueTypes($number_of_fields, $data)
+    private function getValueTypes($field_count, $data)
     {
         $value_types = array();
-        for ($i=0; $i < $number_of_fields; $i++) {
+        for ($i=0; $i < $field_count; $i++) {
             $value_types[$i] = strtolower(substr(gettype($data[$i]), 0, 1));
         }
 
