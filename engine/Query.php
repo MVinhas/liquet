@@ -22,9 +22,35 @@ class Query
         $this->db = \config\Connector::init();
     }
 
+    private function initialize()
+    {
+        return $this->sql = array();
+    }
+
+    public function create($table)
+    {
+        $this->initialize();
+        $this->sql[] = "CREATE TABLE $table";
+        return $this;
+    }
     public function select($columns)
     {
+        $this->initialize();
         $this->sql[] = "SELECT $columns";
+        return $this;
+    }
+
+    public function update($table)
+    {
+        $this->initialize();
+        $this->sql[] = "UPDATE $table";
+        return $this;
+    }
+
+    public function delete($table)
+    {
+        $this->initialize();
+        $this->sql[] = "DELETE FROM $table";
         return $this;
     }
 
@@ -79,7 +105,6 @@ class Query
         $data = array_values($this->values);
         $field_count = substr_count($sql, '?');
         $data = $this->convertHtmlEntities($data);
-
         $sql_prepare = $this->preparedStatement($sql, $field_count, $data);
         if ($sql_prepare === false || $sql_prepare === null)
             return $this->db->connection->error;
@@ -94,19 +119,11 @@ class Query
         }
     }
 
-    private function preparedStatement($sql, $field_count, $data, $field_count_where = '', $data_where = array())
+    private function preparedStatement($sql, $field_count, $data)
     {
         $fields = $this->getValueTypes($field_count, $data);
-        if (strlen($field_count_where) > 0 ) {
-            $fields_where = $this->getValueTypes($field_count_where, $data_where);
-            $value_types = $fields.$fields_where;
-            $sql_prepare = $this->db->prepare($sql);
-            $sql_prepare->bind_param($value_types, ...$data, ...$data_where);
-        } else {
-            $sql_prepare = $this->db->prepare($sql);
-            $sql_prepare->bind_param($fields, ...$data);
-        }
-
+        $sql_prepare = $this->db->prepare($sql);
+        $sql_prepare->bind_param($fields, ...$data);
         return $sql_prepare;
     }
 
