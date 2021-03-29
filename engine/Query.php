@@ -8,26 +8,15 @@ namespace engine;
  */
 class Query
 {
-    public $select;
-
-    public $from;
-
-    public $where;
-
-    public $orderBy;
-
-    public $groupBy;
-
-    public $limit;
-
-    public $offset;
 
     public $one;
+
+    public $all;
 
     public $sql;
 
     protected $db;
-    
+
     public function __construct()
     {
         $this->db = \config\Connector::init();
@@ -35,19 +24,25 @@ class Query
 
     public function select($columns)
     {
-        $this->sql = "SELECT $columns";
+        $this->sql[] = "SELECT $columns";
         return $this;
     }
 
     public function from($table)
     {
-        $this->sql .= "FROM $table";
+        $this->sql[] = "FROM $table";
         return $this;
     }
 
     public function where($clause)
     {
-        $this->where = "WHERE $clause";
+        $this->sql[] = "WHERE $clause";
+        return $this;
+    }
+
+    public function whereValues($val)
+    {
+        $this->values[] = $val;
         return $this;
     }
 
@@ -56,25 +51,109 @@ class Query
         foreach ($columns as $k => $v) {
             $order[] = "$k $v";
         }
-        $this->orderBy = "ORDER BY ".implode(',', $order); 
-        return $this;  
+        $this->sql[] = "ORDER BY ".implode(',', $order);
+        return $this;
     }
 
     public function limit($limit)
     {
-        $this->limit = "LIMIT $limit";  
-        return $this;     
+        $this->sql[] = "LIMIT $limit";
+        return $this;
     }
 
     public function offset($offset)
     {
-        $this->offset = "OFFSET $offset";
+        $this->sql[] = "OFFSET $offset";
         return $this;
     }
 
-    public function one()
+    public function raw()
     {
-        echo "<pre>";print_r($this);"</pre>";
+        $sql = implode(" ", $this->sql);
+        return $sql;
+    }
+
+    public function all()
+    {
+        $sql = $this->raw();
+        $data = array_values($this->values);
+        $field_count = substr_count($sql, '?');
+        $data = $this->convertHtmlEntities($data);
+
+        $sql_prepare = $this->preparedStatement($sql, $number_of_fields, $data);
+        if ($sql_prepare === false || $sql_prepare === null)
+            return $this->db->connection->error;
+
+        if ($sql_prepare->execute()) {
+            $result = $sql_prepare->get_result();
+            $sql_fetch = $this->fetchQuery($result);
+            $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
+            return $sql_fetch;
+        } else {
+            return $this->db->connection->error;
+        }
+    }
+
+    private function preparedStatement($sql, $number_of_fields, $data, $number_of_fields_where = '', $data_where = array())
+    {
+        $fields = $this->getValueTypes($number_of_fields, $data);
+        if (strlen($number_of_fields_where) > 0 ) {
+            $fields_where = $this->getValueTypes($number_of_fields_where, $data_where);
+            $value_types = $fields.$fields_where;
+            $sql_prepare = $this->db->prepare($sql);
+            $sql_prepare->bind_param($value_types, ...$data, ...$data_where);
+        } else {
+            $sql_prepare = $this->db->prepare($sql);
+            $sql_prepare->bind_param($fields, ...$data);
+        }
+
+        return $sql_prepare;
+    }
+
+    private function getValueTypes($number_of_fields, $data)
+    {
+        $value_types = array();
+        for ($i=0; $i < $number_of_fields; $i++) {
+            $value_types[$i] = strtolower(substr(gettype($data[$i]), 0, 1));
+        }
+
+        $value_types = implode('', $value_types);
+
+        return $value_types;
+    }
+
+    private function fetchQuery($query_res)
+    {
+        $sql_fetch = array();
+        if ($query_res->num_rows === 1)
+            return $query_res->fetch_assoc();
+
+        while ($sql_retrieve = $query_res->fetch_assoc())
+            $sql_fetch[] = $sql_retrieve;
+
+        return $sql_fetch;
+    }
+
+    private function convertHtmlEntities($input)
+    {
+        array_walk_recursive(
+            $input, function (&$value) {
+                    if (gettype($value) === 'string')
+                        $value = htmlentities($value);
+                }
+        );
+        return $input;
+    }
+
+    private function htmlEntitiesToUTF8($input)
+    {
+        array_walk_recursive(
+            $input, function (&$value) {
+                    if (gettype($value) === 'string')
+                        $value = html_entity_decode($value);
+                }
+        );
+        return $input;
     }
 
 }
