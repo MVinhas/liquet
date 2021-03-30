@@ -37,7 +37,7 @@ class Setup
     private function config()
     {
         $fields = array(
-            'debug_mode' => 'INT(1) NOT NULL DEFAULT 1',
+            'debugmode' => 'INT(1) NOT NULL DEFAULT 1',
             'sitename' => 'VARCHAR(50) NOT NULL',
             'email' => 'VARCHAR(50) NOT NULL',
             'siteversion' => 'VARCHAR(100) NOT NULL',
