@@ -15,6 +15,10 @@ class Query
 
     public $sql;
 
+    public $setValues;
+
+    public $whereValues;
+
     protected $db;
 
     public function __construct()
@@ -47,6 +51,18 @@ class Query
         return $this;
     }
 
+    public function set($clause)
+    {
+        $this->sql[] = "SET $clause";
+        return $this;   
+    }
+
+    public function setValues($val)
+    {
+        $this->setValues = $val;
+        return $this;   
+    }
+
     public function delete($table)
     {
         $this->initialize();
@@ -68,7 +84,7 @@ class Query
 
     public function whereValues($val)
     {
-        $this->values[] = $val;
+        $this->whereValues = $val;
         return $this;
     }
 
@@ -99,26 +115,38 @@ class Query
         return $sql;
     }
 
-    public function all()
+    public function go()
     {
         $sql = $this->raw();
-        $data = array_values($this->values);
+        $data = array_merge(array_values($this->setValues), array_values($this->whereValues));
         $field_count = substr_count($sql, '?');
         $data = $this->convertHtmlEntities($data);
         $sql_prepare = $this->preparedStatement($sql, $field_count, $data);
         if ($sql_prepare === false || $sql_prepare === null)
             return $this->db->connection->error;
-
-        if ($sql_prepare->execute()) {
-            $result = $sql_prepare->get_result();
-            $sql_fetch = $this->fetchQuery($result);
-            $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
-            return $sql_fetch;
+        $finalRoute = explode(' ',trim($sql));
+        if ($finalRoute[0] === "SELECT") {
+            $this->getRows($sql_prepare);
         } else {
-            return $this->db->connection->error;
-        }
+            $this->done($sql_prepare);
+        }     
     }
 
+    private function getRows($sql_prepare)
+    {
+        $sql_prepare->execute();
+        $result = $sql_prepare->get_result();
+        $sql_fetch = $this->fetchQuery($result);
+        $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
+        return $sql_fetch;
+    }
+
+    private function done($sql_prepare)
+    { 
+        $sql_prepare->execute();
+        return true;
+    }
+    
     private function preparedStatement($sql, $field_count, $data)
     {
         $fields = $this->getValueTypes($field_count, $data);
