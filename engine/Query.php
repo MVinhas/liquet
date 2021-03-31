@@ -117,6 +117,35 @@ class Query
 
     public function go()
     {
+        return $this->treatData();    
+    }
+
+    private function isSelect()
+    {
+        $sql = $this->raw();
+        $finalRoute = explode(' ',trim($sql));
+        if ($finalRoute[0] !== "SELECT") return false;
+        return true;
+    }
+
+    public function all()
+    {
+        if (!$this->isSelect()) return;  
+        $result = $this->treatData->get_result();
+        $sql_fetch = $this->fetchQuery($result);
+        $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
+        return $sql_fetch;
+    }
+
+    public function one()
+    {
+        if (!$this->isSelect()) return;  
+        $result = $this->treatData->get_result();
+        return $result->fetch_assoc();
+    }
+
+    private function treatData()
+    {
         $sql = $this->raw();
         $data = array_merge(array_values($this->setValues), array_values($this->whereValues));
         $field_count = substr_count($sql, '?');
@@ -124,27 +153,7 @@ class Query
         $sql_prepare = $this->preparedStatement($sql, $field_count, $data);
         if ($sql_prepare === false || $sql_prepare === null)
             return $this->db->connection->error;
-        $finalRoute = explode(' ',trim($sql));
-        if ($finalRoute[0] === "SELECT") {
-            $this->getRows($sql_prepare);
-        } else {
-            $this->done($sql_prepare);
-        }     
-    }
-
-    private function getRows($sql_prepare)
-    {
-        $sql_prepare->execute();
-        $result = $sql_prepare->get_result();
-        $sql_fetch = $this->fetchQuery($result);
-        $sql_fetch = $this->htmlentitiesToUTF8($sql_fetch);
-        return $sql_fetch;
-    }
-
-    private function done($sql_prepare)
-    { 
-        $sql_prepare->execute();
-        return true;
+        return $sql_prepare->execute();
     }
     
     private function preparedStatement($sql, $field_count, $data)
@@ -161,9 +170,7 @@ class Query
         for ($i=0; $i < $field_count; $i++) {
             $value_types[$i] = strtolower(substr(gettype($data[$i]), 0, 1));
         }
-
         $value_types = implode('', $value_types);
-
         return $value_types;
     }
 
