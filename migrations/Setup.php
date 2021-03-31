@@ -37,6 +37,7 @@ class Setup
     private function config()
     {
         $fields = array(
+            'id' => 'INT(1) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
             'debugmode' => 'INT(1) NOT NULL DEFAULT 1',
             'sitename' => 'VARCHAR(50) NOT NULL',
             'email' => 'VARCHAR(50) NOT NULL',
