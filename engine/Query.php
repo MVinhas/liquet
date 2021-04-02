@@ -15,9 +15,11 @@ class Query
 
     public $sql;
 
-    public $setValues;
+    public $setValues = array();
 
-    public $whereValues;
+    public $whereValues = array();
+
+    public $insertValues = array();
 
     protected $db;
 
@@ -37,6 +39,34 @@ class Query
         $this->sql[] = "CREATE TABLE $table";
         return $this;
     }
+
+    public function insert($table)
+    {
+        $this->initialize();
+        $this->sql[] = "INSERT INTO $table";
+        return $this;
+    }
+
+    public function fields($fields)
+    {
+        $this->sql[] = "($fields)";
+        return $this;
+    }
+
+    public function values($values)
+    {
+        $fields = preg_replace('~[\s\S]+~', '?', $values);
+        $this->sql[] = "VALUES (".implode(',', $fields).")";
+        $this->insertValues($values);
+        return $this;
+    }
+
+    private function insertValues($values)
+    {
+        $this->insertValues = $values;
+        return $this;
+    }
+
     public function select($columns)
     {
         $this->initialize();
@@ -63,10 +93,10 @@ class Query
         return $this;   
     }
 
-    public function delete($table)
+    public function delete()
     {
         $this->initialize();
-        $this->sql[] = "DELETE FROM $table";
+        $this->sql[] = "DELETE";
         return $this;
     }
 
@@ -144,10 +174,58 @@ class Query
         return $result->fetch_assoc();
     }
 
+    public function checkTable(string $table)
+    {
+        $sql = "SELECT 1 FROM $table LIMIT 1";
+        $sql = $this->db->real_escape_string($sql);
+        $sql_query = $this->db->query($sql);
+        if ($this->db->connection->error)
+            return $this->db->connection->error;
+
+        return true;
+    }
+
+    public function createTable(string $table, array $fields)
+    {
+        $numItems = count($fields);
+        $i = 0;
+        $values = array();
+        foreach ($fields as $k => $v) {
+            $values[] = $k.' '.$v;
+        }
+        
+        $sql = "CREATE TABLE $table (".implode(',',$values).")";
+        $sql = $this->db->real_escape_string($sql);
+        $sql_query = $this->db->query($sql);
+        if ($this->db->connection->errno)
+            return false;
+        else
+            return true;
+    }
+
+    public function alterTable(string $table)
+    {
+        $this->initialize();
+        $this->sql[] = "ALTER TABLE $table";
+        return $this;
+    }
+
+    public function constraint($fields, $type = 'CONSTRAINT')
+    {
+        $this->sql[] = "ADD $type $fields";
+        return $this;
+    }
+
+    public function constraintValues($values, $unique = '')
+    {
+        $this->sql[] = "$unique ($values)";
+        return $this;
+    }
+
     private function treatData()
     {
         $sql = $this->raw();
-        $data = array_merge(array_values($this->setValues), array_values($this->whereValues));
+        $data = array_merge(array_values($this->setValues), array_values($this->whereValues), array_values($this->insertValues));
         $field_count = substr_count($sql, '?');
         $data = $this->convertHtmlEntities($data);
         $sql_prepare = $this->preparedStatement($sql, $field_count, $data);
@@ -160,7 +238,8 @@ class Query
     {
         $fields = $this->getValueTypes($field_count, $data);
         $sql_prepare = $this->db->prepare($sql);
-        $sql_prepare->bind_param($fields, ...$data);
+        if (!empty($data))
+            $sql_prepare->bind_param($fields, ...$data);
         return $sql_prepare;
     }
 
@@ -190,7 +269,7 @@ class Query
     {
         array_walk_recursive(
             $input, function (&$value) {
-                    if (gettype($value) === 'string')
+                    if (is_string($value))
                         $value = htmlentities($value);
                 }
         );
@@ -201,7 +280,7 @@ class Query
     {
         array_walk_recursive(
             $input, function (&$value) {
-                    if (gettype($value) === 'string')
+                    if (is_string($value))
                         $value = html_entity_decode($value);
                 }
         );
