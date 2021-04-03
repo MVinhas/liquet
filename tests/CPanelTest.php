@@ -64,6 +64,17 @@ final class CPanelTest extends TestCase
         $this->assertTrue($result);        
     }
 
+    public function testEditConfig(): void
+    {
+        $mock = $this->createMock(\models\CPanel::class);
+
+        $mock->method('editConfig')->willReturn(true);
+        $array = ['1', '2'];
+        $result = $mock->editConfig($array);
+
+        $this->assertTrue($result);        
+    }
+
     public function testDeletePost(): void
     {
         $mock = $this->createMock(\models\CPanel::class);
@@ -98,6 +109,5 @@ final class CPanelTest extends TestCase
 
         $this->assertTrue($result);        
     }
-
 
 }

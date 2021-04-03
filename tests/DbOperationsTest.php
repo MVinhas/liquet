@@ -2,6 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Will be discontinues (new DbOperations in the cooking)
+ */
 final class DbOperationsTest extends TestCase
 {
 
