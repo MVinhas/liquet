@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-final class DbOperationsTest extends TestCase
+final class DummyTest extends TestCase
 {
     /**
      * These are not tests, these are only annotations 
