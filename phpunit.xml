@@ -1,7 +1,12 @@
 <phpunit bootstrap="config/autoloader.php">
   <testsuites>
     <testsuite name="tests">
-      <directory>tests</directory>
+      <directory>tests/config</directory>
+      <directory>tests/controllers</directory>
+      <directory>tests/engine</directory>
+      <directory>tests/config</directory>
+      <directory>tests/migrations</directory>
+      <directory>tests/models</directory>
     </testsuite>
   </testsuites>
 </phpunit>
