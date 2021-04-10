@@ -41,5 +41,24 @@ final class DummyTest extends TestCase
                    ->getMock();
 
                    ->setMethods(['sendMessage']) //Stub sendMessage methods only
-      */
+      
+    
+    Mockery - framework for PHPUnit with easily readable code
+    
+
+    Data Provider
+    @dataProvider titleProvider (before the function declaration)
+    
+    ******************
+    PHP Reflection to test private methods
+    $item = new Item;
+    $reflector = new ReflectionClass(Item::class)
+
+    $method = $reflector->getMethod('getPrefixedToken');
+    $method->setAccessible(true);
+    $result = $method->invokeArgs($item), ['example']);
+    $this->asserStringStartsWith('example', $result);
+    */
+
+      
 }
