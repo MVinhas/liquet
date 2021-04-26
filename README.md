@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/MVinhas/mvinhas-blog.svg?branch=master)](https://travis-ci.org/github/MVinhas/mvinhas-blog)
-# MVinhas Blog
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/cee82487aa6e444084a7353b1aeadc90)](https://www.codacy.com/gh/MVinhas/mvinhas-blog/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MVinhas/mvinhas-blog&amp;utm_campaign=Badge_Grade)
 
 mvinhas-blog is an MVC CMS blog build from scratch, only with Bootstrap as CSS/JS provider and Twig as a template engine. The primary goal has educational intentions, but it is expected to serve the final user as a simple but functional CMS blog to use for whatever purpose
 
