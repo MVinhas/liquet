@@ -14,7 +14,7 @@ composer update
 ```
 config/              Website and Database configurations
 controllers/         Part of MVC
-cpanel/              Admin and User Settings area
+database/            Database operations
 engine/              Core website functions
 migrations/          Database tables creator
 models/              Part of MVC
