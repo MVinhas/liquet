@@ -19,6 +19,7 @@ class SiteController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Site();
+        $get = filter_input_array(INPUT_GET);
     }
     public function index()
     {
@@ -30,7 +31,7 @@ class SiteController extends Controller
         Dispatcher::metadata();
         $this->head();
 
-        $getKeys = array_keys($_GET);
+        $getKeys = array_keys($get);
         if (!empty($getKeys[0])) {
             $key_method = substr($getKeys[0], strpos($getKeys[0], "/") + 1);
             $key_func = substr($getKeys[0], 0, strpos($getKeys[0], "/"));   
@@ -55,9 +56,9 @@ class SiteController extends Controller
     {
         $out = array();
         $out['debug_mode'] = $this->config_flags->debugmode;
-        $out['page_title'] = $_SESSION['page_title'];
+        $out['page_title'] = filter_var($_SESSION['page_title'], FILTER_SANITIZE_STRING);
         $headTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($headTemplate, $out);
+        $this->view($headTemplate, $out);
     }
 
     private function header()
@@ -69,9 +70,9 @@ class SiteController extends Controller
         $out['header'] = $header->getMenu();
         $out['categories'] = $this->model->getCategories();
         if (!empty($_SESSION['users']))
-            $out['session'] = $_SESSION['users'];
+            $out['session'] = filter_var_array($_SESSION['users']);
         $headerTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($headerTemplate, $out);
+        $this->view($headerTemplate, $out);
     }
 
     protected function footer()
@@ -82,7 +83,7 @@ class SiteController extends Controller
         $out['siteversion'] = $site->getVersion();
         $out['debug_mode'] = $this->config_flags->debugmode;
         $footerTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($footerTemplate, $out);
+        $this->view($footerTemplate, $out);
     }
     public function terms()
     {
@@ -90,13 +91,13 @@ class SiteController extends Controller
         $out['site_name'] = $this->config_flags->sitename;
         $out['email'] = $this->config_flags->email;
         $termsTemplate = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($termsTemplate, $out);
+        $this->view($termsTemplate, $out);
     }
 
     public function subscribe()
     {
         $subscribe = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($subscribe);
+        $this->view($subscribe);
     }
 
     private function migrations()
@@ -104,6 +105,6 @@ class SiteController extends Controller
         $migrations = new \migrations\Setup();
         $migrations->index();
         $home = $this->getFile($this->path, 'first_setup');
-        echo $this->view($home);
+        $this->view($home);
     }
 }

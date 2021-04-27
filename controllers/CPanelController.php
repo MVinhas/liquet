@@ -19,6 +19,8 @@ class CPanelController extends Controller
         $this->path = $this->getDirectory($file);
         $this->model = new CPanel();
         $this->site = new Site();
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $getid = filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT);
     }
 
     public function index()
@@ -90,9 +92,9 @@ class CPanelController extends Controller
     {
         $postCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        if (!empty($_GET['id'])) {
+        if (!empty($getid)) {
             $out['post']['id'] = $_GET['id'];
-            $out['post'] = $this->site->getPost($_GET['id']);
+            $out['post'] = $this->site->getPost($getid);
         }
         $out['categories'] = $this->site->getCategories();
         $out['author'] = $_SESSION['users']['username'];
@@ -104,9 +106,9 @@ class CPanelController extends Controller
     {
         $categoryCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        if (!empty($_GET['id'])) {
-            $out['category_id'] = $_GET['id'];
-            $out['category'] = $this->site->getCategory($_GET['id']);
+        if (!empty($getid)) {
+            $out['category_id'] = $getid;
+            $out['category'] = $this->site->getCategory($getid);
         }
         $out['debugmode'] = $this->config_flags->debugmode;
         echo $this->view($categoryCreate, $out); 
@@ -114,7 +116,7 @@ class CPanelController extends Controller
 
     public function postEditorSubmit()
     {
-        !empty($_GET['id']) ? $this->model->editPost($_GET['id'], $_POST) : $this->model->createPost($_POST);
+        !empty($getid) ? $this->model->editPost($getid, $post) : $this->model->createPost($post);
         
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
@@ -124,12 +126,12 @@ class CPanelController extends Controller
 
     public function categoryEditorSubmit()
     {
-        if (!empty($_GET['id'])) {
+        if (!empty($getid)) {
             $category = array();
-            $category['name'] = $_POST['name'];
-            $this->model->editCategory($_GET['id'], $category);
+            $category['name'] = $post['name'];
+            $this->model->editCategory($getid, $category);
         } else {
-            $this->model->createCategory($_POST);
+            $this->model->createCategory($post);
         }
         
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
@@ -140,13 +142,13 @@ class CPanelController extends Controller
 
     public function configEditorSubmit()
     {
-        $this->model->editConfig($_POST);
+        $this->model->editConfig($post);
         header('Location: ?CPanel/index');
     }
 
     public function postDelete()
     {
-        $post_id = $_GET['id'];
+        $post_id = $getid;
         $this->model->deletePost($post_id);
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
@@ -156,7 +158,7 @@ class CPanelController extends Controller
 
     public function categoryDelete()
     {
-        $category_id = $_GET['id'];
+        $category_id = $getid;
         $this->model->deleteCategory($category_id);
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();

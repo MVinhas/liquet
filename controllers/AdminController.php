@@ -32,7 +32,10 @@ class AdminController extends Controller
     public function createSession()
     {
         $admin = new Admin();
-        $user = $admin->getUser($_POST['username'], $_POST['password']);
+        $user = $admin->getUser(
+            trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING)), 
+            trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING))
+        );
         if (is_array($user)) {
             $home = new HomeController;
             $home->login($user['email'], $user['role']);

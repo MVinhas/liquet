@@ -18,17 +18,15 @@ class PostController extends Controller
         $this->path = $this->getDirectory($file);
         $this->model = new Post();
         $this->site = new Site();
+        $get = filter_input_array(INPUT_GET, FILTER_VALIDATE_INT);
     }
 
     public function archive()
     {
-
-        $monthNum = $_GET['month'];
-        $year = $_GET['year'];
-        $dateObj   = \DateTime::createFromFormat('!m', $monthNum);
+        $dateObj   = \DateTime::createFromFormat('!m', $get['month']);
         $monthName = $dateObj->format('F');
         $out = array();
-        $out['posts'] = $this->model->getCurrentPosts($monthNum, $year);
+        $out['posts'] = $this->model->getCurrentPosts($get['month'], $get['year']);
         if (!isset($out['posts'][0])) {
             $temp = $out['posts'];
             unset($out['posts']);
@@ -45,8 +43,7 @@ class PostController extends Controller
 
     public function detail()
     {
-        $id = $_GET['id'];
-        $out['post'] = $this->site->getPost($id);
+        $out['post'] = $this->site->getPost($get['id']);
         $home = new \models\Home();
         $out['categories'] = $this->site->getCategories();
         $out['about'] = $home->getAbout();
@@ -59,8 +56,7 @@ class PostController extends Controller
 
     public function category()
     {
-        $category = $_GET['category'];
-        $out['posts'] = $this->model->getPostsByCategory($category);
+        $out['posts'] = $this->model->getPostsByCategory($get['category']);
         if (!isset($out['posts'][0]) && !empty($out['posts'])) {
             $temp = $out['posts'];
             unset($out['posts']);
@@ -75,5 +71,4 @@ class PostController extends Controller
         $posts = $this->getFile($this->path, __FUNCTION__);
         echo $this->view($posts, $out);
     }
-
 }

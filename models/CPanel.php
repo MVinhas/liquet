@@ -10,6 +10,7 @@ class CPanel
     public function __construct()
     {
         $this->db = new DbOperations;
+        $files = filter_var_array($_FILES);
     }
 
     public function getPosts()

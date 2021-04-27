@@ -1,27 +1,23 @@
 
 <?php
     if (isset($db_error))
-        if (!empty($db_error)) echo $db_error;
+        if (!empty($db_error)) echo addslashes($db_error);
     echo "<pre class='debug'>";
-    echo "<br><b>Script running time:</b> ". (round(microtime(true) - $time_start,3)).' seconds';
+    echo "<br><b>Script running time:</b> ". addslashes((round(microtime(true) - $time_start,3))).' seconds';
     echo "<br><b>PHP and MYSQL:</b>";
     print_r('<div id="php-sql-errors"></div>');
     echo "<br><b>SESSION:</b>";
-    print_r($_SESSION);
+    print_r(filter_var_array($_SESSION));
     echo "<br><b>POST:</b>";
-    print_r($_POST);
+    print_r(filter_input_array(INPUT_POST));
     echo "<br><b>GET:</b>";
-    print_r($_GET);
-    echo "<br><b>REQUEST:</b>";
-    print_r($_REQUEST);
+    print_r(filter_input_array(ARRAY_GET));
     echo "<br><b>COOKIE:</b>";
-    print_r($_COOKIE);
+    print_r(filter_var_array($_COOKIE));
     echo "<br><b>SERVER:</b>";
-    print_r($_SERVER);
-    echo "<br><b>ENV:</b>";
-    print_r($_ENV);
+    print_r(filter_var_array($_SERVER));
     echo "<br><b>FILES:</b>";
-    print_r($_FILES);
+    print_r(filter_var_array($_FILES));
     echo "</pre>";
 ?>
 <script>

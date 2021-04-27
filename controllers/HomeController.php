@@ -18,14 +18,20 @@ class HomeController extends Controller
         $this->path = $this->getDirectory($file);
         $this->model = new Home();
         $this->site = new Site();
+        if (isset($_GET['page']))
+            $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
+        if (isset($_POST))
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if (isset($_SESSION['users']['email']))
+            $logged_user_email = filter_var($_SESSION['users']['email'], FILTER_VALIDATE_EMAIL);
     }
 
     public function index()
     {
         $offset = 0;
-        if (isset($_GET['page'])) {
-            $offset += ($_GET['page'] * 5);
-            $out['page'] = $_GET['page'];
+        if (isset($page)) {
+            $offset += ($page * 5);
+            $out['page'] = $page;
         }
 
         $out['posts'] = $this->model->getPosts($offset);
@@ -39,21 +45,21 @@ class HomeController extends Controller
     public function register()
     {
         $fields = 'email, username, password, role, active';
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $password = password_hash($post['password'], PASSWORD_DEFAULT);
         $admin_exists = $this->model->checkAdmin();
         $admin_exists === 1 ? $role = 'user' : $role = 'admin'; 
 
-        $values = array($_POST['email'], $_POST['username'], $password, $role, 1);
+        $values = array($post['email'], $post['username'], $password, $role, 1);
         $createUser = $this->model->createUser($fields, $values);
         $createUser === 1 ? $this->login($email, $role) : $this->setup($createUser);
     }
 
     public function login($email, $role)
     {
-        if (!isset($_SESSION['users']['email']) && $_POST['username'])
+        if (!isset($logged_user_email) && $post['username'])
             $_SESSION['users'] = array(
                 'email' => $email,
-                'username' => $_POST['username'],
+                'username' => $post['username'],
                 'role' => $role
             );
     }
@@ -72,7 +78,7 @@ class HomeController extends Controller
         $out['about'] = $this->model->getAbout();
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
-        $search_terms = explode(" ", $_POST['search']);
+        $search_terms = explode(" ", $post['search']);
         $out['posts'] = $this->model->getPostsBySearch($search_terms);
         if (!isset($out['posts'][0]) && !empty($out['posts'])) {
             $temp = $out['posts'];
