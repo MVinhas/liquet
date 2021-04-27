@@ -15,7 +15,7 @@ function CheckPassword(inputtxt)
 
 function searchTable() {
     let value = document.getElementById("search").value;
-    Array.from(document.querySelectorAll("td[data-label="title"]")).forEach((ele) => {
+    Array.from(document.querySelectorAll('td[data-label="title"]')).forEach((ele) => {
         if (value !== "") {
         ele.style.display = "table-cell";
         if (ele.innerHTML.toLowerCase().includes(value.toLowerCase())) {

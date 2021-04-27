@@ -21,7 +21,7 @@ class CPanel
 
     public function createArticle(array $article)
     {
-        $files = filter_var_array($_FILES);
+        $files = filter_var_array($_FILES, FILTER_SANITIZE_STRING);
         $article['date'] = date('Y-m-d');
         $article['comments'] = 0;
         $article['likes'] = 0;
