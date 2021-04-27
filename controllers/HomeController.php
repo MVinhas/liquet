@@ -51,7 +51,7 @@ class HomeController extends Controller
             1
         );
         $createUser = $this->model->createUser($fields, $values);
-        $createUser === 1 ? $this->login($email, $role) : $this->setup($createUser);
+        $createUser === 1 ? $this->login(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL), $role) : $this->setup($createUser);
     }
 
     public function login($email, $role)

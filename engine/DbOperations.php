@@ -113,7 +113,7 @@ class DbOperations
     {
         $sql = "SELECT 1 FROM $table LIMIT 1";
         $sql = $this->db->real_escape_string($sql);
-        $sql_query = $this->db->query($sql);
+        $this->db->query($sql);
         if ($this->db->connection->error)
             return $this->db->connection->error;
 
@@ -122,7 +122,6 @@ class DbOperations
     
     public function createTable(string $table, array $fields)
     {
-        $numItems = count($fields);
         $values = array();
         foreach ($fields as $k => $v) {
             $values[] = $k.' '.$v;

@@ -64,7 +64,7 @@ class Select extends SanitizeQuery implements QueryInterface
     public function done()
     {
         $i = 0;
-        foreach ($this->where as $k => &$v) {
+        foreach ($this->where as &$v) {
             $condition = preg_split('/ !{0,}={0,}<{0,}>{0,} /', $v);
             $conditional = explode(' ', $v);
             $values[] = $condition[1];
@@ -80,23 +80,23 @@ class Select extends SanitizeQuery implements QueryInterface
         $statement = $this->preparedStatement($sql, $i, $values);
 
         if ($statement->execute()) {
-            return "OK";
+            return $statement->execute();
         }
         return "KO";
     }
 
     public function one()
     {
-        if ($this->done()) {
-            $result = $sql_prepare->get_result();
+        if ($execute = $this->done()) {
+            $result = $execute->get_result();
             return $result->fetch_assoc();   
         }
     }
 
     public function all()
     {
-        if ($this->done()) {
-            $result = $sql_prepare->get_result();
+        if ($execute = $this->done()) {
+            $result = $execute->get_result();
             while ($sql_retrieve = $result->fetch_assoc()) 
                 $sql_fetch[] = $sql_retrieve;
 
