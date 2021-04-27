@@ -19,7 +19,7 @@ class Article
         return $articles;   
     }
 
-    public function getPostsByCategory(string $category)
+    public function getArticlesByCategory(string $category)
     {
         $data = array(
             'category' => $category,
