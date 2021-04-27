@@ -39,24 +39,24 @@ final class HomeTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testgetPosts(): void
+    public function testgetArticles(): void
     {
         $mock = $this->createMock(\models\Home::class);
 
-        $mock->method('getPosts')->willReturn(true);
+        $mock->method('getArticles')->willReturn(true);
         $offset = 10;
 
-        $result = $mock->getPosts($offset);
+        $result = $mock->getArticles($offset);
 
         $this->assertTrue($result);
     }
     
-    public function testgetPostsNoOffset(): void
+    public function testgetArticlesNoOffset(): void
     {
         $mock = $this->createMock(\models\Home::class);
 
-        $mock->method('getPosts')->willReturn(true);
-        $result = $mock->getPosts();
+        $mock->method('getArticles')->willReturn(true);
+        $result = $mock->getArticles();
 
         $this->assertTrue($result);
     }
@@ -91,14 +91,14 @@ final class HomeTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testgetPostsBySearch(): void
+    public function testgetArticlesBySearch(): void
     {
         $mock = $this->createMock(\models\Home::class);
 
-        $mock->method('getPostsBySearch')->willReturn(true);
+        $mock->method('getArticlesBySearch')->willReturn(true);
 
         $search = ['Olá', 'Mundo'];
-        $result = $mock->getPostsBySearch($search);
+        $result = $mock->getArticlesBySearch($search);
 
         $this->assertTrue($result);
     }

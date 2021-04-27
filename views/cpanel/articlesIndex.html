@@ -1,11 +1,11 @@
 {% apply spaceless %}
 <div class="container-fluid">
   <div class="row">
-    {% set active = 'Posts' %}
+    {% set active = 'Articles' %}
     {% include 'cpanel/sidebar.html' %}
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Posts
+        <h1 class="h2">Articles
         </h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <button type="button" class="btn btn-sm btn-outline-secondary">
@@ -17,7 +17,7 @@
               <line x1="8" y1="12" x2="16" y2="12">
               </line>
             </svg>
-            <a href="?CPanel/postEditor">New Post
+            <a href="?CPanel/articleEditor">New Article
             </a>
           </button>
         </div>
@@ -37,18 +37,18 @@
             </tr>
           </thead>
           <tbody>
-            {% for item in post_list%}
+            {% for item in articles%}
             <tr>
               <td>{{item.id}}
               </td>
               <td data-label="title">{{item.title|raw}}
               </td>
               <td>
-                <a href="?CPanel/postEditor/&id={{item.id}}">Edit
+                <a href="?CPanel/articleEditor/&id={{item.id}}">Edit
                 </a>
               </td>
               <td>
-                <a href="#" data-href="?CPanel/postDelete/&id={{item.id}}" data-toggle="modal" data-target="#confirm-delete">Delete
+                <a href="#" data-href="?CPanel/articleDelete/&id={{item.id}}" data-toggle="modal" data-target="#confirm-delete">Delete
                 </a>
               </td>
             </tr>
@@ -56,7 +56,7 @@
           </tbody>
         </table>
       </div>
-      {% set data = 'post' %}
+      {% set data = 'article' %}
       {% include 'cpanel/popups.html' %}
     </main>
   </div>

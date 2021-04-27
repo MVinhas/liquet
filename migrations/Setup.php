@@ -13,7 +13,7 @@ class Setup
     {
         $this->config();
         $this->users();
-        $this->posts();
+        $this->articles();
         $this->comments();
         $this->categories();
         $this->pages();
@@ -28,7 +28,7 @@ class Setup
         $this->insertMethods();
         $this->insertPages();
         $this->insertCategories();
-        $this->insertPosts();
+        $this->insertArticles();
         $this->insertAbout();
         $this->insertAdmin();
         $this->insertSocial();
@@ -62,7 +62,7 @@ class Setup
         $this->db->createTable(__FUNCTION__, $fields);
     }
 
-    private function posts()
+    private function articles()
     {
         $fields = array(
             'id' => 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY',
@@ -257,9 +257,9 @@ class Setup
         $this->db->create($table, $fields, $values_11);
     }
 
-    private function insertPosts()
+    private function insertArticles()
     {
-        $table = 'posts';
+        $table = 'articles';
         $fields = '`category`, `title`, `author`, `date`, `short_content`, `content`, `comments`, `likes`, `status`, `featured`';
         $values_1 = array(1, 'Fusce sit amet consectetur risus.', 'Micael Vinhas', '2020-04-07', 'Integer consequat interdum egestas.', 'Integer consequat interdum egestas. Sed mollis ornare erat non varius. Mauris congue, nunc quis porta condimentum, ligula tellus commodo velit, at cursus diam arcu in odio. Cras nisl quam, aliquam sit amet aliquam a, fermentum sit amet arcu. Integer molestie at tortor vel malesuada.', 0, 0, 1, 2);
         $values_2 = array(2, 'Vestibulum molestie efficitur facilisis.', 'Micael Vinhas', '2020-04-22', 'Nunc non vestibulum ipsum, a vulputate enim.', 'Nulla hendrerit lacus at elit viverra malesuada. Aliquam ut mattis velit. Etiam consequat mattis dapibus. Etiam cursus arcu in sodales gravida. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 0, 0, 1, 1);

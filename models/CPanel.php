@@ -10,81 +10,82 @@ class CPanel
     public function __construct()
     {
         $this->db = new DbOperations;
+    }
+
+    public function getArticles()
+    {
+        $articles = $this->db->select('articles', '*');
+
+        return $articles;    
+    }
+
+    public function createArticle(array $article)
+    {
         $files = filter_var_array($_FILES);
-    }
-
-    public function getPosts()
-    {
-        $posts = $this->db->select('posts', '*');
-
-        return $posts;    
-    }
-
-    public function createPost(array $post)
-    {
-        $post['date'] = date('Y-m-d');
-        $post['comments'] = 0;
-        $post['likes'] = 0;
-        $post['status'] = 1;
-        $insert_id = $this->db->create('posts', 'title, category, author, short_content, content, featured, date, comments, likes, status', $post);
-        if (isset($_FILES['avatar'])) {
-            $directory = 'images/post';
-            $img = explode('.', $_FILES['avatar']['name']);
-            $name = 'post_'.$insert_id.'.'.$img[1];
-            $tmp_name = $_FILES['avatar']['tmp_name'];
+        $article['date'] = date('Y-m-d');
+        $article['comments'] = 0;
+        $article['likes'] = 0;
+        $article['status'] = 1;
+        $insert_id = $this->db->create('articles', 'title, category, author, short_content, content, featured, date, comments, likes, status', $article);
+        if (isset($files['avatar'])) {
+            $directory = 'images/article';
+            $img = explode('.', $files['avatar']['name']);
+            $name = 'article_'.$insert_id.'.'.$img[1];
+            $tmp_name = $files['avatar']['tmp_name'];
             move_uploaded_file($tmp_name, "$directory/$name");
             $data['banner'] = "$directory/$name";
-            $this->db->update('posts', 'banner = ?', $data, 'id = ?', array($insert_id));
+            $this->db->update('articles', 'banner = ?', $data, 'id = ?', array($insert_id));
         }
 
     }
     
-    public function editPost(int $id, array $post)
+    public function editArticle(int $id, array $article)
     {
+        $files = filter_var_array($_FILES);
         $data = array($id);
-        if (isset($_FILES['avatar'])) {
-            $directory = 'images/post';
-            $img = explode('.', $_FILES['avatar']['name']);
-            $name = 'post_'.$id.'.'.$img[1];
-            $tmp_name = $_FILES['avatar']['tmp_name'];
+        if (isset($files['avatar'])) {
+            $directory = 'images/article';
+            $img = explode('.', $files['avatar']['name']);
+            $name = 'article_'.$id.'.'.$img[1];
+            $tmp_name = $files['avatar']['tmp_name'];
             move_uploaded_file($tmp_name, "$directory/$name");
-            $post['banner'] = "$directory/$name";
-            $this->db->update('posts', 'title = ?, category = ?, author = ?, short_content = ?, content = ?, featured = ?, banner = ?', $post, 'id = ?', $data);
+            $article['banner'] = "$directory/$name";
+            $this->db->update('articles', 'title = ?, category = ?, author = ?, short_content = ?, content = ?, featured = ?, banner = ?', $article, 'id = ?', $data);
         } else {
-            $this->db->update('posts', 'title = ?, category = ?, author = ?, short_content = ?, content = ?, featured = ?', $post, 'id = ?', $data);
+            $this->db->update('articles', 'title = ?, category = ?, author = ?, short_content = ?, content = ?, featured = ?', $article, 'id = ?', $data);
         }
         
     }
 
-    public function createCategory(array $post)
+    public function createCategory(array $article)
     {
-        $this->db->create('categories', 'name', $post);
+        $this->db->create('categories', 'name', $article);
     }
     
-    public function editCategory(int $id, array $post)
+    public function editCategory(int $id, array $article)
     {
         $data = array($id);
-        $this->db->update('categories', 'name = ?', $post, 'id = ?', $data); 
+        $this->db->update('categories', 'name = ?', $article, 'id = ?', $data); 
     }
 
-    public function editConfig(array $post)
+    public function editConfig(array $article)
     {
         $exists = $this->db->select('config', '*');
 
         if (!empty($exists)) {
             $data = array(1);
-            $this->db->update('config', 'debugmode = ?, sitename = ?, email = ?, siteversion = ?, siteauthor = ?, launchyear = ?', $post, 'id = ?', $data);
+            $this->db->update('config', 'debugmode = ?, sitename = ?, email = ?, siteversion = ?, siteauthor = ?, launchyear = ?', $article, 'id = ?', $data);
         } else {
-            $post['id'] = 1;
-            $this->db->create('config', 'debugmode, sitename, email, siteversion, siteauthor, launchyear, id', $post); 
+            $article['id'] = 1;
+            $this->db->create('config', 'debugmode, sitename, email, siteversion, siteauthor, launchyear, id', $article); 
         }
         
     }
 
-    public function deletePost(int $id)
+    public function deleteArticle(int $id)
     {
         $data = array($id);
-        $this->db->delete('posts', 'id = ?', $data);
+        $this->db->delete('articles', 'id = ?', $data);
     }
 
     public function deleteCategory(int $id)

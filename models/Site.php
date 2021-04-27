@@ -38,10 +38,10 @@ class Site
         return $category;
     }
 
-    public function getPost(int $id)
+    public function getArticle(int $id)
     {
         $data = array($id);
-        $category = $this->db->select('posts', '*', 'id = ?', $data);
+        $category = $this->db->select('articles', '*', 'id = ?', $data);
 
         return $category;
     }

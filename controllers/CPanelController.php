@@ -62,11 +62,11 @@ class CPanelController extends Controller
         $this->view($footer, $out);
     }
 
-    public function postsIndex()
+    public function articlesIndex()
     {
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $out['post_list'] = $this->model->getPosts();
+        $out['articles'] = $this->model->getArticles();
         $this->view($cpanel, $out);
     }
 
@@ -74,7 +74,7 @@ class CPanelController extends Controller
     {
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
-        $out['categories_list'] = $this->site->getCategories();
+        $out['categories'] = $this->site->getCategories();
         $this->view($cpanel, $out);
     }
 
@@ -86,18 +86,18 @@ class CPanelController extends Controller
         $this->view($cpanel, $out);
     }
 
-    public function postEditor()
+    public function articleEditor()
     {
-        $postCreate = $this->getFile($this->path, __FUNCTION__);
+        $articleCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         if (!empty($getid)) {
             $out['post']['id'] = $_GET['id'];
-            $out['post'] = $this->site->getPost($getid);
+            $out['post'] = $this->site->getArticle($getid);
         }
         $out['categories'] = $this->site->getCategories();
         $out['author'] = $_SESSION['users']['username'];
         $out['debugmode'] = $this->config_flags->debugmode;
-        $this->view($postCreate, $out); 
+        $this->view($articleCreate, $out); 
     }
 
     public function categoryEditor()
@@ -112,14 +112,14 @@ class CPanelController extends Controller
         $this->view($categoryCreate, $out); 
     }
 
-    public function postEditorSubmit()
+    public function articleEditorSubmit()
     {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         !empty($getid) ? $this->model->editPost($getid, $post) : $this->model->createPost($post);
         
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
-        $out['post_list'] = $this->model->getPosts();
+        $out['articles'] = $this->model->getPosts();
         $this->view($cpanel, $out);
     }
 
@@ -136,7 +136,7 @@ class CPanelController extends Controller
         
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
-        $out['categories_list'] = $this->site->getCategories();
+        $out['categories'] = $this->site->getCategories();
         $this->view($cpanel, $out);
     }
 
@@ -147,20 +147,18 @@ class CPanelController extends Controller
         header('Location: ?CPanel/index');
     }
 
-    public function postDelete()
+    public function articleDelete()
     {
-        $post_id = filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT);
-        $this->model->deletePost($post_id);
-        $cpanel = $this->getFile($this->path, 'postsIndex');
+        $this->model->deleteArticle(filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT));
+        $cpanel = $this->getFile($this->path, 'articlesIndex');
         $out = array();
-        $out['post_list'] = $this->model->getPosts();
+        $out['articles'] = $this->model->getArticles();
         $this->view($cpanel, $out);
     }
 
     public function categoryDelete()
     {
-        $category_id = filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT);
-        $this->model->deleteCategory($category_id);
+        $this->model->deleteCategory(filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT));
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
         $out['categories_list'] = $this->site->getCategories();
