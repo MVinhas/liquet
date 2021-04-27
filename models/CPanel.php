@@ -41,7 +41,7 @@ class CPanel
     
     public function editArticle(int $id, array $article)
     {
-        $files = filter_var_array($_FILES);
+        $files = filter_var_array($_FILES, FILTER_SANITIZE_STRING);
         $data = array($id);
         if (isset($files['avatar'])) {
             $directory = 'images/article';

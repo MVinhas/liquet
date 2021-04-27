@@ -22,8 +22,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (isset($_GET['page'])) {
-            $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
+        if (null !== ($page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT))) {
             $offset = 0;
             $offset += ($page * 5);
             $out['page'] = $page;
@@ -58,7 +57,7 @@ class HomeController extends Controller
     public function login($email, $role)
     {
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-        if (!isset($_SESSION['users']['email']) && $username)
+        if (empty(filter_var($_SESSION['users']['email'], FILTER_SANITIZE_STRING)) && $username)
             $_SESSION['users'] = array(
                 'email' => $email,
                 'username' => $username,
@@ -73,14 +72,14 @@ class HomeController extends Controller
 
     public function search()
     {
-        if (empty($_POST['search'])) 
+        if (empty($inputsearch = filter_input(INPUT_POST, 'search', FILTER_SANITIZE_STRING))) 
             return $this->index();
         $out = array();
         $out['categories'] = $this->site->getCategories();
         $out['about'] = $this->model->getAbout();
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
-        $search_terms = explode(" ", filter_input(FILTER_POST, 'search', FILTER_SANITIZE_STRING));
+        $search_terms = explode(" ", $inputsearch);
         $out['articles'] = $this->model->getArticlesBySearch($search_terms);
         if (!isset($out['articles'][0]) && !empty($out['articles'])) {
             $temp = $out['articles'];

@@ -31,37 +31,35 @@ class CheckLogin
 }
 
 $check = new CheckLogin;
-if (isset($_POST['username'])) {
-    
-    $username = $_POST['username'];
+if (null !== ($username = filter_input(FILTER_POST, 'username', FILTER_SANITIZE_STRING))) {
     $username_exists = $check->username($username);
     if (!empty($username_exists)) {
         if (in_array($username, $username_exists)) {
             $exists = 1;
             ob_clean();
-            echo 'true';
+            print_r('true');
         }
     }
     if (!isset($exists)) {
         ob_clean();
-        echo 'false';
+        print_r('false');
     }
 }
 
-if (isset($_POST['password'])) {
-    $password = explode('||',$_POST['password']);
-    $username_exists = $check->password($password[0]);
+if (null !== ($userpass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING))) {
+    $password = explode('||', $userpass);
+    $username_exists = $check->password($userpass[0]);
     if (!empty($username_exists)) {
-        $password = password_verify($password[1], $username_exists['password']);
+        $password = password_verify($userpass[1], $username_exists['password']);
         if ($password) {
             $exists = 1;
             ob_clean();
-            echo 'true';
+            print_r('true');
         }
     }
     if (!isset($exists)) {
         ob_clean();
-        echo 'false';
+        print_r('false');
     }
     
 }

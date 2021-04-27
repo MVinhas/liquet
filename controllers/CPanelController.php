@@ -47,7 +47,7 @@ class CPanelController extends Controller
         $header = $this->getFile($this->path, __FUNCTION__);
         $siteInfo = new SiteInfo();
         $out = array();
-        if (!isset($_GET['CPanel/index']))
+        if (null === filter_input(INPUT_GET, 'CPanel/index', FILTER_SANITIZE_STRING))
             $out['searchable'] = 1;
 
         $out['sitename'] = $siteInfo->getName();
@@ -90,12 +90,13 @@ class CPanelController extends Controller
     {
         $articleCreate = $this->getFile($this->path, __FUNCTION__);
         $out = array();
+        $getid = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         if (!empty($getid)) {
-            $out['post']['id'] = $_GET['id'];
+            $out['post']['id'] = $getid;
             $out['post'] = $this->site->getArticle($getid);
         }
         $out['categories'] = $this->site->getCategories();
-        $out['author'] = $_SESSION['users']['username'];
+        $out['author'] = filter_var($_SESSION['users']['username'], FILTER_SANITIZE_STRING);
         $out['debugmode'] = $this->config_flags->debugmode;
         $this->view($articleCreate, $out); 
     }
@@ -149,7 +150,8 @@ class CPanelController extends Controller
 
     public function articleDelete()
     {
-        $this->model->deleteArticle(filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT));
+        if (null !== ($getid = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)))
+            $this->model->deleteArticle($getid);
         $cpanel = $this->getFile($this->path, 'articlesIndex');
         $out = array();
         $out['articles'] = $this->model->getArticles();
@@ -158,7 +160,8 @@ class CPanelController extends Controller
 
     public function categoryDelete()
     {
-        $this->model->deleteCategory(filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT));
+        if (null !== ($getid = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)))
+            $this->model->deleteCategory($getid);
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
         $out['categories_list'] = $this->site->getCategories();

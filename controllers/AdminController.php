@@ -17,7 +17,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        if (!isset($_SESSION['user']))
+        if (null === filter_var($_SESSION['user'], FILTER_SANITIZE_STRING))
             $this->login();
     }
     
@@ -26,7 +26,7 @@ class AdminController extends Controller
         $out = array();
         $out['debug_mode'] = $this->config_flags->debug_mode;
         $loginView = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($loginView, $out);
+        $this->view($loginView, $out);
     }
 
     public function createSession()

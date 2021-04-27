@@ -31,37 +31,33 @@ class CheckFormData
 }
 
     $check = new CheckFormData;
-if (isset($_POST['email'])) {
-    $email = $_POST['email'];
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $email_exists = $check->email($email);
-    }
+if (null !== ($email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL))) {
+    $email_exists = $check->email($email);
     if (!empty($email_exists)) {
         foreach ($email_exists as $k => $v) {
             if (in_array($email, $v)) {
                 $exists = 1;
-                echo 'false';
+                print_r('false');
             }
         }
     }
     if (!isset($exists)) {
-        echo 'true';
+        print_r('true');
     }
 }
 
-if (isset($_POST['username'])) {
-    $username = $_POST['username'];
+if (null !== ($username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING))) {
     //$username = preg_replace('/[^\w]/','',$username);
     $username_exists = $check->username($username);
     if (!empty($username_exists)) {
         foreach ($username_exists as $k => $v) {
             if (in_array($username, $v)) {
                 $exists = 1;
-                echo 'false';
+                print_r('false');
             }
         }
     }
     if (!isset($exists)) {
-        echo 'true';
+        print_r('true');
     }
 }

@@ -28,6 +28,6 @@ class Controller
 
     protected function view($view, $out = array())
     {
-        echo $this->twig->render($view.'.html', $out);
+        print_r($this->twig->render($view.'.html', $out));
     }
 }
