@@ -4,4 +4,3 @@ composer.lock
 deploy.php
 .phpunit.result.cache
 images/
-playground.php
