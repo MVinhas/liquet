@@ -17,7 +17,7 @@ class PostController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Post();
-        $this->site = new Site()
+        $this->site = new Site();
     }
 
     public function archive()
