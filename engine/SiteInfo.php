@@ -13,22 +13,22 @@ class SiteInfo
 
     public function getName()
     {
-        return $sitename ?? trim($this->flags->sitename) ?? '(no name found)';
+        return trim($this->flags->sitename) ?? '(no name found)';
     }
 
     public function getVersion()
     {
-        return $siteversion ?? trim($this->flags->siteversion) ?? '(no version found)';
+        return trim($this->flags->siteversion) ?? '(no version found)';
     }
 
     public function getAuthor()
     {
-        return $siteauthor ?? trim($this->flags->siteauthor) ?? '(no author found)';
+        return trim($this->flags->siteauthor) ?? '(no author found)';
     }
 
     public function getLaunchYear()
     {
-        return $launchyear ?? trim($this->flags->launchyear) ?? date('Y');
+        return trim($this->flags->launchyear) ?? date('Y');
     }
 
     public function getCopyright()
