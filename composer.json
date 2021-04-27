@@ -6,6 +6,11 @@
         "twig/twig": "^3.0",
         "phpunit/phpunit": "^8"
     },
+    "autoload": {
+        "psr-4": {
+            "Database\\": "database/"
+        }
+    },
     "license": "AGPL-3.0-or-later",
     "authors": [
         {
