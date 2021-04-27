@@ -1,7 +1,9 @@
 <?php
-namespace database;
+namespace Database;
 
-class Select
+use Database\Interfaces\QueryInterface;
+
+class Select implements QueryInterface
 {
     public $table;
 
@@ -17,8 +19,12 @@ class Select
         return new Select($table);
     }
 
-    public function select(...$fields)
+    public function fields(...$fields)
     {
+        foreach ($fields as &$field) {
+            $field = "`".$field."`";
+        }
+
         $this->fields = $fields;
         return $this;
     }
@@ -27,7 +33,9 @@ class Select
     {
         $query = array();
 
-        $query[] = "SELECT ".implode(', ',$this->fields)." FROM ".$this->table;
+        $fields = implode(', ', $this->fields) ?? '*';
+
+        $query[] = "SELECT $fields FROM `$this->table`";
         
         if (!empty($this->where)) {
             $query[] = "WHERE ".implode(" AND ", $this->where);
@@ -39,7 +47,7 @@ class Select
     public function where(array $condition)
     {
         foreach ($condition as $k => $v) {
-            $this->where[] = strpos('!', (string)$v) === 0 ?  "$k = $v" : "$k != $v";
+            $this->where[] = strpos('!', (string)$v) === false ?  "`$k` = '{$v}'" : "`$k` != '{$v}'";
             //PHP8 str_starts_with ( string $haystack , string $needle ) : bool
 
         }

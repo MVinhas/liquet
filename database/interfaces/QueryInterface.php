@@ -1,15 +1,11 @@
 <?php
-namespace database\interfaces;
+namespace Database\Interfaces;
 
 interface QueryInterface
 {
-    public static function select(array $fields, string $table);
-    
-    public static function create(string $table);
+    public static function table(string $table);
 
-    public static function update(string $table);
+    public function queryBuilder();
 
-    public static function insert(string $table);
-
-    public static function delete(string $table);
+    public function raw();
 }
