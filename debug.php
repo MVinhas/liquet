@@ -9,7 +9,7 @@
     "<br><b>PHP and MYSQL:</b>".
     '<div id="php-sql-errors"></div>'.
     "<br><b>SESSION:</b>".
-    filter_var_array($_SESSION).
+    filter_var_array($_SESSION, FILTER_SANITIZE_STRING).
     "<br><b>POST:</b>".
     filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING).
     "<br><b>GET:</b>".
