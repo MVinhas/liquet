@@ -17,7 +17,7 @@ echo Create::table('users')->set([
     'name' => 'VARCHAR(64) NOT NULL'
 ])->raw();
 echo "<br>";
-echo Select::table('users')->fields('id', 'name')->where(['name' => 'Catarina'])->raw();
+echo Select::table('users')->fields('id', 'name')->where(['name' => 'Catarina'])->done();
 echo "<br>";
 echo Update::table('users')->set(['name' => 'Filipa'])->where(['id' => 1])->raw();
 echo "<br>";

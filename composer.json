@@ -9,7 +9,8 @@
     "autoload": {
         "psr-4": {
             "Database\\": "database/",
-            "Database\\Interfaces\\" : "database/interfaces/"
+            "Database\\Interfaces\\" : "database/interfaces/",
+            "Database\\Traits\\" : "database/traits/"
         }
     },
     "license": "AGPL-3.0-or-later",

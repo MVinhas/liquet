@@ -1,8 +1,9 @@
 <?php
+namespace Database\Traits;
 
-trait PreparedStatement
+trait PrepareTrait
 {
-    private function preparedStatement($sql, $field_count, $data)
+    public function preparedStatement($sql, $field_count, $data)
     {
         $fields = $this->getValueTypes($field_count, $data);
         $sql_prepare = $this->db->prepare($sql);
@@ -11,7 +12,7 @@ trait PreparedStatement
         return $sql_prepare;
     }
 
-    private function getValueTypes($field_count, $data)
+    public function getValueTypes($field_count, $data)
     {
         $value_types = array();
         for ($i=0; $i < $field_count; $i++) {

@@ -2,9 +2,11 @@
 namespace Database;
 
 use Database\Interfaces\QueryInterface;
+use Database\SanitizeQuery;
 
-class Select implements QueryInterface
+class Select extends SanitizeQuery implements QueryInterface 
 {
+    use Traits\PrepareTrait;
     public $table;
 
     public $fields;
@@ -57,7 +59,50 @@ class Select implements QueryInterface
     public function raw()
     {
         return $this->queryBuilder();
-    } 
+    }
+
+    public function done()
+    {
+        $i = 0;
+        foreach ($this->where as $k => &$v) {
+            $condition = preg_split('/ !{0,}={0,}<{0,}>{0,} /', $v);
+            $conditional = explode(' ', $v);
+            $values[] = $condition[1];
+            $condition[1] = '?';
+            $v = implode(" $conditional[1] ", [$condition[0], $condition[1]]);
+            $i++;
+        }
+
+        $this->entityEncode($values);
+
+        $sql = $this->queryBuilder();
+        
+        $statement = $this->preparedStatement($sql, $i, $values);
+
+        if ($statement->execute()) {
+            return "OK";
+        }
+        return "KO";
+    }
+
+    public function one()
+    {
+        if ($this->done()) {
+            $result = $sql_prepare->get_result();
+            return $result->fetch_assoc();   
+        }
+    }
+
+    public function all()
+    {
+        if ($this->done()) {
+            $result = $sql_prepare->get_result();
+            while ($sql_retrieve = $result->fetch_assoc()) 
+                $sql_fetch[] = $sql_retrieve;
+
+            return $sql_fetch;
+        }
+    }
     
 
 }

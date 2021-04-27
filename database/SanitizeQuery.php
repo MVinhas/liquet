@@ -1,9 +1,9 @@
 <?php
 namespace Database;
 
-trait SanitizeQuery
+class SanitizeQuery
 {
-    private function stringEncode($input)
+    public function entityEncode($input)
     {
         foreach ($input as &$value) {
             $value = htmlentities($value);
@@ -11,7 +11,7 @@ trait SanitizeQuery
         return $input;
     }
 
-    private function stringDecode($input)
+    public function entityDecode($input)
     {
         foreach ($input as &$value) {
             $value = html_entity_decode($value);
