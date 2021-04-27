@@ -10,7 +10,6 @@ define('DB_DATABASE', 'mvinhasblog');
 class Connector
 {
     private static $instance;
-    private $link;
     public $connection;
     private function __construct()
     {

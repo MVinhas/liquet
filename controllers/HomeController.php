@@ -18,18 +18,17 @@ class HomeController extends Controller
         $this->path = $this->getDirectory($file);
         $this->model = new Home();
         $this->site = new Site();
-        if (isset($_GET['page']))
-            $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
-        if (isset($_POST))
-            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        
         if (isset($_SESSION['users']['email']))
             $logged_user_email = filter_var($_SESSION['users']['email'], FILTER_VALIDATE_EMAIL);
     }
 
     public function index()
     {
-        $offset = 0;
-        if (isset($page)) {
+        if (isset($_GET['page'])) {
+            $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
+            $offset = 0;
             $offset += ($page * 5);
             $out['page'] = $page;
         }
@@ -39,27 +38,34 @@ class HomeController extends Controller
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
         $home = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($home, $out);
+        $this->view($home, $out);
     }
 
     public function register()
     {
         $fields = 'email, username, password, role, active';
-        $password = password_hash($post['password'], PASSWORD_DEFAULT);
+        $password = password_hash(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING), PASSWORD_DEFAULT);
         $admin_exists = $this->model->checkAdmin();
         $admin_exists === 1 ? $role = 'user' : $role = 'admin'; 
 
-        $values = array($post['email'], $post['username'], $password, $role, 1);
+        $values = array(
+            filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL), 
+            filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING), 
+            $password, 
+            $role, 
+            1
+        );
         $createUser = $this->model->createUser($fields, $values);
         $createUser === 1 ? $this->login($email, $role) : $this->setup($createUser);
     }
 
     public function login($email, $role)
     {
-        if (!isset($logged_user_email) && $post['username'])
+        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+        if (!isset($logged_user_email) && $username)
             $_SESSION['users'] = array(
                 'email' => $email,
-                'username' => $post['username'],
+                'username' => $username,
                 'role' => $role
             );
     }
@@ -78,7 +84,7 @@ class HomeController extends Controller
         $out['about'] = $this->model->getAbout();
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
-        $search_terms = explode(" ", $post['search']);
+        $search_terms = explode(" ", filter_input(FILTER_POST, 'search', FILTER_SANITIZE_STRING));
         $out['posts'] = $this->model->getPostsBySearch($search_terms);
         if (!isset($out['posts'][0]) && !empty($out['posts'])) {
             $temp = $out['posts'];
@@ -89,7 +95,7 @@ class HomeController extends Controller
             $out['number_results'] = count($out['posts']);
         }
         $search = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($search, $out); 
+        $this->view($search, $out); 
     }
 
     public function setup($message = '')
@@ -102,7 +108,7 @@ class HomeController extends Controller
             $out['first_account'] = 1;
         }
         $setup = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($setup, $out);
+        $this->view($setup, $out);
     }
 
 }

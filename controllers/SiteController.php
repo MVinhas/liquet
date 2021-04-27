@@ -19,10 +19,10 @@ class SiteController extends Controller
         $file = pathinfo(__FILE__, PATHINFO_FILENAME);
         $this->path = $this->getDirectory($file);
         $this->model = new Site();
-        $get = filter_input_array(INPUT_GET);
     }
     public function index()
     {
+        $get = filter_input_array(INPUT_GET);
         try {
             $this->model->visitCounter();
         } catch (\Error $e) {

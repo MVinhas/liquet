@@ -19,8 +19,6 @@ class CPanelController extends Controller
         $this->path = $this->getDirectory($file);
         $this->model = new CPanel();
         $this->site = new Site();
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $getid = filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT);
     }
 
     public function index()
@@ -30,18 +28,18 @@ class CPanelController extends Controller
         $out['sessions']['week'] = 0;
         $out['sessions']['alltime'] = 0;
         $visits = $this->model->getVisits();
-        foreach ($visits as $k => $v) {
+        foreach ($visits as $visit) {
             // Today
-            if ($v['date'] == date('Y-m-d 00:00:00')) 
-                $out['sessions']['today'] = $v['session']; 
+            if ($visit['date'] == date('Y-m-d 00:00:00')) 
+                $out['sessions']['today'] = $visit['session']; 
             // Week
-            if ($v['date'] <= date('Y-m-d 00:00:00') && $v['date'] >= date('Y-m-d 00:00:00', strtotime('-7 days'))) 
-                $out['sessions']['week'] += $v['session'];
+            if ($visit['date'] <= date('Y-m-d 00:00:00') && $visit['date'] >= date('Y-m-d 00:00:00', strtotime('-7 days'))) 
+                $out['sessions']['week'] += $visit['session'];
             // All time
-            $out['sessions']['alltime'] += $v['session'];
+            $out['sessions']['alltime'] += $visit['session'];
         }
         $cpanel = $this->getFile($this->path, __FUNCTION__);
-        echo $this->view($cpanel, $out);
+        $this->view($cpanel, $out);
     }
 
     public function header()
@@ -53,7 +51,7 @@ class CPanelController extends Controller
             $out['searchable'] = 1;
 
         $out['sitename'] = $siteInfo->getName();
-        echo $this->view($header, $out);
+        $this->view($header, $out);
     }
 
     public function footer()
@@ -61,7 +59,7 @@ class CPanelController extends Controller
         $footer = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $out['debugmode'] = $this->config_flags->debugmode;
-        echo $this->view($footer, $out);
+        $this->view($footer, $out);
     }
 
     public function postsIndex()
@@ -69,7 +67,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $out['post_list'] = $this->model->getPosts();
-        echo $this->view($cpanel, $out);
+        $this->view($cpanel, $out);
     }
 
     public function categoriesIndex()
@@ -77,7 +75,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $out['categories_list'] = $this->site->getCategories();
-        echo $this->view($cpanel, $out);
+        $this->view($cpanel, $out);
     }
 
     public function configEditor()
@@ -85,7 +83,7 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, __FUNCTION__);
         $out = array();
         $out['config'] = $this->site->getConfig();
-        echo $this->view($cpanel, $out);
+        $this->view($cpanel, $out);
     }
 
     public function postEditor()
@@ -99,7 +97,7 @@ class CPanelController extends Controller
         $out['categories'] = $this->site->getCategories();
         $out['author'] = $_SESSION['users']['username'];
         $out['debugmode'] = $this->config_flags->debugmode;
-        echo $this->view($postCreate, $out); 
+        $this->view($postCreate, $out); 
     }
 
     public function categoryEditor()
@@ -111,21 +109,23 @@ class CPanelController extends Controller
             $out['category'] = $this->site->getCategory($getid);
         }
         $out['debugmode'] = $this->config_flags->debugmode;
-        echo $this->view($categoryCreate, $out); 
+        $this->view($categoryCreate, $out); 
     }
 
     public function postEditorSubmit()
     {
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         !empty($getid) ? $this->model->editPost($getid, $post) : $this->model->createPost($post);
         
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
         $out['post_list'] = $this->model->getPosts();
-        echo $this->view($cpanel, $out);
+        $this->view($cpanel, $out);
     }
 
     public function categoryEditorSubmit()
     {
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if (!empty($getid)) {
             $category = array();
             $category['name'] = $post['name'];
@@ -137,32 +137,33 @@ class CPanelController extends Controller
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
         $out['categories_list'] = $this->site->getCategories();
-        echo $this->view($cpanel, $out);
+        $this->view($cpanel, $out);
     }
 
     public function configEditorSubmit()
     {
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $this->model->editConfig($post);
         header('Location: ?CPanel/index');
     }
 
     public function postDelete()
     {
-        $post_id = $getid;
+        $post_id = filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT);
         $this->model->deletePost($post_id);
         $cpanel = $this->getFile($this->path, 'postsIndex');
         $out = array();
         $out['post_list'] = $this->model->getPosts();
-        echo $this->view($cpanel, $out);
+        $this->view($cpanel, $out);
     }
 
     public function categoryDelete()
     {
-        $category_id = $getid;
+        $category_id = filter_input(INPUT_GET, $_GET['id'], FILTER_VALIDADE_INT);
         $this->model->deleteCategory($category_id);
         $cpanel = $this->getFile($this->path, 'categoriesIndex');
         $out = array();
         $out['categories_list'] = $this->site->getCategories();
-        echo $this->view($cpanel, $out);
+        $this->view($cpanel, $out);
     }
 }
