@@ -129,7 +129,7 @@ class DbOperations
         
         $sql = "CREATE TABLE $table (".implode(',',$values).")";
         $sql = $this->db->real_escape_string($sql);
-        $sql_query = $this->db->query($sql);
+        $this->db->query($sql);
         if ($this->db->connection->errno)
             return false;
         else
@@ -140,7 +140,7 @@ class DbOperations
     {
         $sql = "ALTER TABLE $table ADD CONSTRAINT $constraint $value";
         $sql = $this->db->real_escape_string($sql);
-        $sql_query = $this->db->query($sql);
+        $this->db->query($sql);
         if ($this->db->connection->errno)
             return false;
         else
