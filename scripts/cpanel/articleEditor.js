@@ -1,4 +1,4 @@
-$('#article_create').validate({
+$("#article_create").validate({
     rules : {
         title: {
             required: true,

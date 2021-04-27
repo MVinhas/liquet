@@ -1,4 +1,4 @@
-$('#first-account').validate({
+$("#first-account").validate({
     rules : {
         email: {
             required: true,

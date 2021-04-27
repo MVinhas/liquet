@@ -1,10 +1,10 @@
 {% apply spaceless %}
 {% if number_results == 0 %}
-{% include 'post/no_results.html' %}
+{% include 'article/no_results.html' %}
 {% else %}
 <div class="alert alert-info" role="alert">
     Found {{number_results}} result(s)
 </div>
-{% include 'post/list.html' %}
+{% include 'article/list.html' %}
 {% endif %}
 {% endapply %}

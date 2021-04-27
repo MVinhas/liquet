@@ -22,6 +22,6 @@ class DbConfController extends Controller
         $out['DB_PASSWORD'] = DB_PASSWORD;
         $out['DB_DATABASE'] = DB_DATABASE;
         $setup = $this->getFile($this->path, __FUNCTION__);
-        echo addslashes($this->view($setup, $out));
+        $this->view($setup, $out);
     }
 }

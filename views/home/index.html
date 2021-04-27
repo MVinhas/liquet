@@ -1,5 +1,5 @@
 {% apply spaceless %}
-{% for item in posts %}
+{% for item in articles %}
 {% if item.featured == 2 %}
 <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
   <div class="col-md-6 px-0">
@@ -8,7 +8,7 @@
     <p class="lead my-3">{{item.short_content|raw}}
     </p>
     <p class="lead mb-0">
-      <a href="?Post/detail/&id={{item.id}}" class="text-white font-weight-bold">Continue reading...
+      <a href="?Article/detail/&id={{item.id}}" class="text-white font-weight-bold">Continue reading...
       </a>
     </p>
   </div>
@@ -16,13 +16,13 @@
 {% endif%}
 {% endfor %}
 <div class="row mb-2">
-  {% for item in posts %}
+  {% for item in articles %}
   {% if item.featured == 1 %}
   <div class="col-md-6">
     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
       <div class="col p-4 d-flex flex-column position-static">
         <strong class="d-inline-block mb-2 text-primary">
-          <a href="?Post/category/&category={{item.category}}">{{item.category_name|raw}}
+          <a href="?Article/category/&category={{item.category}}">{{item.category_name|raw}}
           </a>
         </strong>
         <h3 class="mb-0">{{item.title|raw}}
@@ -31,7 +31,7 @@
         </div>
         <p class="mb-auto">{{item.short_content|raw}}
         </p>
-        <a href="?Post/detail/&id={{item.id}}" class="stretched-link">Continue reading
+        <a href="?Article/detail/&id={{item.id}}" class="stretched-link">Continue reading
         </a>
       </div>
       <div class="col-auto d-none d-lg-block col-sm-4">
@@ -46,27 +46,27 @@
 <div class="row">
   <div class="col-md-8 blog-main">
     <h3 class="pb-4 mb-4 font-italic border-bottom">
-      Todos os posts
+      All articles
     </h3>
-    {% set num_posts = 0 %}
-    {% for item in posts %}
-    {% set num_posts = num_posts + 1%}
+    {% set num_articles = 0 %}
+    {% for item in articles %}
+    {% set num_articles = num_articles + 1%}
     {% if item.featured == 0 and item.other_featured == 0%}
-    <div class="blog-post">
-      <h2 class="blog-post-title">
-        <a class="text-dark" href="?Post/detail/&id={{item.id}}">{{item.title|raw}}
+    <div class="blog-article">
+      <h2 class="blog-article-title">
+        <a class="text-dark" href="?Article/detail/&id={{item.id}}">{{item.title|raw}}
         </a>
       </h2>
-      <p class="blog-post-meta">{{item.date}} by {{item.author|raw}}
+      <p class="blog-article-meta">{{item.date}} by {{item.author|raw}}
       </p>
       <p>{{item.content|raw|nl2br}}
       </p>
     </div>
-    <!-- /.blog-post -->
+    <!-- /.blog-article -->
     {% endif %}
     {% endfor %}
     <nav class="blog-pagination">
-      <a class="btn btn-outline-primary {% if num_posts < 3 %}disabled{% endif %}" href="?Home/index/&page={{page+1}} {% if num_posts < 3 %}aria-disabled="true"{% endif %}">Older
+      <a class="btn btn-outline-primary {% if num_articles < 3 %}disabled{% endif %}" href="?Home/index/&page={{page+1}} {% if num_articles < 3 %}aria-disabled="true"{% endif %}">Older
       </a>
       <a class="btn btn-outline-secondary {% if page == 0 %}disabled{% endif %}" href="?Home/index/&page={{page-1}}" tabindex="-1" {% if page == 0%}aria-disabled="true" {% endif %}>Newer
       </a>
@@ -86,7 +86,7 @@
       <ol class="list-unstyled mb-0">
         {% for item in archives %}
         <li>
-          <a href="?Post/archive/&month={{item.month}}&year={{item.year}}">{{item.date|raw}}
+          <a href="?article/archive/&month={{item.month}}&year={{item.year}}">{{item.date|raw}}
           </a>
         </li>
         {% endfor %}

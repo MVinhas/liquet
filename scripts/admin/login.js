@@ -16,7 +16,7 @@ $("#login").validate({
                 type: "post",
                 data: {
                     password() {
-                        return $( "#username" ).val()+'||'+$( "#password" ).val();
+                        return $( "#username" ).val()+"||"+$( "#password" ).val();
                     }
                 }
             }

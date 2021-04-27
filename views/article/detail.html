@@ -2,14 +2,14 @@
 <div class="row">
   <div class="col-md-8 blog-main">
     <h3 class="pb-4 mb-4 font-italic border-bottom">
-      Post
+      Article
     </h3>
-    <div class="blog-post">
-      <h2 class="blog-post-title">{{post.title|raw}}
+    <div class="blog-article">
+      <h2 class="blog-article-title">{{article.title|raw}}
       </h2>
-      <p class="blog-post-meta">{{post.date}} by {{post.author|raw}}
+      <p class="blog-article-meta">{{article.date}} by {{article.author|raw}}
       </p>
-      <div>{{post.content|raw|nl2br}}
+      <div>{{article.content|raw|nl2br}}
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
       <ol class="list-unstyled mb-0">
         {% for item in archives %}
         <li>
-          <a href="?Post/archive/&month={{item.month}}&year={{item.year}}">{{item.date|raw}}
+          <a href="?Article/archive/&month={{item.month}}&year={{item.year}}">{{item.date|raw}}
           </a>
         </li>
         {% endfor %}

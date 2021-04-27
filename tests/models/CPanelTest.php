@@ -5,36 +5,36 @@ use PHPUnit\Framework\TestCase;
 final class CPanelTest extends TestCase
 {
 
-    public function testGetPosts(): void
+    public function testGetArticles(): void
     {
         $mock = $this->createMock(\models\CPanel::class);
 
-        $mock->method('getPosts')->willReturn(true);
+        $mock->method('getArticles')->willReturn(true);
 
-        $result = $mock->getPosts();
+        $result = $mock->getArticles();
 
         $this->assertTrue($result);
     }
 
-    public function testCreatePost(): void
+    public function testCreateArticle(): void
     {
         $mock = $this->createMock(\models\CPanel::class);
 
-        $mock->method('createPost')->willReturn(true);
+        $mock->method('createArticle')->willReturn(true);
         $array = ['1', '2'];
-        $result = $mock->createPost($array);
+        $result = $mock->createArticle($array);
 
         $this->assertTrue($result);        
     }
 
-    public function testEditPost(): void
+    public function testEditArticle(): void
     {
         $mock = $this->createMock(\models\CPanel::class);
 
-        $mock->method('editPost')->willReturn(true);
+        $mock->method('editArticle')->willReturn(true);
         $array = ['1', '2'];
         $id = 1;
-        $result = $mock->editPost($id, $array);
+        $result = $mock->editArticle($id, $array);
 
         $this->assertTrue($result);        
     }
@@ -75,14 +75,14 @@ final class CPanelTest extends TestCase
         $this->assertTrue($result);        
     }
 
-    public function testDeletePost(): void
+    public function testDeleteArticle(): void
     {
         $mock = $this->createMock(\models\CPanel::class);
 
-        $mock->method('deletePost')->willReturn(true);
+        $mock->method('deleteArticle')->willReturn(true);
         $id = 1;
 
-        $result = $mock->deletePost($id);
+        $result = $mock->deleteArticle($id);
 
         $this->assertTrue($result);        
     }
