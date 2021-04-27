@@ -23,10 +23,10 @@ class Dispatcher
     }
     private static function getURI()
     {
-        if (filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL) === null)
+        if (!isset($_SERVER['REQUEST_URI']))
             return false;
-            
-        $url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+
+        $url = explode('/', trim(filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL), '/'));
 
         $ctrPos = isset($url[1]) ? $url[1] : null;
         $mtdPos = isset($url[2]) ? $url[2] : null;

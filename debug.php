@@ -15,11 +15,11 @@
     "<br><b>GET:</b>".
     filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING).
     "<br><b>COOKIE:</b>".
-    filter_var_array($_COOKIE).
+    filter_var_array($_COOKIE, FILTER_SANITIZE_STRING).
     "<br><b>SERVER:</b>".
-    filter_var_array($_SERVER).
+    filter_var_array($_SERVER, FILTER_SANITIZE_STRING).
     "<br><b>FILES:</b>".
-    filter_var_array($_FILES).
+    filter_var_array($_FILES, FILTER_SANITIZE_STRING).
     "</pre>";
 ?>
 <script>
