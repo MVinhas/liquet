@@ -37,7 +37,7 @@ class Connector
         if (method_exists($this->connection, $name)) {
             return call_user_func_array(array($this->connection,$name), $args);
         } else {
-            die();
+            return false;
         }
     }
 }
