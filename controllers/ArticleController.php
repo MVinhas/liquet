@@ -2,11 +2,11 @@
 
 namespace controllers;
 
-use models\Post as Post;
+use models\Article as Article;
 use models\Site as Site;
 use models\Home as Home;
 
-class PostController extends Controller
+class ArticleController extends Controller
 {
     protected $path;
     protected $model;
@@ -24,7 +24,6 @@ class PostController extends Controller
     public function archive()
     {
         $get = filter_input_array(INPUT_GET, FILTER_VALIDATE_INT);
-        $dateObj   = \DateTime::createFromFormat('!m', $get['month']);
         $out = array();
         $out['articles'] = $this->model->getCurrentPosts($get['month'], $get['year']);
         if (!isset($out['articles'][0])) {

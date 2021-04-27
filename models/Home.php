@@ -15,7 +15,6 @@ class Home
     public function checkUsers()
     {
         $getUsers = $this->db->select('users');
-        $tableExists = false;
   
         if (is_array($getUsers)) {
             return true;
@@ -44,16 +43,16 @@ class Home
         }
     }
 
-    public function getPosts(int $offset = 0)
+    public function getArticles(int $offset = 0)
     {
         $data = array(1);
-        $posts = $this->db->select('posts','*', 'status = ? ORDER BY id DESC LIMIT 5 OFFSET '.$offset, $data);
-        foreach ($posts as $k => $v) {
+        $articles = $this->db->select('articles','*', 'status = ? ORDER BY id DESC LIMIT 5 OFFSET '.$offset, $data);
+        foreach ($articles as $k => $v) {
             $data = array($v['category']);
             $category = $this->db->select('categories','*','id = ? ORDER BY id ASC', $data);
-            !empty($category) ?? $posts[$k]['category_name'] = $category['name'] :: $posts[$k]['category_name'] = 'No Category';
+            !empty($category) ?? $articles[$k]['category_name'] = $category['name'] :: $articles[$k]['category_name'] = 'No Category';
         }
-        return $posts;
+        return $articles;
     }
 
     public function getAbout()
@@ -66,7 +65,7 @@ class Home
     public function getArchives()
     {
         $data = array(1);
-        $rows = $this->db->select('posts', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year ', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y") ORDER BY year, month ASC', $data);
+        $rows = $this->db->select('articles', 'COUNT(*) AS Total, DATE_FORMAT(date, "%M %Y") AS date, DATE_FORMAT(date, "%m") as month, DATE_FORMAT(date, "%Y") as year ', '1= ? GROUP BY DATE_FORMAT(date, "%M %Y"), DATE_FORMAT(date, "%m"), DATE_FORMAT(date, "%Y") ORDER BY year, month ASC', $data);
         $archives = array();
         array_key_exists('Total', $rows) ? $archives[0] = $rows : $archives = $rows;
         return $archives;
@@ -81,17 +80,17 @@ class Home
         return $social;
     }
 
-    public function getPostsBySearch(array $search)
+    public function getArticlesBySearch(array $searchItems)
     {
         $sql = '';
         $data = array(1);
-        foreach ($search as $k => $v) {
-            if ($v !== "") {
+        foreach ($searchItems as $item) {
+            if ($item !== "") {
                 $sql .= " AND title LIKE CONCAT('%',?,'%') ";
-                array_push($data, $v);
+                array_push($data, $item);
             }
         }
-        $posts = $this->db->select('posts', '*', '1= ?'.$sql, $data);
-        return $posts;
+        $articles = $this->db->select('articles', '*', '1= ?'.$sql, $data);
+        return $articles;
     }
 }

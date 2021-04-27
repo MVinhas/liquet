@@ -18,10 +18,6 @@ class HomeController extends Controller
         $this->path = $this->getDirectory($file);
         $this->model = new Home();
         $this->site = new Site();
-
-        
-        if (isset($_SESSION['users']['email']))
-            $logged_user_email = filter_var($_SESSION['users']['email'], FILTER_VALIDATE_EMAIL);
     }
 
     public function index()
@@ -33,7 +29,7 @@ class HomeController extends Controller
             $out['page'] = $page;
         }
 
-        $out['posts'] = $this->model->getPosts($offset);
+        $out['articles'] = $this->model->getPosts($offset);
         $out['about'] = $this->model->getAbout();
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
@@ -62,7 +58,7 @@ class HomeController extends Controller
     public function login($email, $role)
     {
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-        if (!isset($logged_user_email) && $username)
+        if (!isset($_SESSION['users']['email']) && $username)
             $_SESSION['users'] = array(
                 'email' => $email,
                 'username' => $username,
@@ -85,14 +81,14 @@ class HomeController extends Controller
         $out['archives'] = $this->model->getArchives();
         $out['social'] = $this->model->getSocial();
         $search_terms = explode(" ", filter_input(FILTER_POST, 'search', FILTER_SANITIZE_STRING));
-        $out['posts'] = $this->model->getPostsBySearch($search_terms);
-        if (!isset($out['posts'][0]) && !empty($out['posts'])) {
-            $temp = $out['posts'];
-            unset($out['posts']);
-            $out['posts'][0] = $temp;
-            $out['number_results'] = count($out['posts']);
-        } elseif (!empty($out['posts'])) {
-            $out['number_results'] = count($out['posts']);
+        $out['articles'] = $this->model->getArticlesBySearch($search_terms);
+        if (!isset($out['articles'][0]) && !empty($out['articles'])) {
+            $temp = $out['articles'];
+            unset($out['articles']);
+            $out['articles'][0] = $temp;
+            $out['number_results'] = count($out['articles']);
+        } elseif (!empty($out['articles'])) {
+            $out['number_results'] = count($out['articles']);
         }
         $search = $this->getFile($this->path, __FUNCTION__);
         $this->view($search, $out); 
