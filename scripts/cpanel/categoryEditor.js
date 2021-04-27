@@ -1,4 +1,4 @@
-$('#category_create').validate({
+$("#category_create").validate({
     rules : {
         name: {
             required: true,
@@ -8,8 +8,8 @@ $('#category_create').validate({
     },
     messages : {
         name: {
-            required: 'Please write the category nme',
-            maxlenght: 'The name cannot be more than 64 characters long'
+            required: "Please write the category name",
+            maxlenght: "The name cannot be more than 64 characters long"
         }
     }  
 });

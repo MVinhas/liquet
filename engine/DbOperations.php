@@ -123,7 +123,6 @@ class DbOperations
     public function createTable(string $table, array $fields)
     {
         $numItems = count($fields);
-        $i = 0;
         $values = array();
         foreach ($fields as $k => $v) {
             $values[] = $k.' '.$v;
