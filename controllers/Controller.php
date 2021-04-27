@@ -28,6 +28,6 @@ class Controller
 
     protected function view($view, $out = array())
     {
-        echo addslashes($this->twig->render($view.'.html', $out));
+        echo $this->twig->render($view.'.html', $out);
     }
 }
