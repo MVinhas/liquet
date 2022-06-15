@@ -1,4 +1,9 @@
-# mvinhas-blog Changelog
+# liquet Changelog
+
+## 0.1.0
+### 2022-06-15
+- Improved dispatcher
+- Bugfixing
 
 ## 0.1.0-beta1
 ### 2021-04-24

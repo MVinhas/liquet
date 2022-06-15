@@ -1,7 +1,12 @@
-[![Build Status](https://travis-ci.org/MVinhas/mvinhas-blog.svg?branch=master)](https://travis-ci.org/github/MVinhas/mvinhas-blog)
-# MVinhas Blog
+# Important Info
 
-mvinhas-blog is an MVC CMS blog build from scratch, only with Bootstrap as CSS/JS provider and Twig as a template engine. The primary goal has educational intentions, but it is expected to serve the final user as a simple but functional CMS blog to use for whatever purpose
+liquet is archived and was superseeded by [nifty-cms](https://github.com/MVinhas/nifty)
+This was my first "PHP from scratch" experience, and it is usable, but meanwhile I've found better and simpler ways to achieve the same things.
+The last release is 0.1.0, from 2022-06-15
+
+# Liquet
+
+liquet was an MVC CMS blog build from scratch, only with Bootstrap as CSS/JS provider and Twig as a template engine. The primary goal has educational intentions, but it is expected to serve the final user as a simple but functional CMS blog to use for whatever purpose
 
 ## Installation
 
