@@ -5,43 +5,61 @@ class Dispatcher
 {
     public static function dispatch()
     {
-        $uri = self::getURI();
-        $cont = new $uri->controller;
-        $method = $uri->method;
-        $arg = $uri->arg;
-        $cont->$method($arg);
+        $uri = self::processURI();
+        if (class_exists($uri['controller'])) {
+            $controller = $uri['controller'];
+            $method = $uri['method'];
+            $args = $uri['args'];
+            //Now, the magic
+            $args ? (new $controller)->{$method}(...$args) :
+                (new $controller)->{$method}();
+        }
+        
     }
+
     public static function metadata()
     {
-        $uri = self::getURI();
-        $split = explode("\\", $uri->controller);
+        $uri = self::processURI();
+        $split = explode("\\", $uri['controller']);
         $controller = explode("Controller", $split[2]);
 
         $site = new \engine\SiteInfo();
 
         $_SESSION['page_title'] = $site->getName().' :: '.$controller[0];
     }
+
     private static function getURI()
     {
-        $url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+        return explode('/', $_SERVER['REQUEST_URI']);
+    }
 
-        $ctrPos = isset($url[1]) ? $url[1] : null;
-        $mtdPos = isset($url[2]) ? $url[2] : null;
-        $argPos = isset($url[3]) ? $url[3] : null;
+    private static function processURI() : array
+    {
+        $controllerPart = self::getURI()[1] ?? '';
+        $methodPart = self::getURI()[2] ?? '';
+        $numParts = count(self::getURI());
+        $argsPart = [];
+        for ($i = 3; $i < $numParts; $i++) {
+            $argsPart[] = self::getURI()[$i] ?? '';
+        }
+        $controllerPart = str_replace('?', '', $controllerPart);
+    
+        //Let's create some defaults if the parts are not set
+        $controller = !empty($controllerPart) ?
+        '\controllers\\'.$controllerPart.'Controller' :
+        '\controllers\HomeController';
 
-        isset($ctrPos) ? $ctrPos = preg_replace('/\?/', '', $ctrPos) : null;
-        //check for controller
-        $controller = !empty($ctrPos) ? "\controllers\\" . $ctrPos . 'Controller' : '\controllers\HomeController';
-        //controller method
-        $method = !empty($mtdPos) ? $mtdPos : 'index';
+        $method = !empty($methodPart) ?
+            $methodPart :
+            'index';
 
-        //get argument
-        $arg = !empty($argPos) ? $argPos : null;
-        
-        $uri = new \stdClass();
-        $uri->controller = $controller;
-        $uri->method = $method;
-        $uri->arg = $arg;
-        return $uri;
+        $args = !empty($argsPart) ?
+            $argsPart :
+            [];
+        return [
+            'controller' => $controller,
+            'method' => $method,
+            'args' => $args
+        ];
     }
 }

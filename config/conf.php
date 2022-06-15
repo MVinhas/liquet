@@ -35,3 +35,4 @@ if ((int)$__CONFIG['debugmode'] === 1 || empty($__CONFIG)) {
 $loader = new \Twig\Loader\FilesystemLoader('views');
 
 $twig = new \Twig\Environment($loader);
+
